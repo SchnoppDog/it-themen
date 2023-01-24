@@ -4,11 +4,52 @@ Dieses Markdown-Dokument soll verschiedene IT-Themen zusammenfassen, die ich hin
 
 ## Disclaimer
 
-Dieses Markdown-Dokument wurde in Joplin verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird Joplin nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen! Außerdem werden für Diagramme **mermaid** benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt!
+Dieses Markdown-Dokument wurde in VScode mit diveresen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen! Außerdem werden für Diagramme **mermaid** benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt!
+
+### Benutze VSCode Plugins
+
+- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+- [Markdown PDF](https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf)
+- [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
+- [Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
 
 ## Inhaltsverzeichnis
 
-$<toc{"level":[1,2]}>
+- [IT-Themenzusammenfassung](#it-themenzusammenfassung)
+	- [Disclaimer](#disclaimer)
+		- [Benutze VSCode Plugins](#benutze-vscode-plugins)
+	- [Inhaltsverzeichnis](#inhaltsverzeichnis)
+	- [APN - Access Point Name](#apn---access-point-name)
+		- [Kommunikationswege der APN-Typen](#kommunikationswege-der-apn-typen)
+		- [APN vs. VPN](#apn-vs-vpn)
+	- [Cisco - Passwort vs. Secret](#cisco---passwort-vs-secret)
+		- [Das Password-Kommando](#das-password-kommando)
+		- [Das Secret-Kommando](#das-secret-kommando)
+		- [Secret-Verschlüsselungstypen erklärt](#secret-verschlüsselungstypen-erklärt)
+		- [Quellen](#quellen)
+	- [DNS - Domain Name System](#dns---domain-name-system)
+		- [DNS - Quick Facts](#dns---quick-facts)
+		- [Einleitung - Was ist DNS?](#einleitung---was-ist-dns)
+		- [Die Zeit vor dem DNS](#die-zeit-vor-dem-dns)
+		- [Die Domain](#die-domain)
+		- [DNS-Zone](#dns-zone)
+		- [DNS-Server Arten](#dns-server-arten)
+		- [Funktionsweise eines DNS-Lookups](#funktionsweise-eines-dns-lookups)
+		- [Sichtbarkeit](#sichtbarkeit)
+		- [Angriffsvektoren](#angriffsvektoren)
+		- [Sicherheitserweiterungen](#sicherheitserweiterungen)
+		- [DNS-Zensur](#dns-zensur)
+		- [Quellen](#quellen-1)
+	- [Domain und Domaincontroller](#domain-und-domaincontroller)
+		- [Was ist eine Domain?](#was-ist-eine-domain)
+		- [Was ist ein Domaincontroller?](#was-ist-ein-domaincontroller)
+		- [Quellen](#quellen-2)
+	- [X11](#x11)
+		- [X Window System](#x-window-system)
+		- [(Sicherheits-) Probleme](#sicherheits--probleme)
+		- [X11 Forwarding](#x11-forwarding)
+		- [Fußnoten](#fußnoten)
+		- [Quellen](#quellen-3)
 
 ## APN - Access Point Name
 
@@ -19,9 +60,9 @@ Mithilfe eines APNs ist es möglich verschiedene Endgeräte als auch IoT-Geräte
 - Für jedes neue APN-Netzwerk muss dieses beim Mobilfunkanbieter gemietet werden.
 - Die APNs werden (meist) monatlich abgerechnet.
 - Jedes mobile Endgerät oder IoT-Gerät erhält meist eine SIM-Karte, auf welcher der APN bereits fest eingetragen ist.
-	- Oft kommt es aber auch vor, dass der APN in den LTE-Einstellungen des Geräts eingegeben werden muss, damit sich das Gerät mit dem Mobilfunkanbieter verbindet (siehe Telekom).
+  - Oft kommt es aber auch vor, dass der APN in den LTE-Einstellungen des Geräts eingegeben werden muss, damit sich das Gerät mit dem Mobilfunkanbieter verbindet (siehe Telekom).
 - Jedes mobile Endgerät oder IoT-Gerät innerhalb eines APN-Netzwerks muss den gleichen Mobilfunkanbieter besitzen. Es ist nur unter Umständen möglich, dass mobile Endgeräte zu verschiedenen APN-Netzen eine Verbindung aufbauen können.
-	- Ist der Mobilfunkanbieter im Ausland nicht unter gleichem Namen gelistet, wird der entsprechende, zum Unternehmen gehörende APN-Übergangspunkt für die Einwahl benutzt. Existiert der Mobilfunkanbieter gar nicht, so versucht sich die SIM-Karte in das nächst beste Netzwerk / Parnternetzwerk einzuwählen.
+  - Ist der Mobilfunkanbieter im Ausland nicht unter gleichem Namen gelistet, wird der entsprechende, zum Unternehmen gehörende APN-Übergangspunkt für die Einwahl benutzt. Existiert der Mobilfunkanbieter gar nicht, so versucht sich die SIM-Karte in das nächst beste Netzwerk / Parnternetzwerk einzuwählen.
 
 Wie bereits erwähnt ist es möglich, dass ein Gerät zwar mehrere verschiedene APNs von verschiedenen Mobilfunkanbietern besitzen kann, dies aber nur mit erhöhten Kosten möglich ist. Dafür gibt es zwei Möglichkeiten, um dieses Vorhaben umzusetzen:
 
@@ -32,21 +73,23 @@ Wie bereits erwähnt ist es möglich, dass ein Gerät zwar mehrere verschiedene 
 
 Vor der Mietung eines APNs sollte man im Klaren sein, welche Art von APN man benutzen möchte. Dabei gibt es zwei Arten mit jeweils statischer und dynamischer IP-Adressvergabe.
 
+<!-- omit in toc -->
 #### Öffentlicher APN
 
 Wird ein öffentliches APN-Netzwerk benutzt, dann können mobile End- und IoT-Geräte **direkt mit dem Internet** mit Umweg über den Mobilfunkanbieter kommunizieren. Ist die IP-Adressvergabe dynamisch konfiguriert, so holt sich das jeweilige zu verbindende Endgerät entsprechend nach DHCP eine freie IP-Adresse aus einem verfügbaren Pool und benutzt diese so lange, bis das Endgerät die Verbindung abbaut und somit die Session schließt (oftmals auch im entsprechend Management-Portal konfigurierbar).
 
 Dabei gibt das mobile End- oder IoT-Gerät die IP-Adresse wieder zurück an den Adresspool. Bei einem neuen Verbindungsaufbau wird eine neue freie IP-Adresse aus dem vorhandenen Adresspool benutzt. Ist das APN-Netzwerk statisch konfiguriert, so besitzt jedes mobile End- oder IoT-Gerät seine eigene statische Adresse innerhalb des Netzwerk. Diese wird für jede Verbindung mit dem Internet benutzt.
 
-![APN_public_apn_image.PNG](:/20748e8ca68744788f447143dbd8ca1a)
+![APN_public_apn_image.PNG](./_resources/APN_public_apn_image.PNG)
 
+<!-- omit in toc -->
 #### Privater APN
 
 Im Vergleich zu einem öffentlichen APN-Netzwerk, welches die Daten der mobilen End- und IoT-Geräte **in das Internet routen**, macht das private APN-Netzwerk **dies nicht unbedingt**. Grundsätzlich ist es möglich auch diesen Datenverkehr in das Internet zu routen, jedoch kann man bei einem privaten APN mehrere **Sicherheitseinstellungen** einstellen als bei einem öffentlichen APN.
 
 Meist werden private APNs jedoch dafür benutzt, um den **Datenverkehr mittels VPN** zum eigenen (Unternehmens-) Netzwerk zu routen. So ist es möglich, dass Dienste innerhalb eines privaten APN-Netzwerks mit Diensten innerhalb des eigenen (Unternehmens-) Netzwerk kommunizieren können. Damit diese Dienste miteinander kommunizieren können, wird klassischerweise ein VPN-Tunnel vom Mobilfunkanbieter zum eigenen (Unternehmens-) Netzwerk erstellt. Die IP-Adressen innerhalb eines privaten APN-Netzwerks können ebenfalls **statisch** oder **dynamisch** verteilt werden.
 
-![APN_private_apn_image.PNG](:/9160afa1b713480b98fad0472af3e617)
+![APN_private_apn_image.PNG](./_resources/APN_private_apn_image.PNG)
 
 ### APN vs. VPN
 
@@ -108,12 +151,12 @@ Weitere DNS-Themen zur Bearbeitung:
 
 - **Osi-Schicht:** 7
 - **Ports:**
-	- 53 (TCP / UDP)
-	- 853 TLS - TCP
-	- 853 DTLS - UDP
+  - 53 (TCP / UDP)
+  - 853 TLS - TCP
+  - 853 DTLS - UDP
 - **Standards:**
-	- [RFC 1034](https://www.rfc-editor.org/rfc/rfc1034)
-	- [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035)
+  - [RFC 1034](https://www.rfc-editor.org/rfc/rfc1034)
+  - [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035)
 
 ### Einleitung - Was ist DNS?
 
@@ -128,7 +171,7 @@ Und genau hier liegt der Knackpunkt. Denn mit der Host-Datei kommen folgende Pro
 - Ein **Einzelner** konnte bestimmen, welche Einträge in der Host-Datei existieren und welche nicht → **Kein Schutz vor Manipulation**.
 - Es gab keine zentrale Verwaltung der unterschiedlichen Namens-Zuordnungen.
 - Bei **steigender** Hostanzahl wurde die **manuelle** Administration deutlich schwieriger.
-	- Dadurch wurde die Aktualität der Host-Datei gefährdet.
+  - Dadurch wurde die Aktualität der Host-Datei gefährdet.
 - Die Host-Datei wurde **manuell** gepflegt. Es gab keine automatisch anpassbaren Lösungen.
 
 Diese Probleme zeigten schnell Grenzen der Benutzung der lokalen Host-Datei auf, weshalb ein neues, (de-) zentrales System mit einer besseren Namensordnung entwickelt werden musste. Dies ist als das heutige **Domain Name System** bekannt.
@@ -150,6 +193,7 @@ Die hier aufgelisteten Beispiele werden auch als **Fully Qualified Domain Name**
 
 Wie bereits angedeutet gibt es unterschiedliche Domain-Arten. Dabei sind die **Second-Level-Domain** (SLD) und **Top-Level-Domain** (TLD) am bekanntesten und immer verwendet, wenn ein Computername aufgerufen wird. 
 
+<!-- omit in toc -->
 #### Top-Level-Domain
 
 Die TLD ist in der DNS-Baum-Hierarchie an zweiter Stelle. Hier eingesetzte Server verwalten Namensbereiche, welche wie "*.de*", "*.org*" oder auch "*.uk*" verwalten. Dabei muss man zwischen zwei Arten von TLDs unterschieden:
@@ -186,6 +230,7 @@ Die TLD ist in der DNS-Baum-Hierarchie an zweiter Stelle. Hier eingesetzte Serve
 | org | Nicht kommerzielle Unternehmen, Projekte |
 | ... | ... |
 
+<!-- omit in toc -->
 #### Second-Level-Domain
 
 Die SLD ist in der DNS-Baum-Hierarchie an dritter Stelle. Hier existierende Namensbereiche können von jedem frei erfunden und registriert werden. Wichtig ist jedoch, dass eine SLD unterhalb einer TLD **eindeutig** sein muss. Eine Vergabe von doppelten Namen kann aufzulösende Namen durcheinanderbringen.
@@ -215,6 +260,7 @@ graph TB
 	end
 ```
 
+<!-- omit in toc -->
 #### Zoneneinträge
 
 Jeder einfache DNS-Eintrag innerhalb einer DNS-Zone wird als **Resource Record** bezeichnet. Jeder Resource Record bezieht sich auf einen bestimmten **Record-Type**, welcher bestimmte Informationen enthält.
@@ -233,6 +279,7 @@ Die Record-Types sind wie folgt:
 | TXT | Liefert einen Text zurück |
 | SOA | Ansprechpartner und Parameter zur abgefragten Zone (Start of Authority) |
 
+<!-- omit in toc -->
 #### DNS-Cluster
 
 Damit die Zonen-Dateien auf unterschiedlichen Servern in den unterschiedlichen Domain-Level-Bereichen gleich sind und redundant gespeichert werden, werden Server, die einer gleichen Domain zugeordnet sind, in Clustern zusammengeschlossen. Dies erhöht die Redundanz und vermindert die Ausfallswahrscheinlichkeit. Zudem werden die Zonendateien über die jeweiligen Server entsprechend abgeglichen und aktuell gehalten.
@@ -249,34 +296,38 @@ DNS-Server-Cluster werden dabei in zwei Gruppen eingeteilt:
 1. Autoritative DNS-Server
 2. Nicht-autoritative DNS-Server
 
+<!-- omit in toc -->
 #### Autoritativer DNS-Server
 
 Ein autoritativer DNS-Server speichert alle DNS-Informationen für seine befugte Zone. Das bedeutet, dass dieser die **Endstation** einer DNS-Anfrage ist. **Er besitzt die Informationen, um den jeweiligen DNS-Namen in eine IP-Adresse aufzulösen**. Daher gilt die Kommunikation bzw. die Antwort als **verbindlich** / **gesichert** (autoritativ).
 
+<!-- omit in toc -->
 #### Nicht-autoritativer DNS-Server
 
 Ein nicht-autoritativer DNS-Server ist **nicht selbst** für die DNS-Zone verantwortlich und bedient sich für die Namensauflösung daher an Dritte (DNS-Server) derer DNR-Einträge (Resource Records). DNS-Einträge, welche er aufgelöst hat, werden dabei für eine bestimmte Zeit (**TTL** → Time to Live) im Cache (RAM) gespeichert des DNS-Servers gespeichert. Da sich die Einträge der ursprünglichen Zonendatei in der Zwischenzeit jedoch ändern kann, gelten die abgefragten Informationen als **nicht gesichert** und daher auch als **nicht-autoritativ**.
 
 Bei dieser Vorgehensweise nimmt der DNS-Server die Rolle eines **Resolvers** ein, weshalb dieser auch als **DNS-Resolver** bezeichnet wird.
 
+<!-- omit in toc -->
 #### Weitere DNS-Server Arten
 
 **Root-DNS-Server:** Der Root-DNS-Server ist ein **autoritativer** Server, welcher sich um die Root-Zone kümmert. Er besitzt alle Einträge für die TLD-Server weltweit. Ohne diesen wäre das DNS-Netzwerk nicht möglich.
 
 **TLD-DNS-Server:** Der TLD-DNS-Server ist ebenfalls ein **autoritativer** Server, welcher alle Second-Level-Domain-Server / Namen für seine entsprechende Zone besitzt.
 
+<!-- omit in toc -->
 #### DNS-Resolver
 
 Ein **Resolver** ist per se kein DNS-Server, sondern vielmehr eine **ogrammschnittstelle**  (Vermittlungsstelle) für Anwendung und DNS. Die Aufgabe des Resolvers ist es, sich mit den entsprechenden autoritativen DNS-Servern auseinanderzusetzen, um die jeweilige IP-Adresse zu bekommen. Dabei besitzt dieser auch zweit Methoden:
 
 1. **Rekursives Resolving**
-	1. Kontaktiert den zugeordneten Nameserver
-	2. Wenn dieser die Adresse nicht im Datenbestand hat, fragt der Nameserver weitere Nameserver ab.
-	3. Dies geht solange bis entweder der Adressname aufgelöst wird oder eine negative Antwort eines autoritativen DNS-Servers zurückkommt.
+   1. Kontaktiert den zugeordneten Nameserver
+   2. Wenn dieser die Adresse nicht im Datenbestand hat, fragt der Nameserver weitere Nameserver ab.
+   3. Dies geht solange bis entweder der Adressname aufgelöst wird oder eine negative Antwort eines autoritativen DNS-Servers zurückkommt.
 2. **Iteratives Resolving**
-	1. Entweder bekommt der Resolver den entsprechenden Resource Record direkt vom DNS-Cache mitgeteilt oder er bekommt eine Adresse eines weiteren Nameservers zurück.
-	2. Im zweiten Fall würde der Resolver so lange Namerserver nach Nameserver abfragen, bis dieser eine verbindliche Antwort enthält.
-	3. Dabei werden die Anfragen meist eine Instanz höher (eine Zone nach oben) weitergeleitet, um die Adresse aufzulösen.
+   1. Entweder bekommt der Resolver den entsprechenden Resource Record direkt vom DNS-Cache mitgeteilt oder er bekommt eine Adresse eines weiteren Nameservers zurück.
+   2. Im zweiten Fall würde der Resolver so lange Namerserver nach Nameserver abfragen, bis dieser eine verbindliche Antwort enthält.
+   3. Dabei werden die Anfragen meist eine Instanz höher (eine Zone nach oben) weitergeleitet, um die Adresse aufzulösen.
 
 **Bemerke:** Das Iterative-Verfahren wird kaum für Resolver oder Clients eingesetzt, da diese damit nicht umgehen können. Deshalb wird das Verfahren nur unter DNS-Servern eingesetzt.
 
@@ -341,12 +392,14 @@ DNS-Server können einerseits **privat** andererseits **öffentlich** betrieben 
 
 Nachfolgend werden zwei Angriffszenarien gezeigt. Es gibt natürlich noch weitere Angriffsmöglichkeiten, als hier dargestellt.
 
+<!-- omit in toc -->
 #### Distributed Denial of Service (DDoS)
 
 Hier werden meist Botnetzwerke benutzt, um einen DNS-Server mit vielen Anfragen zu fluten und die **Systemressourcen stark zu belasten**, bis dieser, im (aus Angreifersicht) Best-Case abstürzt. Zwar sind vor allem Root-DNS-Server sehr performante DNS-Server, können jedoch bei einem großflächigem Angriff temporär ausfallen. Daher ist es wichtig DNS-Server in **Cluster** zu stecken, um die **Ausfallsicherheit** zu erhöhen.
 
 Ein DDoS-Angriff kann ebenfalls in Verbindung mit anderen Angriffen erfolgen.
 
+<!-- omit in toc -->
 #### DNS-Spoofing - Cache Poisoning
 
 *Cache Poisoning* beschreibt ein Vorgehen, bei welchem der Angreifer versucht dem DNS-Server eine **gefälschte IP-Adresse** für einen DNS-Namen unterzubringen. Dadurch können DNS-Anfragen von unwissenden Clients auf die entsprechende Adresse auf das **Ziel des Hackers** umgeleitet werden. Dieser kann z.B. eine entsprechende Webseite so präparieren, sodass diese täuschend echt zur Originalseite ist. Hier geben Unwissentliche ihre **geheimen Informationen** an, die der Hacker anschließend missbrauchen kann.
@@ -390,6 +443,7 @@ sequenceDiagram
 
 **Notiz Stand 07.11.2022:** Aufgrund der Komplexität und Länge der nachfolgenden Themen, wurden diese nur kurz beschrieben. Eine ausführliche Ausarbeitung ist noch geplant.
 
+<!-- omit in toc -->
 #### Transaction Signature (TSIG)
 
 TSIG beschreibt ein Verfahren, bei welchem die **Authentizität** von kommunizierenden DNS-Server bewahrt werden soll. TSIG wird hauptsächlich zwischen **DNS-Servern** benutzt. Es funktioniert mittels symmetrischer Verschlüsselung. Um TSIG konfigurieren zu können, muss auf den entsprechenden DNS-Server mindestens ein Administrator-Zugriff bereitgestellt sein.
@@ -398,14 +452,17 @@ Auf den jeweiligen DNS-Servern muss ein **geteiltes Geheimnis** konfiguriert wer
 
 Grundsätzlich ist dies ein deutlich einfacheres Verfahren als **DNSSEC**, welches auf **Public-Key-Infrastructure** setzt. Jedoch ist der **Konfigurationsaufwand** bei vielen Servern **sehr hoch**, weshalb der Einsatz von PKI hier ein Vorteil besitzt. TSIG ist in [RFC 2845](https://www.rfc-editor.org/rfc/rfc2845) beschrieben.
 
+<!-- omit in toc -->
 #### DNS over https (DoH)
 
 Beschreibt die Funktion, wie DNS über das **https-Protokoll** verwendet werden kann, um **Sicherheit und Authentizität** der DNS-Anfragen zu stärken. DoH ist ein [RFC 8484](https://www.rfc-editor.org/rfc/rfc8484.html) beschrieben.
 
+<!-- omit in toc -->
 #### DNS over TLS (DoT)
 
 Beschreibt die Funktion, wie DNS über TLS verwendet werden kann, um **Sicherheit und Authentizität** der DNS-Anfragen zu stärken. Es ist ähnlich zu DNS over https (DoH) und ist in [RFC 8310](https://datatracker.ietf.org/doc/html/rfc8310) und in [RFC 7858](https://datatracker.ietf.org/doc/html/rfc7858) beschrieben.
 
+<!-- omit in toc -->
 #### DNSSEC
 
 Beschreibt eine Reihe von Internetstandards zur Stärkung der DNS-Abfragen in **Authentizität** und **Integrität** der Daten, nicht aber der Server. Es wurde entwickelt, um **DNS-Poisoning-Angriffe** entgegenzuwirken. Für **Vertraulichkeit** ist DNSSEC **nicht** vorgesehen! DNS-Daten werden zudem **nicht verschlüsselt**!
@@ -416,31 +473,19 @@ In verschiedenen Ländern der Welt -so auch in Deutschland- werden ebenfalls DNS
 
 ### Quellen
 
-[https://de.wikipedia.org/wiki/Domain_Name_System](https://de.wikipedia.org/wiki/Domain_Name_System)
-
-[https://www.ionos.de/digitalguide/server/knowhow/namensaufloesung-im-netz-was-ist-ein-dns-server/](https://www.ionos.de/digitalguide/server/knowhow/namensaufloesung-im-netz-was-ist-ein-dns-server/)
-
-[https://www.varonis.com/de/blog/was-dns-ist-wie-es-funktioniert-und-schwachstellen](https://www.varonis.com/de/blog/was-dns-ist-wie-es-funktioniert-und-schwachstellen)
-
-[https://www.elektronik-kompendium.de/sites/net/0901141.htm](https://www.elektronik-kompendium.de/sites/net/0901141.htm)
-
-[https://aws.amazon.com/de/route53/what-is-dns/](https://aws.amazon.com/de/route53/what-is-dns/)
-
-[https://de.wikipedia.org/wiki/TSIG](https://de.wikipedia.org/wiki/TSIG)
-
-[https://www.cira.ca/resources/anycast/guide-how/using-transaction-signatures-tsig-secure-dns-server-communication](https://www.cira.ca/resources/anycast/guide-how/using-transaction-signatures-tsig-secure-dns-server-communication)
-
-[https://de.wikipedia.org/wiki/Cache_Poisoning](https://de.wikipedia.org/wiki/Cache_Poisoning)
-
-[https://en.wikipedia.org/wiki/DNS_over_HTTPS](https://en.wikipedia.org/wiki/DNS_over_HTTPS)
-
-[https://en.wikipedia.org/wiki/DNS_over_TLS](https://en.wikipedia.org/wiki/DNS_over_TLS)
-
-[https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions](https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions)
-
-[https://www.ionos.de/digitalguide/server/knowhow/dns-zone/](https://www.ionos.de/digitalguide/server/knowhow/dns-zone/)
-
-[https://www.elektronik-kompendium.de/sites/net/1910181.htm](https://www.elektronik-kompendium.de/sites/net/1910181.htm)
+- [https://de.wikipedia.org/wiki/Domain_Name_System](https://de.wikipedia.org/wiki/Domain_Name_System)
+- [https://www.ionos.de/digitalguide/server/knowhow/namensaufloesung-im-netz-was-ist-ein-dns-server/](https://www.ionos.de/digitalguide/server/knowhow/namensaufloesung-im-netz-was-ist-ein-dns-server/)
+- [https://www.varonis.com/de/blog/was-dns-ist-wie-es-funktioniert-und-schwachstellen](https://www.varonis.com/de/blog/was-dns-ist-wie-es-funktioniert-und-schwachstellen)
+- [https://www.elektronik-kompendium.de/sites/net/0901141.htm](https://www.elektronik-kompendium.de/sites/net/0901141.htm)
+- [https://aws.amazon.com/de/route53/what-is-dns/](https://aws.amazon.com/de/route53/what-is-dns/)
+- [https://de.wikipedia.org/wiki/TSIG](https://de.wikipedia.org/wiki/TSIG)
+- [https://www.cira.ca/resources/anycast/guide-how/using-transaction-signatures-tsig-secure-dns-server-communication](https://www.cira.ca/resources/anycast/guide-how/using-transaction-signatures-tsig-secure-dns-server-communication)
+- [https://de.wikipedia.org/wiki/Cache_Poisoning](https://de.wikipedia.org/wiki/Cache_Poisoning)
+- [https://en.wikipedia.org/wiki/DNS_over_HTTPS](https://en.wikipedia.org/wiki/DNS_over_HTTPS)
+- [https://en.wikipedia.org/wiki/DNS_over_TLS](https://en.wikipedia.org/wiki/DNS_over_TLS)
+- [https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions](https://en.wikipedia.org/wiki/Domain_Name_System_Security_Extensions)
+- [https://www.ionos.de/digitalguide/server/knowhow/dns-zone/](https://www.ionos.de/digitalguide/server/knowhow/dns-zone/)
+- [https://www.elektronik-kompendium.de/sites/net/1910181.htm](https://www.elektronik-kompendium.de/sites/net/1910181.htm)
 
 ## Domain und Domaincontroller
 
@@ -452,6 +497,7 @@ Innerhalb eines Unternehmensnetzwerks gibt es viele Netzwerkressourcen wie Druck
 
 Dadurch entstehen **zentral verwaltete Sicherheitsbereiche** mit administrierten Ressourcen. Die Netzwerkdomains sind **hierarchisch** strukturiert und verwenden sogenannte "*Domaincontroller (DC)*" für die Zuteilung der Benutzerrechte. Ein Vorteil der Netzwerkdomain ist, dass die verschiedenen Informationen und Richtlinien zu den unterschiedlichen Objekten **nicht mehr lokal** auf den jeweiligen Rechner selbst, sondern **zentral verwaltet werden**. Die Domain sorgt für die Authentisierung und ermöglicht die Umsetzung des Berechtigungskonzepts für Endgeräte und Netzlaufwerke sowie Ressourcen wie Netzwerkdrucker.
 
+<!-- omit in toc -->
 #### Die Struktur einer Domain
 
 Die Namenskonvention und Struktur von Domains basieren auf dem "*Domain Name System (DNS)*" (siehe [DNS - Domain Name System](#dns-domain-name-system)). Unterhalb einer Stammdomain lassen sich mehrere untergeordnete Domains in einer **Baumstruktur** anlegen. Die Domainstruktur bezeichnet man daher auch als *Domainbaum*. Alle, einer Stammdomain untergeordneten Domains besitzen in ihren Namen den Namensteil der Stammdomäne.
@@ -466,12 +512,14 @@ Je nach Größe und Komplexität des Netzwerk kommen pro Domain ein oder mehrere
 
 Anwender müssen sich gegenüber dem Controller authentifizieren. Können sie nachweisen, dass sie Mitglied der Domain sind, erhalten sie die entsprechenden Benutzerrechte für beispielsweise bestimmte Verzeichnisse oder Druckerressourcen. Es ist anzumerken, dass es mittlerweile auch Lösungen gibt, die es gestatten, Server als DC zu benutzen, auf denen **Nicht-Windows-Betriebssysteme** wie Linux betrieben werden können. Die Kompatibilität ist jedoch in einigen Bereichen eingeschränkt.
 
+<!-- omit in toc -->
 #### Die Redundanz des Domaincontrollers
 
 Da der DC eine zentrale Rolle für die User zur Nutzung der Netzwerkressourcen darstellt, gab es von Microsoft frühzeitig entsprechende Redundanzkonzepte. Früher, in den **NT4-Domains**, existierte ein "*Primary Domain Controller (PDC)*" und ein "*Backup Domain Controller (BDC)*". Änderungen waren nur auf dem PDC möglich. Der BDC hielte eine regelmäßig aktualisierte Sicherheitskopie der Daten und ließ sich **bei Bedarf zum Primary-System ernennen**.
 
 Seit Windows 2000 bietet Microsoft das "*Active Directory (AD)*" (bei Linux Samba oder eDirectory) mit der sogenannten "*Multimaster-Replikation*" an. Alle DCs besitzen nun eine beschreibbare Kopie der AD-Datenbank. **Jede Änderung wird automatische an alle anderen DCs repliziert.** Dieser Mechanismus sorgt dafür, dass alle DCs sich steht auf dem **gleichen Informationsstand** befinden. Fällt ein DC aus, hat dies **keinen Informationsverlust** zur Folge und ein anderer DC übernimmt dessen Funktion. Seit 2008 existiert zusätzlich das Konzept eines "*Read Only*"-Domain Controllers.
 
+<!-- omit in toc -->
 #### Rollen des Domaincontrollers innerhalb des Active-Directories
 
 Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf verschiedene Rollen** annehmen. Das dahinterstehende Konzept nennt sich "*Flexible Single Master Operations*" (FMSOs). Abhängig von der jeweiligen Rolle, existiert diese einmalig pro Domain oder einmalig pro Gesamtstruktur.
@@ -482,6 +530,7 @@ Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf v
 - **Schemamaster (Einmal pro Gesamtstruktur):** Er erlaubt das Erweitern und Verändern von Schemas des ADs.
 - **Domainnamenmaster:** Dieser wird immer dann benötigt, wenn eine **neue Domain in die Gesamtstruktur** aufgenommen werden soll.
 
+<!-- omit in toc -->
 #### Vor- und Nachteile eines Domain-Controllers
 
 | Vorteile | Nachteile |
@@ -500,3 +549,44 @@ Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf v
 - [https://www.varonis.com/de/blog/was-ist-ein-domanen-controller-wann-wird-er-gebraucht-und-eingerichtet](https://www.varonis.com/de/blog/was-ist-ein-domanen-controller-wann-wird-er-gebraucht-und-eingerichtet)
 - [https://www.ip-insider.de/was-ist-eine-domaene-netzwerkdomaene-a-626054/](https://www.ip-insider.de/was-ist-eine-domaene-netzwerkdomaene-a-626054/)
 - [https://www.ip-insider.de/was-ist-ein-active-directory-a-626455/](https://www.ip-insider.de/was-ist-ein-active-directory-a-626455/)
+
+## X11
+
+*X11* ist ein Protokoll-Stack bestehend aus unterschiedlichen Komponenten. *X* bezieht sich hierbei auf das *X-Window-System*, welches in den meisten Linux-Distributionen vorkommt und dazu benutzt wird, primitive Grahpical User Interfaces (GUIs) zu erstellen. Die *11* bedeutet, dass sich das Protokoll in der elften Version befindet, welche seit dem Jahr **1987** besteht.
+
+### X Window System
+
+Das *X Window System* ist ein Framework, um primitive GUIs zu erstellen, welche meist nicht mehr als aus einem Display-Device<sup>1</sup> und Canvas<sup>2</sup> besteht und man mit diesem per Maus und Tastatur interagieren kann. Jedoch ist es für das X Window System nicht möglich komplexere Inhalte wie Buttons zu generieren. Hierfür werden meist Toolkits wie [GTK](https://www.gtk.org/) benutzt, um entsprechende komplexe GUI-Darstellung zu erstellen.
+
+X arbeitet in einem transparenten **Client-Server-Modell**, wodurch es an Unabhängigkeit vom eingesetzten Betriebssystem und GUI-Toolkits ist. Der Client ist das **Frontend** des Systems. Es erstellt die primitiven GUI-Elemente, welche durch die entsprechend eingesetzten Toolkits verschönert werden können. Es arbeitet komplett isoliert vom Server, was bedeutet, dass der Stil sich pro eingesetzten Client / Toolkit unterscheiden kann. Der Server ist das **Backend** des Systems. Es kümmert sich um die Anfragen des Clients, der Bereitstellung der Ressourcen und der Kommunikation mit dem Linux-Kernel. Auch dieser kann isoliert vom Frontend benutzt werden.
+
+Das X Window System ist **netzwerkfähig**, was bedeutet, dass es nicht nur lokal auf einem Rechner ausgeführt werden kann, sondern auch über das Netzwerk verteilt. Dabei agiert der PC als **XServer** (Backend, stellt Ressourcen zur Verfügung) und kommuniziert mit einem entfernten Server (XClient, Frontend) mitsamt GUI-Frontend.
+
+![X_Remote_Server_Communication](./_resources/X_Remote_Server_Communication.PNG)
+
+### (Sicherheits-) Probleme
+
+- Der X11-Standard ist bereits veraltet und dennoch großer Beliebtheit. Dennoch gibt es bereits ähnliche Programme wie [Wayland](https://wayland.freedesktop.org/docs/html/), welche deutlich effizienter laufen.
+- Die netzwerkbasierte Kommunikation erfolgt **unverschlüsselt**. Dies macht die Benutzung von X11 über Netzwerk sehr anfällig für MiTM-Angriffe.
+- X11 liefert viel Programmcode mit sich und bläst das OS ggf. unnötig auf.
+- Viele Prozesse von X11 laufen mit **root-Berechtigungen**. Ein kleiner Fehler im Programmcode kann es erlauben sämtliche Kontrolle des Prozesses zu übernehmen und schadhaften Code als root auszuführen.
+
+### X11 Forwarding
+
+Da X11 **unverschlüsselt** kommuniziert, wird SSH oftmals als Tunnel verwendet, um X11 benutzen zu können. Dieses Vorgehen ist auch bekannt als *X11 Forwarding*. Durch die verschlüsselte SSH-Kommunikation ist es Angreifern nicht möglich auf die Daten während der Kommunikation zuzugreifen.
+
+X11 Forwarding könnte man auch als *Linuxartiges RDP* bezeichnen. Da auf den meisten unixbasierten Produktiv-Servern in einem Unternehmensnetzwerk sowieso keine GUI vorhanden ist, kann in der SSH-Konfiguration (sshd_config) das X11 Forwarding **deaktiviert** werden.
+
+### Fußnoten
+
+- <sup>1</sup> Hiermit sind nicht unbedingt Displays als Hardware gemeint. Gemeint können auch virtuelle Desktops sein.
+- <sup>2</sup> Canvas ist bei Computern ein Container, welcher eine Vielzahl an unterschiedlichen Elemente beinhalten kann.
+
+### Quellen
+
+- [https://goteleport.com/blog/x11-forwarding/](https://goteleport.com/blog/x11-forwarding/)
+- [https://security.stackexchange.com/questions/4641/why-are-people-saying-that-the-x-window-system-is-not-secure](https://security.stackexchange.com/questions/4641/why-are-people-saying-that-the-x-window-system-is-not-secure)
+- [https://askubuntu.com/questions/101829/why-is-x11-a-security-risk-in-servers](https://askubuntu.com/questions/101829/why-is-x11-a-security-risk-in-servers)
+- [https://www.baeldung.com/linux/x11](https://www.baeldung.com/linux/x11)
+- [https://unix.stackexchange.com/questions/276168/what-is-x11-exactly](https://unix.stackexchange.com/questions/276168/what-is-x11-exactly)
+- [https://en.wikipedia.org/wiki/X_Window_System](https://en.wikipedia.org/wiki/X_Window_System)
