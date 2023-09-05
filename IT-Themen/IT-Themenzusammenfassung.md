@@ -1,57 +1,36 @@
+<!-- omit in toc -->
 # IT-Themenzusammenfassung
 
 Dieses Markdown-Dokument soll verschiedene IT-Themen zusammenfassen, die ich hin und wieder angeschaut habe.
 
+<!-- omit in toc -->
 ## Disclaimer
 
-Dieses Markdown-Dokument wurde in VScode mit diveresen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen! Außerdem werden für Diagramme **mermaid** benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt!
+Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://code.visualstudio.com/) mit diveresen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen! Außerdem werden für Diagramme **mermaid** benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt.
 
+<!-- omit in toc -->
 ### Benutze VSCode Plugins
 
 - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - [Markdown PDF](https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf)
 - [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
-- [Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)
+- ~~[Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)~~ Wird nicht mehr zur Syntaxüberprüfung verwendet.
+- [Markdown Footnotes](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-footnotes)
 
+<!-- omit in toc -->
 ## Inhaltsverzeichnis
 
-- [IT-Themenzusammenfassung](#it-themenzusammenfassung)
-	- [Disclaimer](#disclaimer)
-		- [Benutze VSCode Plugins](#benutze-vscode-plugins)
-	- [Inhaltsverzeichnis](#inhaltsverzeichnis)
-	- [APN - Access Point Name](#apn---access-point-name)
-		- [Kommunikationswege der APN-Typen](#kommunikationswege-der-apn-typen)
-		- [APN vs. VPN](#apn-vs-vpn)
-	- [Cisco - Passwort vs. Secret](#cisco---passwort-vs-secret)
-		- [Das Password-Kommando](#das-password-kommando)
-		- [Das Secret-Kommando](#das-secret-kommando)
-		- [Secret-Verschlüsselungstypen erklärt](#secret-verschlüsselungstypen-erklärt)
-		- [Quellen](#quellen)
-	- [DNS - Domain Name System](#dns---domain-name-system)
-		- [DNS - Quick Facts](#dns---quick-facts)
-		- [Einleitung - Was ist DNS?](#einleitung---was-ist-dns)
-		- [Die Zeit vor dem DNS](#die-zeit-vor-dem-dns)
-		- [Die Domain](#die-domain)
-		- [DNS-Zone](#dns-zone)
-		- [DNS-Server Arten](#dns-server-arten)
-		- [Funktionsweise eines DNS-Lookups](#funktionsweise-eines-dns-lookups)
-		- [Sichtbarkeit](#sichtbarkeit)
-		- [Angriffsvektoren](#angriffsvektoren)
-		- [Sicherheitserweiterungen](#sicherheitserweiterungen)
-		- [DNS-Zensur](#dns-zensur)
-		- [Quellen](#quellen-1)
-	- [Domain und Domaincontroller](#domain-und-domaincontroller)
-		- [Was ist eine Domain?](#was-ist-eine-domain)
-		- [Was ist ein Domaincontroller?](#was-ist-ein-domaincontroller)
-		- [Quellen](#quellen-2)
-	- [X11](#x11)
-		- [X Window System](#x-window-system)
-		- [(Sicherheits-) Probleme](#sicherheits--probleme)
-		- [X11 Forwarding](#x11-forwarding)
-		- [Fußnoten](#fußnoten)
-		- [Quellen](#quellen-3)
+- [APN - Access Point Name](#apn---access-point-name)
+- [Cisco - Access Control List](#cisco---access-control-list)
+- [Cisco - Passwort vs. Secret](#cisco---passwort-vs-secret)
+- [DNS - Domain Name System](#dns---domain-name-system)
+- [Domain und Domaincontroller](#domain-und-domaincontroller)
+- [DSL - Digital Subscriber Line](#dsl---digital-subscriber-line)
+- [Flow Control](#flow-control)
+- [X11](#x11)
+- [Fußnotizen](#fußnotizen)
 
-## APN - Access Point Name
+# APN - Access Point Name
 
 "*APN*" steht für "**A**ccess **P**oint **N**ame" - nicht zu verwechseln mit einem Access-Point als Netzwerkgerät. Ein APN ist eine Art "*Gateway*" eines Mobilfunkbetreibers, welches ein Netzwerk für das jeweilige mobile Endgerät zur Verfügung stellt. Mithilfe dieses Netzwerks kann ein mobiles Endgerät das **öffentliche Netzwerk** (Internet) erreichen. Ein APN dient jedoch nicht nur als Gateway, sondern setzt weitere verschiedene Eigenschaften für das jeweilige mobile Endgerät wie zum Beispiel wie es sich am **Netzwerk authentifiziert**, welche **Kommunikationswege** es benutzt als auch welche **Sicherheitsmaßnahmen** für das mobile Endgerät greifen.
 
@@ -69,12 +48,13 @@ Wie bereits erwähnt ist es möglich, dass ein Gerät zwar mehrere verschiedene 
 1. Die **preisgünstigere** Variante ist es, dass der Mobilfunkanbieter mehrere APN-Profile auf seiner SIM-Karte hinterlegt (oder entsprechend in der Software). Somit können jedoch nur die vorgefertigten APN-Profile für andere Mobilfunkanbieter benutzt werden.
 2. Die **teurere** Variante ist es eine E-SIM zu benutzen, welche ohne physische SIM-Karte mehrere APN-Profile innerhalb eines Speicherchips abspeichern kann.
 
-### Kommunikationswege der APN-Typen
+<!-- omit in toc -->
+## Kommunikationswege der APN-Typen
 
 Vor der Mietung eines APNs sollte man im Klaren sein, welche Art von APN man benutzen möchte. Dabei gibt es zwei Arten mit jeweils statischer und dynamischer IP-Adressvergabe.
 
 <!-- omit in toc -->
-#### Öffentlicher APN
+### Öffentlicher APN
 
 Wird ein öffentliches APN-Netzwerk benutzt, dann können mobile End- und IoT-Geräte **direkt mit dem Internet** mit Umweg über den Mobilfunkanbieter kommunizieren. Ist die IP-Adressvergabe dynamisch konfiguriert, so holt sich das jeweilige zu verbindende Endgerät entsprechend nach DHCP eine freie IP-Adresse aus einem verfügbaren Pool und benutzt diese so lange, bis das Endgerät die Verbindung abbaut und somit die Session schließt (oftmals auch im entsprechend Management-Portal konfigurierbar).
 
@@ -83,7 +63,7 @@ Dabei gibt das mobile End- oder IoT-Gerät die IP-Adresse wieder zurück an den 
 ![APN_public_apn_image.PNG](./_resources/APN_public_apn_image.PNG)
 
 <!-- omit in toc -->
-#### Privater APN
+### Privater APN
 
 Im Vergleich zu einem öffentlichen APN-Netzwerk, welches die Daten der mobilen End- und IoT-Geräte **in das Internet routen**, macht das private APN-Netzwerk **dies nicht unbedingt**. Grundsätzlich ist es möglich auch diesen Datenverkehr in das Internet zu routen, jedoch kann man bei einem privaten APN mehrere **Sicherheitseinstellungen** einstellen als bei einem öffentlichen APN.
 
@@ -91,11 +71,298 @@ Meist werden private APNs jedoch dafür benutzt, um den **Datenverkehr mittels V
 
 ![APN_private_apn_image.PNG](./_resources/APN_private_apn_image.PNG)
 
-### APN vs. VPN
+<!-- omit in toc -->
+## APN vs. VPN
 
 Es kommt hin und wieder vor, ass ein APN mit einem VPN verwechselt oder verglichen wird. Dies ist nicht möglich, da die Aufgaben von einem APN und eines VPNs **sehr unterschiedlich** sind. ***Während der APN die Verbindung für ein mobiles End- und IoT-Gerät in das Netzwerk des Mobilfunkanbieters herstellt, stellt ein VPN einen Tunnel zwischen zwei Standorten her.*** Zudem verschlüsselt ein VPN den Datenverkehr innerhalb eines VPN-Tunnels, während ein APN keine Verschlüsselung verwendet,
 
-## Cisco - Passwort vs. Secret
+# Cisco - Access Control List
+
+<!-- omit in toc -->
+## Überblick - Was ist eine Access Control List
+
+Eine ***Access Control List*** (ACL) ist eine Liste an unterschiedlichen Kommandos, welche Datenverkehr für bestimmte Netzwerke und Anwendungen **zulassen** oder **blockieren** kann. ACLs werden zum **Absichern des Datenverkehrs** auf Routern benutzt. Somit gleichen ACLs einer Art Firewall.
+
+ACLs gibt es in verschiedenen Formen und Arten. Darunter sind die bekanntesten:
+
+- **Standard ACLs**: Grober Datenfilter anhand IP-Adressen.
+- **Extended ACLs**: Granularer Datenfilter anhand IP-Adressen, Protokolle und Anwendungen.
+
+Desweiteren gibt es weitere ACLs, welche unterschiedliche Zwecke erfüllen.
+
+ACLs werden im Konfigurationsmodus des Routers angelegt. Sie wirken jedoch erst dann, wenn diese **auf einem Interface** konfiguriert wurden. Auf dem Interface selbst gibt es zwei Richtungen:
+
+- **Inbound (In)**: Datenverkehr, welcher am Interface ankommt und nach *innen* weiterverarbeitet werden soll. Z.B. Public-Datenverkehr nach Intern.
+- **Outbound (Out)**: Datenverkehr, welcher am Interface ankommt und nach *draußen* weiterverarbeitet werden soll. Z.B. Interner Datenverkehr nach Public.
+
+<!-- omit in toc -->
+## ACL Grundlagen
+
+<!-- omit in toc -->
+### Masken
+
+ACLs verwenden Zugriffskontroll-Masken (ACL-Maske / Wildcard Mask), um festzulegen welche IP-Adresse bzw. Netzwerkbereiche zugelassen oder abgelehnt werden sollen. Die ACL-Masken sind dabei den Subnetzmasken von IP-Adressen sehr ähnlich. Anders als bei den Subnetzmasken, werden ACL-Masken *vekehrt herum* gebildet. Folgendes Beispiel erläutert den Prozess:
+
+- Netzwerk: 192.168.1.0
+- Subnetzmaske: 255.255.255.0
+
+Das Netzwerk `192.168.1.0` mit der Subnetzmaske `255.255.255.0` beschreibt, dass die ersten drei Oktette `192.168.1` immer identisch sein müssen, damit ein Client innerhalb des Netzwerks mit einem anderen Client im gleichen Netzwerk kommunizieren kann. Der **Hostanteil** besitzt den Wert `0` im 4 Oktett der Subnetzmaske. Das bedeutet, dass alle Adressen `0 - 255` (-2 für Netz- und Broadcastadresse) als **Hostadressen** benutzbar und somit frei im Netzwerk zur Verfügung sind. Sommit können z.B. Client_A mit `192.168.1.5` und Client_B mit `192.168.1.250` miteinander kommunizieren.
+
+Dieses Konzept wird bei den ACL-Masken umgekehrt behandelt:
+
+- Netzwerk: 192.168.1.0
+- Subnetzmaske: 255.255.255.0
+- ACL-Maske: 0.0.0.255
+
+Das bedeutet, dass **exakte Übereinstimmungen** mit einer `0` gekennzeichnet werden und alles andere, was **nicht exakt übereinstimmen muss** mit einer `1` (binär) gekennzeichnet wird. Aufgeteilt im Binärformat wäre das folgendermaßen:
+
+- Netzwerk: 192.168.1.0
+- Subnetzmaske: 11111111.11111111.11111111.00000000 (→ Binär 1 = Exakte Übereinsteimmung; Binär 0 = Keine Übereinstimmung)
+- ACL-Maske: 00000000.00000000.00000000.11111111 (→ Binär 1 = Keine Übereinstimmung; Binär 0 = Exakte Übereinstimmung)
+
+Möchte man also eine ACL-Maske erstellen, in welcher z.B. das letzte Oktett einer Netzwerkadresse **nicht übereinstimmen** muss, dann würde man die Maske `0.0.0.255` dafür wählen.
+
+Das Errechnen der ACL-Maske kann ebenfalls durch folgenden Trick **vereinfacht** werden:
+
+```txt
+255.255.255.255 - Subnetzmaske = ACL-Maske
+
+255.255.255.255 - 255.255.255.0 = 0.0.0.255
+```
+
+**Beachte**:
+
+- Der Wert `0.0.0.0 (Subnetzmaske) / 255.255.255.255 (ACL-Maske)` ist eine *Default-Route* und steht für den Wert `any`.
+- Eine Host-Adresse kann auf der CLI abgekürzt werden: ❌ `192.168.1.0 0.0.0.0` / ✅ `host 192.168.1.0`
+
+<!-- omit in toc -->
+### Zusammenfassen von Netzwerken in ACL-Masken
+
+Besitzt man mehrere **aufeinanderfolgende** Netzwerke, welche gleiche Regeln besitzen sollen, dann kann es viel Aufwand sein, die entsprechenden Regeln zu erstellen. Das kann deutlich einfacher gemacht werden, indem man die Netzwerke zusammenfasst. Bei Subnetzmasken ist das auch unter `Supernet` bekannt. Angenommen es existieren folgende Netzwerke:
+
+- 192.168.32.0/24
+- 192.168.33.0/24
+- 192.168.34.0/24
+- 192.168.35.0/24
+- 192.168.36.0/24
+- 192.168.37.0/24
+- 192.168.38.0/24
+- 192.168.39.0/24
+
+Die Oktette 1, 2 und 4 sind bei allen Adressen gleich. Nur das dritte Oktett unterscheidet sich. Das 4. Oktett braucht keine weitere beachtung, da hier wieder alle Adressen nicht übereinstimmen müssen. Das ist wiederum bei den ersten drei Oktetten nicht der Fall. Das dritte Oktett kann von der ACL-Maske jedoch so zusammengefasst werden, dass nur ein Netzwerk mit entsprechender ACL-Maske angegeben werden muss. Die nachfolgenden Tabelle erläutert wie die Maske aussehen kann:
+
+| Dezimal / Binär | 128 | 64 | 32 | 16 | 8 | 4 | 2 | 1 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 32 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 0 |
+| 33 | 0 | 0 | 1 | 0 | 0 | 0 | 0 | 1 |
+| 34 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 0 |
+| 35 | 0 | 0 | 1 | 0 | 0 | 0 | 1 | 1 |
+| 36 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 0 |
+| 37 | 0 | 0 | 1 | 0 | 0 | 1 | 0 | 1 |
+| 38 | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 0 |
+| 39 | 0 | 0 | 1 | 0 | 0 | 1 | 1 | 1 |
+
+Da die ersten 5 Bits übereinstimmen, kann das Netzwerk bis dahin zusammengefasst werden. Daraus entsteht folgendes Netzwerk: 192.168.1.0/21. Die daraus resultierende ACL-Maske ist 0.0.7.255.
+
+Mit folgendem Befehl könnten also die entsprechenden IP-Adressen in einer ACL erlaubt werden:
+
+```txt
+access-list acl_permit permit ip 192.168.32.0 0.0.7.255
+```
+
+**Aufgepasst**: Adressen können nur dann zusammengefasst werden, wenn diese auch in den entsprechenden Bereichen vertreten sind. So können zwar oben gezeigte Adressen komplett zusammengefasst werden, jedoch funktioniert das nicht immer, wie das nächste Beispiel zeigt.
+
+Geht man davon aus, man hätte die folgenden Adressblöcke:
+
+- 192.168.146.0/24
+- 192.168.147.0/24
+- 192.168.148.0/24
+- 192.168.149.0/24
+
+Hier könnten, wie beim oben gezeigten Beispiel, auch die ersten 5 Bits des dritten Oktetts zusammengefasst werden. So könnte man meinen, dass folgende ACL ausreichend wäre:
+
+```txt
+access-list acl_permit permit ip 192.168.146.0 0.0.7.255
+```
+
+Die Problematik hierbei ist jedoch, dass **mehr Adressen als angegeben** in dieser Regel umfasst werden würden:
+
+```txt
+3. Oktett = 8 Bits
+Supernet-Bits = 8 - 5 (Netzteil) = 3 Bits (flexibel)
+2^3 = 8
+```
+
+Es können somit 8 Netzwerke gebildet werden. Damit würde die access-list "acl_permit" folgenden Bereich haben: `192.168.146.0 - 192.168.153.255`. In diesem Bereich wären zudem folgende Netzwerke inkludiert:
+
+- 192.168.150.0/24
+- 192.168.151.0/24
+- 192.168.152.0/24
+- 192.168.153.0/24
+
+In diesem Beispiel müsste man die 4 Adressen auf jeweil **2 Supernetze** aufteilen:
+
+```txt
+access-list acl_permit permit ip 192.168.146.0 0.0.1.255
+access-list acl_permit permit ip 192.168.148.0 0.0.1.255
+```
+
+<!-- omit in toc -->
+### Verarbeitung von ACLs
+
+Das **Abgleichen von Regelsätzen** in einer ACL geht immer der Reihenfolge von **oben nach unten** durch. Trifft eine Regel zu, wird diese sofort angewandt. Trifft keine Regel zu, wird durch eine **implizite** `deny any` Regel der Datenverkehr verworfen. Diese Regel ist bei jeder ACL am Ende vorhanden und muss **nicht** explizit gesetzt werden.
+
+Erstellt man eine ACL oder bearbeitet diese und fügt neue Regelsätze hinzu, dann werden diese **standardmäßig am Ende der ACL** angehangen. Es gibt jedoch Möglichkeiten je nach ACL-Typ die Regeln an entsprechende Positionen zu packen. Grundsätzlich gilt folgende **Best-Practice-Regel**:
+
+> **Zitat**
+> 
+> Order ACL with multiple statements from most specific to least specific.
+
+<!-- omit in toc -->
+## Standard-ACL
+
+- Standard-ACLs wurden bereits vor der Cisco IOS-Version 8.3 benutzt. 
+- Sie besitzen einen anwendbaren Zahlenbereich von `1 - 99` und `1300 - 1999` (erweiterter Zahlenbereich).
+- Sie arbeitet **ausschließlich** mit Quell-Adressen. Die ACL-Maske kann ist dabei optional und kann weggelassen werden.
+- Die Standard-ACL besitzt zwar wie alle anderen ACLs eine implizite `deny any`-Regel, ist wird jedoch vorausgesetzt, dass am Ende jeder Standard-ACL eine `permit any`-Regel geschrieben wird.
+  - Ansonsten wird sämtlicher Datenvekehr blockiert!
+
+Die Syntax ist wie folgt:
+
+```txt
+access-list <access-list-number> {permit|deny} {host|source source-wildcard|any}
+```
+
+Eine solche Konfiguration einer Standard-ACL sieht wie folgt aus:
+
+```txt
+access-list 99 deny host 172.16.0.55
+access-list 99 permit any
+```
+
+<!-- omit in toc -->
+## Erweiterte ACLs
+
+- Erweiterte ACLs sind seit der Cisco IOS Version 8.3 verfügbar
+- Anders als bei der Standard-ACL wird hier nach **Quell- und Ziel-Adresse** gefiltert. Optional kann noch das Protokoll und der Port angegeben werden.
+- Der anwendbare Zahlenbereich für erweitere ACLs liegt bei `100 - 199` und `2000 - 2699` (erweiteter Zahlenbereich).
+- Auch diese ACL besitzt ein implizites `deny any any` am Ende. Auch hier wird empfohlen, ein `permit any any` am Ende der ACL zu konfigurieren, um sonstigen Datenverkehr zuzulasen.
+  - Kann aus Sicherheitsgründen auch entfallen
+
+Die Syntax ist wie folgt:
+
+```txt
+access-list <access-list-number> {permit|deny} {ip|tcp|udp} <source> <source-wildcard-mask> <destination> <destination-wildcard-mask> <protocol> 
+```
+
+Die Syntax kann, je nach ACL-Einstellung auch noch um weitere Parameter wie `timeout`, `tos` `log` etc. ergänzt werden.
+
+Eine solche Konfiguration einer erweiterten ACL kann wie folgt aussehen:
+
+```txt
+# Lasse sämtlichen Datenverkehr von 192.168.1.2 nach 172.16.0.55 zu
+access-list 100 permit ip host 192.168.1.2 host 172.16.0.55
+# Lasse HTTPS-Datenverkehr von 192.168.1.0/24 nach 172.16.1.3 zu
+access-list 100 permit tcp 192.168.1.0 0.0.0.255 host 172.16.1.3 eq 443
+# Lass ICMP-Echo Antworten nicht zu
+access-list 100 deny icmp any any echo
+```
+
+**Bemerke:**
+
+- Bei `ICMP` muss anstatt des Ports der entsprechende ICMP-Code eingetragen werden!
+  - Sämtliche ICMP-Codes können bei der [IANA](https://www.iana.org/assignments/icmp-parameters/icmp-parameters.xhtml) nachgeschaut werden.
+- Es gibt auch die Möglichkeit, anstatt die Ports mit ihrer Zahl konfigurieren, die dahinterstehende Anwendung auch beim Namen zu nennen. Dies gilt auch für ICMP-Codes.
+  - Das funktioniert jedoch ausschließlich für **standardisierte Ports** wie:
+    - http / https: 80 / 443
+    - telnt: 23
+    - ssh: 22
+    - Etc.
+
+<!-- omit in toc -->
+## ACL Namen anstatt Zahlen
+
+Ansatt die Nummern-Bereiche für die entsprechenden ACLs zu benutzen, ist es auch möglich **Namen** zu verwenden. Das macht den Einsatz und Wieder-Erkennungswert von ACls deutlicher. Das Verwenden von ACLs mit einem Namen birgt zudem einige Vorteile:
+
+- **Benutzung von Namen anstatt Nummern**: Wie bereits gesagt verbessert das den Wieder-Erkennungswert. Dadurch können ACLs besser beschrieben werden.
+- **Neu anordnen der Regeln**: Bei der Benutzung von nummerierten ACLs ist es **nicht** möglich die Regeln an andere Stellen zu packen. Um Regeln in nummerierten ACLs umzustellen, müssen die entsprechenden ACLs zuerst gelöscht und dann mit der entsprechenden neuen Reihenfolge neu erstellt werden.
+  - Hierbei ist es jedoch wichtig, dass man die ACL vorher abspeichert!
+- **Löschen von ACL-Einträgen**: Bei der Benutzung von nummerierten ACLs ist es **nicht** möglich die Regeln zu löschen. Diese können jedoch mit dem `no`-Keyword bei **benannten** ACLs entsprechend gelöscht werden.
+
+Die Konfiguration von ACLs mit Namen unterscheidet sich leicht zu den nummerierten ACLs:
+
+**Standard-ACLs**: Standard ACLs können von Extended-ACLs durch das Keyword `standard` im Kommando unterschieden werden.
+
+```txt
+conf t
+ip access-list standard my_standard_acl 	# Enter
+remark my rules for the standard acl
+permit 172.16.0.0 0.0.255.255
+deny any
+exit
+```
+
+**Extended-ACls**: Extended ACLs können von Standard-ACLs durch das Keyword `extended` im Kommando unterschieden werden.
+
+```txt
+conf t
+ip access-list extended my_extended_acl		# Enter
+remark my rules for the extended acl
+permit tcp 192.168.1.0 0.0.0.255 172.16.0.254 0.0.0.0 eq https
+deny any any
+exit
+```
+
+<!-- omit in toc -->
+## Anwendung von ACLs
+
+Wie bereits erwähnt werden ACLs auf Interfaces angewandt. Dabei gibt es zwei Ausrichtungen:
+
+- **Inbound (In)**: Datenverkehr, welcher am Interface ankommt und nach *innen* weiterverarbeitet werden soll. Z.B. Public-Datenverkehr nach Intern.
+- **Outbound (Out)**: Datenverkehr, welcher am Interface ankommt und nach *draußen* weiterverarbeitet werden soll. Z.B. Interner Datenverkehr nach Public.
+
+Bereits definierten ACLs werden wie folgt für Interfaces konfiguriert:
+
+```txt
+conf t
+ip access-list extended my_acl
+remark acl for webservices
+permit any 172.16.0.254 0.0.0.0 eq https
+deny any any
+exit
+
+ip access-list extended my_acl_web
+remark acl for webserver to public
+permit host 172.16.0.254 any any
+exit
+
+int gi1/0/2
+ip access-group my_acl in
+ip access-group my_acl_web out
+```
+
+**Tipp**: Mittels des Keywords `remark` können Kommentare zu ACL-Einträge verfasst werden. Jedoch können diese selbst in ACLs mit Namen **nicht die Position wechseln**! Daher sollte **vor** einer neuen Regel, welche beschrieben werden soll, der Kommentar erfolgen!
+
+<!-- omit in toc -->
+## ACL - Best Practices
+
+- ACLs sollten immer zuerst konfiguriert werden, bevor diese auf Interfaces angewandt werden. Das kann Fehler oder auch Aussperrungen vermeiden.
+- **Extended** ACLs sollten immer **nahe der Quelle** platziert werden. Hier findet meistens eine feinere, granularere Abstimmung von Regelsätzen für den Datenverkehr statt.
+- **Standard** ACLs sollte immer **nahe des Ziels** platziert werden. Hier findet meistens eher eine grobere Abstimmung von Regelsätzen für den Datenverkehr statt.
+- ACL-Regelsätze sollten von **meist benutzt** nach **wenig benutzt** sortiert werden. Das vermeidet unnötige Rechenkapazität bei der Begutachtung der Regeln für den zu evaluierenden Datenverkehr.
+- Es können **maximal 2** ACLs auf **einem Interface** angewandt werden. Darunter je 1 für inbound und outbound.
+- Eine ACL sollte **mindestens eine `permit`-Regel** besitzen. Ansonsten wird sämtlicher Datenverkehr blockiert.
+- Eine `deny any any`-Regel ist zwar, durch das implizit gesetzte `deny any any` nicht nötig, sollte aber dennoch für das allgemeine Verständnis gesetzt werden.
+- Standard- und Erweitere-ACLs können **nicht den gleichen** Namen besitzen.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.cisco.com/c/de_de/support/docs/security/ios-firewall/23602-confaccesslists.html](https://www.cisco.com/c/de_de/support/docs/security/ios-firewall/23602-confaccesslists.html)
+- [https://community.cisco.com/t5/networking-knowledge-base/access-control-lists-acl-explained/ta-p/4182349](https://community.cisco.com/t5/networking-knowledge-base/access-control-lists-acl-explained/ta-p/4182349)
+- [https://content.cisco.com/chapter.sjs?uri=/searchable/chapter/content/en/us/td/docs/ios-xml/ios/sec_data_acl/configuration/xe-3e/sec-data-acl-xe-3e-book/sec-acl-named.html.xml](https://content.cisco.com/chapter.sjs?uri=/searchable/chapter/content/en/us/td/docs/ios-xml/ios/sec_data_acl/configuration/xe-3e/sec-data-acl-xe-3e-book/sec-acl-named.html.xml)
+
+# Cisco - Passwort vs. Secret
 
 Standardmäßig sind Cisco-Geräte wie Router oder Switches ***nicht*** passwortgeschützt. Das bedeutet, dass ein Zugriff auf das Gerät als auch in den erhöhten EXEC-Modus **ohne Authentifizierung** stattfinden kann. Da dies jedoch ein **enormes Sicherheitsrisiko** darstellt, werden Passwörter benutzt, um diese Bereiche abzusichern. Bei Cisco-Geräten gibt es zwei Methoden, um Passwörter zu setzen:
 
@@ -104,13 +371,15 @@ Standardmäßig sind Cisco-Geräte wie Router oder Switches ***nicht*** passwort
 
 Doch es gibt einen großen Unterschied, welcher im Nachfolgenden erklärt wird.
 
-### Das Password-Kommando
+<!-- omit in toc -->
+## Das Password-Kommando
 
 Zu Beginn wurden Cisco-Geräte **ausschließlich** mit dem Passwort-Kommando hergestellt. Dieses Kommando setzt ein Passwort für die verschiedenen zu sichernden Bereiche (1-15). Das Problem ist jedoch, dass dieses im **Klartext** in die Running / Startup-Config geschrieben wird. Somit kann es einfach ausgelesen werden.
 
 Damit dies verhindert wird, hat Cisco **Passwortsicherheitsypen** als auch den Befehl `service password-encryption` eingeführt. Mit dem Kommando `service password-encryption` werden alle im Klartext gespeicherten Kennwörter **verschlüsselt**. Dies ist zwar im Vergleich zum vorherigen Verfahren eine gute Verbesserung, da dieses mit einer einfachen **Vigenère-Verschlüsselung** verschlüsselt wurde. Heutzutage existieren jedoch einige Programme, die eine solche Verschlüsselung **brechen** können. Damit das Risiko für das Auslesen oder der Entschlüsselung des Passworts gemindert werden kann, wurde das `secret`-Kommando eingeführt.
 
-### Das Secret-Kommando
+<!-- omit in toc -->
+## Das Secret-Kommando
 
 Das **Secret**-Kommando löst das ursprüngliche **Password**-Kommando ab. Aus historischen Gründen und für Entwicklungsumgebungen ist das Passwort-Kommando immer noch im Cisco IOS enthalten. Es wird jedoch ausdrücklich geraten dieses ***nicht mehr einzusetzen***. Stattdessen soll das Secret-Kommando als Passwort benutzt werden. Das Secret-Kommando ist ein zweites Passwort, welches auf dem System hinterlegt wird. **Existiert** bereits ein Passwort, welches durch das **Passwort-Kommando** gesetzt wurde, wird dieses vom **Secret-Kommando abgelöst**. Wie beim Passwort-Kommando gibt es auch beim Secret-Kommando unterschiedliche **Passwortsicherheitstypen.** Zu benutzende Sicherheitstypen bei Cisco sind:
 
@@ -118,9 +387,10 @@ Das **Secret**-Kommando löst das ursprüngliche **Password**-Kommando ab. Aus h
 - **Typ 8** → PBKDF2 ()
 - **Typ 9** → SCRYPT (**empfohlen**)
 
-### Secret-Verschlüsselungstypen erklärt
+<!-- omit in toc -->
+## Secret-Verschlüsselungstypen erklärt
 
-Generell wird **abgeraten** andere Verschlüsselungstypen, die **nicht** den oben genannten entsprechen, für Cisco-Geräte **weiter einzusetzen**. **MD5** wird zwar mit einem **zusätzlichem Salt<sup>1</sup>** versehen, ist dennoch weiterhin ein schnell zu berechenbarer Hash-Algorithmus. Auch hier gibt es bereits ein paar Programme, welche es schaffen MD5-Hashes umzukehren.
+Generell wird **abgeraten** andere Verschlüsselungstypen, die **nicht** den oben genannten entsprechen, für Cisco-Geräte **weiter einzusetzen**. **MD5** wird zwar mit einem **zusätzlichem Salt[^CPS1]** versehen, ist dennoch weiterhin ein schnell zu berechenbarer Hash-Algorithmus. Auch hier gibt es bereits ein paar Programme, welche es schaffen MD5-Hashes umzukehren.
 
 Deswegen und daher, dass MD5 bereits im Jahr **2008** von der IETF (Internet Engineering Task Force) als **unsicher** begutachtet wurde, wird auch davon **abgeraten**, MD5 weiter als Passwort-Hash einzusetzen. MD5 sollte **nur dann** eingesetzt werden, wenn es **keinen weiteren verfügbaren Hashalgorithmus** zur Verfügung steht. Auch beim sichereren PBKDF2-Hashalgorithmus scheiden sich in der Sicherheit der Verwendung die Gemüter, da es, je nach **Stärke der Verschlüsselung** schneller oder langsamer mittels eines **Bruteforce-Angriffs** entschlüsselt werden kann. Daher wird auch davon abgeraten PBKDF2 zu benutzen.
 
@@ -128,9 +398,8 @@ Als letzte Option bleibt daher **SCRYPT**. SCRYPT ist die empfohlene Variante, u
 
 ***DAHER WIRD DAZU GERATEN ALLE ALTEN UND NEUEN PASSWÖRTER MITTELS SCRYPT ZU VERSCHLÜSSELN.***
 
-- <sup>1</sup> Ein bestimmter oder unbestimmter Wert, welcher als zusätzlicher Sicherheitsfaktor mit in die Passwortverschlüsselung genommen wird.
-
-### Quellen
+<!-- omit in toc -->
+## Quellen
 
 - [https://community.cisco.com/t5/networking-documents/understanding-the-differences-between-the-cisco-password-secret/ta-p/3163238](https://community.cisco.com/t5/networking-documents/understanding-the-differences-between-the-cisco-password-secret/ta-p/3163238)
 - [https://learningnetwork.cisco.com/s/article/cisco-routers-password-types](https://learningnetwork.cisco.com/s/article/cisco-routers-password-types)
@@ -139,7 +408,7 @@ Als letzte Option bleibt daher **SCRYPT**. SCRYPT ist die empfohlene Variante, u
 - [https://www.section.io/engineering-education/what-is-md5/](https://www.section.io/engineering-education/what-is-md5/)
 - [https://www.oreilly.com/library/view/hardening-cisco-routers/0596001665/ch04.html](https://www.oreilly.com/library/view/hardening-cisco-routers/0596001665/ch04.html)
 
-## DNS - Domain Name System
+# DNS - Domain Name System
 <!-- 
 Weitere DNS-Themen zur Bearbeitung:
 - DNSSEC
@@ -147,7 +416,8 @@ Weitere DNS-Themen zur Bearbeitung:
 - DNS over TLS
 - DynDNS
 -->
-### DNS - Quick Facts
+<!-- omit in toc -->
+## DNS - Quick Facts
 
 - **Osi-Schicht:** 7
 - **Ports:**
@@ -158,11 +428,13 @@ Weitere DNS-Themen zur Bearbeitung:
   - [RFC 1034](https://www.rfc-editor.org/rfc/rfc1034)
   - [RFC 1035](https://www.rfc-editor.org/rfc/rfc1035)
 
-### Einleitung - Was ist DNS?
+<!-- omit in toc -->
+## Einleitung - Was ist DNS?
 
 Das **D**omain **N**ame **S**ystem (DNS) ist ein integraler Bestandteil des Internets. Ohne diesen würde das Internet so in der heutigen Form nicht funktionieren. DNS beschreibt die Übersetzung eines Namens wie z.B. `www.wikipedia.org` in die zugehörige IPv4 / IPv6 Adresse `91.198.174.192` / `2620:0:862:ed1a::1`. Um *DNS* auszuführen werden entsprechende DNS-Server eingesetzt. Von diesen gibt es weltweit **mehrere tausende** und sie besitzen unterschiedlichste Funktionen und Aufgaben.
 
-### Die Zeit vor dem DNS
+<!-- omit in toc -->
+## Die Zeit vor dem DNS
 
 Bevor es das DNS gab, zu Zeiten des [ARPANETs](https://de.wikipedia.org/wiki/Arpanet) (Vorgänger des Internets) wurden, wurden Namensauflösungen von **Webseiten** oder einfachen **Computernamen** anhand der sogenannten **Host**-Datei aufgelöst. Die Host-Datei ist eine Datei, welche -auch heute noch- auf dem Betriebssystem des Computers bzw. eines zentralen Computers abgelegt ist. Sie enthält alle Einträge, welche ein Systemadministrator für wichtig hielt einzutragen.
 
@@ -176,7 +448,8 @@ Und genau hier liegt der Knackpunkt. Denn mit der Host-Datei kommen folgende Pro
 
 Diese Probleme zeigten schnell Grenzen der Benutzung der lokalen Host-Datei auf, weshalb ein neues, (de-) zentrales System mit einer besseren Namensordnung entwickelt werden musste. Dies ist als das heutige **Domain Name System** bekannt.
 
-### Die Domain
+<!-- omit in toc -->
+## Die Domain
 
 Ein integraler Bestandteil des Domain Name System ist natürlich die **Domain**. Eine Domain ist ein Bereich, welcher Computernamen verwaltet und diese entsprechend hierarchisch gliedert. Ein wichtiger Bestandsteil einer Domain ist der sogenannte **Domain-Name**.
 
@@ -194,7 +467,7 @@ Die hier aufgelisteten Beispiele werden auch als **Fully Qualified Domain Name**
 Wie bereits angedeutet gibt es unterschiedliche Domain-Arten. Dabei sind die **Second-Level-Domain** (SLD) und **Top-Level-Domain** (TLD) am bekanntesten und immer verwendet, wenn ein Computername aufgerufen wird. 
 
 <!-- omit in toc -->
-#### Top-Level-Domain
+### Top-Level-Domain
 
 Die TLD ist in der DNS-Baum-Hierarchie an zweiter Stelle. Hier eingesetzte Server verwalten Namensbereiche, welche wie "*.de*", "*.org*" oder auch "*.uk*" verwalten. Dabei muss man zwischen zwei Arten von TLDs unterschieden:
 
@@ -231,11 +504,12 @@ Die TLD ist in der DNS-Baum-Hierarchie an zweiter Stelle. Hier eingesetzte Serve
 | ... | ... |
 
 <!-- omit in toc -->
-#### Second-Level-Domain
+### Second-Level-Domain
 
 Die SLD ist in der DNS-Baum-Hierarchie an dritter Stelle. Hier existierende Namensbereiche können von jedem frei erfunden und registriert werden. Wichtig ist jedoch, dass eine SLD unterhalb einer TLD **eindeutig** sein muss. Eine Vergabe von doppelten Namen kann aufzulösende Namen durcheinanderbringen.
 
-### DNS-Zone
+<!-- omit in toc -->
+## DNS-Zone
 
 Eine DNS-Zone ist ein **Verwaltungs-** bzw. **Verantwortungsbereich** eines DNS-Servers. In einer Zone befindet sich mindestens ein DNS-Server. Ein DNS-Server kann zudem auch mehrere Zonen besitzen. Innerhalb jeder Zone existiert die **komplette** Datenbasis für einen bestimmten Bereich des Domänen-Namensraums. 
 
@@ -244,7 +518,6 @@ Die Daten der DNS-Zone wird in einer sogenannte **(DNS-) Zonendatei** lokal auf 
 Die Zonen der Baum-Hierarchie sehen dabei wie folgt aus:
 
 ```mermaid
-%%{init: {"theme": "dark" } }%%
 graph TB
 	subgraph Beispiel
 		direction TB
@@ -261,7 +534,7 @@ graph TB
 ```
 
 <!-- omit in toc -->
-#### Zoneneinträge
+### Zoneneinträge
 
 Jeder einfache DNS-Eintrag innerhalb einer DNS-Zone wird als **Resource Record** bezeichnet. Jeder Resource Record bezieht sich auf einen bestimmten **Record-Type**, welcher bestimmte Informationen enthält.
 
@@ -280,7 +553,7 @@ Die Record-Types sind wie folgt:
 | SOA | Ansprechpartner und Parameter zur abgefragten Zone (Start of Authority) |
 
 <!-- omit in toc -->
-#### DNS-Cluster
+### DNS-Cluster
 
 Damit die Zonen-Dateien auf unterschiedlichen Servern in den unterschiedlichen Domain-Level-Bereichen gleich sind und redundant gespeichert werden, werden Server, die einer gleichen Domain zugeordnet sind, in Clustern zusammengeschlossen. Dies erhöht die Redundanz und vermindert die Ausfallswahrscheinlichkeit. Zudem werden die Zonendateien über die jeweiligen Server entsprechend abgeglichen und aktuell gehalten.
 
@@ -289,7 +562,8 @@ DNS-Server-Cluster werden dabei in zwei Gruppen eingeteilt:
 1. **Primary:** Hier werden die Zonendateien gespeichert, angepasst und modifiziert. Die Primary-DNS-Server sind zudem jene, welche bei einer Namensauflösung zuerst angesprochen werden. Sie teilen ihre Zonendatei mit anderen, in der gleichen Domain befindlichen Primary-Servern.
 2. **Secondary:** Die Secondary-DNS-Server sind dafür da, um die entsprechenden Zonendateien abzuspeichern. Sie dienen ausschließlich als Zonendatei-Backup.
 
-### DNS-Server Arten
+<!-- omit in toc -->
+## DNS-Server Arten
 
 *Den einen* DNS-Server gibt es so nicht, denn es gibt unterschiedliche DNS-Server, die unterschiedliche Aufgaben übernehmen. Jedoch ist zwischen zwei Haupt-DNS-Arten zu unterscheiden:
 
@@ -297,26 +571,26 @@ DNS-Server-Cluster werden dabei in zwei Gruppen eingeteilt:
 2. Nicht-autoritative DNS-Server
 
 <!-- omit in toc -->
-#### Autoritativer DNS-Server
+### Autoritativer DNS-Server
 
 Ein autoritativer DNS-Server speichert alle DNS-Informationen für seine befugte Zone. Das bedeutet, dass dieser die **Endstation** einer DNS-Anfrage ist. **Er besitzt die Informationen, um den jeweiligen DNS-Namen in eine IP-Adresse aufzulösen**. Daher gilt die Kommunikation bzw. die Antwort als **verbindlich** / **gesichert** (autoritativ).
 
 <!-- omit in toc -->
-#### Nicht-autoritativer DNS-Server
+### Nicht-autoritativer DNS-Server
 
 Ein nicht-autoritativer DNS-Server ist **nicht selbst** für die DNS-Zone verantwortlich und bedient sich für die Namensauflösung daher an Dritte (DNS-Server) derer DNR-Einträge (Resource Records). DNS-Einträge, welche er aufgelöst hat, werden dabei für eine bestimmte Zeit (**TTL** → Time to Live) im Cache (RAM) gespeichert des DNS-Servers gespeichert. Da sich die Einträge der ursprünglichen Zonendatei in der Zwischenzeit jedoch ändern kann, gelten die abgefragten Informationen als **nicht gesichert** und daher auch als **nicht-autoritativ**.
 
 Bei dieser Vorgehensweise nimmt der DNS-Server die Rolle eines **Resolvers** ein, weshalb dieser auch als **DNS-Resolver** bezeichnet wird.
 
 <!-- omit in toc -->
-#### Weitere DNS-Server Arten
+### Weitere DNS-Server Arten
 
 **Root-DNS-Server:** Der Root-DNS-Server ist ein **autoritativer** Server, welcher sich um die Root-Zone kümmert. Er besitzt alle Einträge für die TLD-Server weltweit. Ohne diesen wäre das DNS-Netzwerk nicht möglich.
 
 **TLD-DNS-Server:** Der TLD-DNS-Server ist ebenfalls ein **autoritativer** Server, welcher alle Second-Level-Domain-Server / Namen für seine entsprechende Zone besitzt.
 
 <!-- omit in toc -->
-#### DNS-Resolver
+### DNS-Resolver
 
 Ein **Resolver** ist per se kein DNS-Server, sondern vielmehr eine **ogrammschnittstelle**  (Vermittlungsstelle) für Anwendung und DNS. Die Aufgabe des Resolvers ist es, sich mit den entsprechenden autoritativen DNS-Servern auseinanderzusetzen, um die jeweilige IP-Adresse zu bekommen. Dabei besitzt dieser auch zweit Methoden:
 
@@ -332,7 +606,6 @@ Ein **Resolver** ist per se kein DNS-Server, sondern vielmehr eine **ogrammschni
 **Bemerke:** Das Iterative-Verfahren wird kaum für Resolver oder Clients eingesetzt, da diese damit nicht umgehen können. Deshalb wird das Verfahren nur unter DNS-Servern eingesetzt.
 
 ```mermaid
-%%{init: {"theme": "dark" } }%%
 graph TB
 	subgraph Lokaler Rechner
 		direction TB
@@ -347,7 +620,8 @@ graph TB
 	child_ns--6. Antwort-->conf_ns
 ```
 
-### Funktionsweise eines DNS-Lookups
+<!-- omit in toc -->
+## Funktionsweise eines DNS-Lookups
 
 **Bemerke:** Nachfolgender Ausschnitt wurde größtenteils von Wikipedia übernommen!
 
@@ -364,7 +638,6 @@ Angenommen, ein Rechner X (Zur Einfachheit: Alice) möchte eine Verbindung zu `d
 9. Alice kann anschließend mit Bob (`de.wikipedia.org`) eine Kommunikation aufbauen.
 
 ```mermaid
-%%{init: {"theme": "dark" } }%%
 graph LR
 	client[Client]--1. DNS-Query-->local_dns[Konfigurierter DNS]
 	local_dns--2. DNS Query-->root_dns[Root-DNS]
@@ -377,7 +650,8 @@ graph LR
 	client--9. Kommunikationsaufbau-->wikipedia[de.wikipedia.org]
 ```
 
-### Sichtbarkeit
+<!-- omit in toc -->
+## Sichtbarkeit
 
 DNS-Server können einerseits **privat** andererseits **öffentlich** betrieben werden. Im folgenden werden die Unterschiede gezeigt:
 
@@ -388,19 +662,20 @@ DNS-Server können einerseits **privat** andererseits **öffentlich** betrieben 
 | Wird mittels öffentlichen IP-Adressen angesprochen | Besitzt private IP-Adresse |
 | Lösen öffentliche Adressen auf | Lösen private und öffentliche Adressen auf |
 
-### Angriffsvektoren
+<!-- omit in toc -->
+## Angriffsvektoren
 
 Nachfolgend werden zwei Angriffszenarien gezeigt. Es gibt natürlich noch weitere Angriffsmöglichkeiten, als hier dargestellt.
 
 <!-- omit in toc -->
-#### Distributed Denial of Service (DDoS)
+### Distributed Denial of Service (DDoS)
 
 Hier werden meist Botnetzwerke benutzt, um einen DNS-Server mit vielen Anfragen zu fluten und die **Systemressourcen stark zu belasten**, bis dieser, im (aus Angreifersicht) Best-Case abstürzt. Zwar sind vor allem Root-DNS-Server sehr performante DNS-Server, können jedoch bei einem großflächigem Angriff temporär ausfallen. Daher ist es wichtig DNS-Server in **Cluster** zu stecken, um die **Ausfallsicherheit** zu erhöhen.
 
 Ein DDoS-Angriff kann ebenfalls in Verbindung mit anderen Angriffen erfolgen.
 
 <!-- omit in toc -->
-#### DNS-Spoofing - Cache Poisoning
+### DNS-Spoofing - Cache Poisoning
 
 *Cache Poisoning* beschreibt ein Vorgehen, bei welchem der Angreifer versucht dem DNS-Server eine **gefälschte IP-Adresse** für einen DNS-Namen unterzubringen. Dadurch können DNS-Anfragen von unwissenden Clients auf die entsprechende Adresse auf das **Ziel des Hackers** umgeleitet werden. Dieser kann z.B. eine entsprechende Webseite so präparieren, sodass diese täuschend echt zur Originalseite ist. Hier geben Unwissentliche ihre **geheimen Informationen** an, die der Hacker anschließend missbrauchen kann.
 
@@ -415,7 +690,6 @@ Problem ist jedoch, dass der DNS-Server eine **Query-ID** zu seinem Upstream-DNS
 Hat der Angreifer die Query-ID des DNS-Servers erraten, schickt dieser auf die Anfrage des DNS-Servers seine präparierte IP-Adresse. Wenn nun ein User den entsprechenden DNS-Namen eingibt, wird dieser anstatt auf die Originalwebseite auf die gefälschte Webseite des Angreifer weitergeleitet. Hier kann der Angreifer nun die geheimen Daten abgreifen und entsprechend missbrauchen.
 
 ```mermaid
-%%{init: {"theme": "dark" } }%%
 sequenceDiagram
 	actor mallory as Mallory
 	participant client as Client
@@ -439,12 +713,19 @@ sequenceDiagram
 	dns-->>-resolver: IP: 200.15.20.33, Query-ID: 1001
 ```
 
-### Sicherheitserweiterungen
+<!-- 
+Nur für PDF-Print-Version aktivieren, da aus unbekannten Gründen ein Mermaid-Fehler kommt
+Der Mermaid-Fehler ist nicht genau spezifiziert.
+-->
+<!-- <img src="./_resources/DNS_Cache-Poisoning.PNG" width="1000"> -->
+
+<!-- omit in toc -->
+## Sicherheitserweiterungen
 
 **Notiz Stand 07.11.2022:** Aufgrund der Komplexität und Länge der nachfolgenden Themen, wurden diese nur kurz beschrieben. Eine ausführliche Ausarbeitung ist noch geplant.
 
 <!-- omit in toc -->
-#### Transaction Signature (TSIG)
+### Transaction Signature (TSIG)
 
 TSIG beschreibt ein Verfahren, bei welchem die **Authentizität** von kommunizierenden DNS-Server bewahrt werden soll. TSIG wird hauptsächlich zwischen **DNS-Servern** benutzt. Es funktioniert mittels symmetrischer Verschlüsselung. Um TSIG konfigurieren zu können, muss auf den entsprechenden DNS-Server mindestens ein Administrator-Zugriff bereitgestellt sein.
 
@@ -453,25 +734,27 @@ Auf den jeweiligen DNS-Servern muss ein **geteiltes Geheimnis** konfiguriert wer
 Grundsätzlich ist dies ein deutlich einfacheres Verfahren als **DNSSEC**, welches auf **Public-Key-Infrastructure** setzt. Jedoch ist der **Konfigurationsaufwand** bei vielen Servern **sehr hoch**, weshalb der Einsatz von PKI hier ein Vorteil besitzt. TSIG ist in [RFC 2845](https://www.rfc-editor.org/rfc/rfc2845) beschrieben.
 
 <!-- omit in toc -->
-#### DNS over https (DoH)
+### DNS over https (DoH)
 
 Beschreibt die Funktion, wie DNS über das **https-Protokoll** verwendet werden kann, um **Sicherheit und Authentizität** der DNS-Anfragen zu stärken. DoH ist ein [RFC 8484](https://www.rfc-editor.org/rfc/rfc8484.html) beschrieben.
 
 <!-- omit in toc -->
-#### DNS over TLS (DoT)
+### DNS over TLS (DoT)
 
 Beschreibt die Funktion, wie DNS über TLS verwendet werden kann, um **Sicherheit und Authentizität** der DNS-Anfragen zu stärken. Es ist ähnlich zu DNS over https (DoH) und ist in [RFC 8310](https://datatracker.ietf.org/doc/html/rfc8310) und in [RFC 7858](https://datatracker.ietf.org/doc/html/rfc7858) beschrieben.
 
 <!-- omit in toc -->
-#### DNSSEC
+### DNSSEC
 
 Beschreibt eine Reihe von Internetstandards zur Stärkung der DNS-Abfragen in **Authentizität** und **Integrität** der Daten, nicht aber der Server. Es wurde entwickelt, um **DNS-Poisoning-Angriffe** entgegenzuwirken. Für **Vertraulichkeit** ist DNSSEC **nicht** vorgesehen! DNS-Daten werden zudem **nicht verschlüsselt**!
 
-### DNS-Zensur
+<!-- omit in toc -->
+## DNS-Zensur
 
 In verschiedenen Ländern der Welt -so auch in Deutschland- werden ebenfalls DNS-Sperren für bestimmte Websites verhängt. Auch hier könnte man von einem *DNS-Poisoning* reden, da die Einträge entweder auf **andere Webseiten verwiesen** werden oder einfach **gesperrt** werden. Im letzteren Fall wird der abzufragende DNS-Name gegen eine **Sperrliste** (Blacklist) verglichen. Ist der DNS-Name dort enthalten, wird der Zugriff entsprechend **blockiert**. Es existieren jedoch DNS-Service-Provider, die darauf schören **zensurfrei** zu sein.
 
-### Quellen
+<!-- omit in toc -->
+## Quellen
 
 - [https://de.wikipedia.org/wiki/Domain_Name_System](https://de.wikipedia.org/wiki/Domain_Name_System)
 - [https://www.ionos.de/digitalguide/server/knowhow/namensaufloesung-im-netz-was-ist-ein-dns-server/](https://www.ionos.de/digitalguide/server/knowhow/namensaufloesung-im-netz-was-ist-ein-dns-server/)
@@ -487,22 +770,24 @@ In verschiedenen Ländern der Welt -so auch in Deutschland- werden ebenfalls DNS
 - [https://www.ionos.de/digitalguide/server/knowhow/dns-zone/](https://www.ionos.de/digitalguide/server/knowhow/dns-zone/)
 - [https://www.elektronik-kompendium.de/sites/net/1910181.htm](https://www.elektronik-kompendium.de/sites/net/1910181.htm)
 
-## Domain und Domaincontroller
+# Domain und Domaincontroller
 
 ***Hinweis: Der nachfolgende Text entspricht fast 1:1 dem aus der Quelle [https://www.ip-insider.de/was-ist-ein-domaenencontroller-a-626094/](https://www.ip-insider.de/was-ist-ein-domaenencontroller-a-626094/) stammenden Text.***
 
-### Was ist eine Domain?
+<!-- omit in toc -->
+## Was ist eine Domain?
 
 Innerhalb eines Unternehmensnetzwerks gibt es viele Netzwerkressourcen wie Drucker, Server, Anwendungen u.v.m. Um diese Geräte und dessen Benutzern bzw. die Benutzerzugriffe zu verwalten, werden diese zu einem (oder mehreren Netzwerk-) Domains zusammengefasst. Diese Netzwerkdomains kommen in Unternehmensnetzwerken zum Einsatz, um die **Struktur des Unternehmens nachzubilden**. Es handelt sich hierbei um voneinander administrativ **klar abgegrenzte** Netzwerkbereiche, in denen User unterschiedliche Rechte- und Sicherheitsrichtlinien erhalten. Zur Unterscheidung der Domains besitzen diese **eindeutige Namen**.
 
 Dadurch entstehen **zentral verwaltete Sicherheitsbereiche** mit administrierten Ressourcen. Die Netzwerkdomains sind **hierarchisch** strukturiert und verwenden sogenannte "*Domaincontroller (DC)*" für die Zuteilung der Benutzerrechte. Ein Vorteil der Netzwerkdomain ist, dass die verschiedenen Informationen und Richtlinien zu den unterschiedlichen Objekten **nicht mehr lokal** auf den jeweiligen Rechner selbst, sondern **zentral verwaltet werden**. Die Domain sorgt für die Authentisierung und ermöglicht die Umsetzung des Berechtigungskonzepts für Endgeräte und Netzlaufwerke sowie Ressourcen wie Netzwerkdrucker.
 
 <!-- omit in toc -->
-#### Die Struktur einer Domain
+### Die Struktur einer Domain
 
 Die Namenskonvention und Struktur von Domains basieren auf dem "*Domain Name System (DNS)*" (siehe [DNS - Domain Name System](#dns-domain-name-system)). Unterhalb einer Stammdomain lassen sich mehrere untergeordnete Domains in einer **Baumstruktur** anlegen. Die Domainstruktur bezeichnet man daher auch als *Domainbaum*. Alle, einer Stammdomain untergeordneten Domains besitzen in ihren Namen den Namensteil der Stammdomäne.
 
-### Was ist ein Domaincontroller?
+<!-- omit in toc -->
+## Was ist ein Domaincontroller?
 
 Ein Domaincontroller (DC) ist ein Server, der eine Domain uns seiner verschiedenen Ressourcen / Objekte **zentral verwaltet und kontrolliert**. Anwender, die sich an einer Netzwerkdomain anmelden möchten, wenden sich zuerst an den für ihre Domain zuständigen DC.
 
@@ -513,14 +798,14 @@ Je nach Größe und Komplexität des Netzwerk kommen pro Domain ein oder mehrere
 Anwender müssen sich gegenüber dem Controller authentifizieren. Können sie nachweisen, dass sie Mitglied der Domain sind, erhalten sie die entsprechenden Benutzerrechte für beispielsweise bestimmte Verzeichnisse oder Druckerressourcen. Es ist anzumerken, dass es mittlerweile auch Lösungen gibt, die es gestatten, Server als DC zu benutzen, auf denen **Nicht-Windows-Betriebssysteme** wie Linux betrieben werden können. Die Kompatibilität ist jedoch in einigen Bereichen eingeschränkt.
 
 <!-- omit in toc -->
-#### Die Redundanz des Domaincontrollers
+### Die Redundanz des Domaincontrollers
 
 Da der DC eine zentrale Rolle für die User zur Nutzung der Netzwerkressourcen darstellt, gab es von Microsoft frühzeitig entsprechende Redundanzkonzepte. Früher, in den **NT4-Domains**, existierte ein "*Primary Domain Controller (PDC)*" und ein "*Backup Domain Controller (BDC)*". Änderungen waren nur auf dem PDC möglich. Der BDC hielte eine regelmäßig aktualisierte Sicherheitskopie der Daten und ließ sich **bei Bedarf zum Primary-System ernennen**.
 
 Seit Windows 2000 bietet Microsoft das "*Active Directory (AD)*" (bei Linux Samba oder eDirectory) mit der sogenannten "*Multimaster-Replikation*" an. Alle DCs besitzen nun eine beschreibbare Kopie der AD-Datenbank. **Jede Änderung wird automatische an alle anderen DCs repliziert.** Dieser Mechanismus sorgt dafür, dass alle DCs sich steht auf dem **gleichen Informationsstand** befinden. Fällt ein DC aus, hat dies **keinen Informationsverlust** zur Folge und ein anderer DC übernimmt dessen Funktion. Seit 2008 existiert zusätzlich das Konzept eines "*Read Only*"-Domain Controllers.
 
 <!-- omit in toc -->
-#### Rollen des Domaincontrollers innerhalb des Active-Directories
+### Rollen des Domaincontrollers innerhalb des Active-Directories
 
 Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf verschiedene Rollen** annehmen. Das dahinterstehende Konzept nennt sich "*Flexible Single Master Operations*" (FMSOs). Abhängig von der jeweiligen Rolle, existiert diese einmalig pro Domain oder einmalig pro Gesamtstruktur.
 
@@ -531,7 +816,7 @@ Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf v
 - **Domainnamenmaster:** Dieser wird immer dann benötigt, wenn eine **neue Domain in die Gesamtstruktur** aufgenommen werden soll.
 
 <!-- omit in toc -->
-#### Vor- und Nachteile eines Domain-Controllers
+### Vor- und Nachteile eines Domain-Controllers
 
 | Vorteile | Nachteile |
 | --- | --- |
@@ -541,7 +826,8 @@ Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf v
 | Lässt sich gut skalieren und replizieren | Muss sicherheitstechnisch abgeschottet sein |
 | Trägt zu einer verbesserten Netzwerksicherheit bei |  |
 
-### Quellen
+<!-- omit in toc -->
+## Quellen
 
 - [https://de.wikipedia.org/wiki/FSMO](https://de.wikipedia.org/wiki/FSMO)
 - [https://en.wikipedia.org/wiki/Domain_controller_(Windows)](https://en.wikipedia.org/wiki/Domain_controller_(Windows))
@@ -550,13 +836,244 @@ Insgesamt kann ein Domaincontroller innerhalb des Microsoft ADs bis zu **fünf v
 - [https://www.ip-insider.de/was-ist-eine-domaene-netzwerkdomaene-a-626054/](https://www.ip-insider.de/was-ist-eine-domaene-netzwerkdomaene-a-626054/)
 - [https://www.ip-insider.de/was-ist-ein-active-directory-a-626455/](https://www.ip-insider.de/was-ist-ein-active-directory-a-626455/)
 
-## X11
+# DSL - Digital Subscriber Line
+
+DSL (*Digital Subscriber Line*, auf deutsch „Teilnehmerbreitbandanschluss“) bezeichnet eine Reihe von unterschiedlichen DSL-Übertragungsstandards, auch genannt `xDSL`. Im Allgemeinen wird DSL als Synonym für  einen Breitbandanschluss verwendet. Dabei steht die im Hintergrund eingesetzte Technik außen vor. Das Wort `DSL` kommt ursprünglich von ISDN (*Integrated Services Digital Network*), wurde jedoch als alleinstehende Technik mit der Veröffentlichung von HDSL anerkannt, welche als Nachfolger von ISDN gilt.
+DSL setzt, genauso wie ISDN, auf die bereits bestehenden Telefonkabel (Kupferkabel). Somit konnte ein kostspieliger Aufwand umgangen werden, welcher sich aus Kostengründen nicht gelohnt hätte.
+
+<!-- omit in toc -->
+## Anbindung an die Vermittlungsstelle
+
+DSL benutzt, genau wie ISDN, die **Telefonkabel**. ADSL, benutzt für die Datenübertragung **zwei Kupferadernpaare** (4 Adern insgesamt). VDSL benutzt wiederum nur **ein Adernpaar**. Damit die, zur damaligen Zeit noch eingesetzten, Techniken wie ISDN und POTS (*Plain Old Telephone Service*, analoge Telefonleitung) weiterhin funktionieren konnten, wurde (A)DSL mit einer **höheren Frequenz** auf das Telefonkabel gelegt als ISDN und POTS. 
+
+Ein solcher ADSL-Anschluss sah wie folgt aus:
+
+<img src="./_resources/DSL_ADSL_Teilnehmeranschluss.PNG" width="1000">
+
+Heutzutage werden jedoch keine Splitter mehr eingesetzt, da Techniken wie Telefone oder auch Faxgeräte allesamt digitalisiert anstatt analog betrieben werden:
+
+<img src="./_resources/DSL_VDSL_Ohne_Splitter.PNG" width="1000">
+
+<!-- omit in toc -->
+### Authentifizierung
+
+Um die vom Vertrag gebuchten Leistungen zu erhalten, wird meist `PPPoE` (*Point to Point Protocol over Ethernet*) als Einwahlprotokoll verwendet. Hierfür sendet das DSL-Modem mittels PPPoE bestimmte Authentifzierungsdaten an einen Authentifizierungs-Server beim Provider (z.B. Radius). Dabei passieren die Daten den sogenannten `DSL-AC` (*DSL Access  Concentrator*), welcher als **Layer-3 Router** fungiert und die PPPoE-Sessions zwischen Privatkunden und Betreiber routet.
+
+<!-- omit in toc -->
+### DSLAM
+
+Ein `DSLAM` (*DSL Access Multiplexer*) ist das **Gegenstück zum DSL-Modem**. Bei diesem laufen **alle Verbindungen der Privatkunden** zusammen. Die Strecke zwischen DSL-Modem und DSLAM heißt daher auch `Teilnehmeranschluss`. Ein solcher DSLAM ist oftmals in Vermittlungsstellen[^DSL_1], Gebäuden oder im Außenbereich vorzufinden. Ein DSLAM ist vor allem dann in Außenbereichen (Outdoor-DSLAM) oder in Gebäuden vorzufinden, wenn die Leitung zur Vermittlungsstelle für die Techniken (ADSL, ADSL2, VDSL) **zu lang ist** und somit die gebuchte Geschwindigkeit der Kunden nicht zustande kommt oder wenn Glasfasteranbindungen wie `FTTX` (*Fiber tot he X*) benutzt wird. Ein DSLAM **verkürzt somit die Leitungslänge** der Teilnehmeranschlüsse und **verbessert damit die Geschwindigkeit**.
+
+Während auf der einen Seite eines DSLAMs die Teilnehmeranschlüsse an sogenannten `Linecards` angeschlossen sind, ist auf der anderen Seite der DSLAM mit dem Backbone des Netzreibers (Providers) verbunden. Das Backbone-Netzwerk besteht dabei aus **Glasfaser**.
+
+Eine der Aufgaben eines DSLAM ist die Verhandlung der eingesetzten Technik, Frequenz und Geschwindigkeit mit dem DSL-Modem des Kunden. Pro Linecard, also pro Teilnehmeranschluss, ist für den Kunden **ein Profil hinterlegt** mit unterschiedlichen Werten zum gebuchten Kundenvertrag.
+
+Hat sich ein Modem mittels PPPoE authentifiziert, handelt der DSLAM mit dem DSL-Modem die eingesetzte Technik, die minimale und maximale Frequenz als auch die minimale und maximale Bandbreitengeschwindigkeit aus.
+
+<!-- omit in toc -->
+## Kurzübersicht - DSL-Techniken
+
+<!-- omit in toc -->
+### HDSL – High Data Rate DSL
+
+- Erste DSL-Entwicklung für hohe Geschwindigkeiten
+- Hohe Geschwindigkeiten auf langen Strecken ohne zwischengeschalteten Repeater
+- Vorentwicklungen von ADSL, SDSL, etc.
+- HDSL2 als Weiterentwicklung. Jedoch abgelöst durch SDSL
+- Benutzung von zwei Doppeladern
+
+<!-- omit in toc -->
+### SDSL - Symmetric DSL
+
+- Nachfolger von HDSL
+- Benutzung einer einzigen Doppelader für Datenübertragung
+- Besitzt mehrere Techniken wie SHDSL, G.SHDSL und EHDSL
+- Setzt auf gleiche Up- und Downloadrate (=Symmetrisch)
+
+<!-- omit in toc -->
+### ADSL - Asymmetric DSL
+
+- Erste DSL-Technologie für die breite Masse
+  - Dadurch stieg Internetnutzung stark an
+- Bietet asynchrone Donw- und Uploadrate an:
+  - Upload ist niedrig
+  - Download ist hoch
+- Weiterentwicklungen sind ADSL2 und ADSL2+
+- Wurde abgelöst von VDSL
+
+<!-- omit in toc -->
+### VDSL/2 - Vector DSL
+
+- Nachfolger von ADSL
+- Erhöhte Geschwindigkeiten durch erhöhte Frequenzen
+  - Leitungslänge fällt dadurch kürzer aus
+- Erstmalige Umsetzung mit Hybrid-Netz:
+  - Benutzung von Kupfer als Teilnehmeranschluss und Glasfaser als Backbone
+
+<!-- omit in toc -->
+### G.FAST
+
+- DSL-Technik für Gigabit-Geschwindigkeit auf maximal 100 Meter Kupferdoppeladern
+- Nachfolger von VDSL
+
+<!-- omit in toc -->
+### DSL Übersicht
+
+<img src="./_resources/DSL_DSL-Übersicht.PNG" width="600">
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://de.wikipedia.org/wiki/Digital_Subscriber_Line](https://de.wikipedia.org/wiki/Digital_Subscriber_Line)
+- [https://de.wikipedia.org/wiki/Digital_Subscriber_Line_Access_Multiplexer](https://de.wikipedia.org/wiki/Digital_Subscriber_Line_Access_Multiplexer)
+- [https://de.wikipedia.org/wiki/Vermittlungsstelle](https://de.wikipedia.org/wiki/Vermittlungsstelle)
+- [https://www.elektronik-kompendium.de/sites/kom/0305232.htm](https://www.elektronik-kompendium.de/sites/kom/0305232.htm)
+- [https://www.elektronik-kompendium.de/sites/kom/1307281.htm](https://www.elektronik-kompendium.de/sites/kom/1307281.htm)
+- [https://www.elektronik-kompendium.de/sites/kom/0701141.htm](https://www.elektronik-kompendium.de/sites/kom/0701141.htm)
+- [https://www.elektronik-kompendium.de/sites/kom/0305236.htm](https://www.elektronik-kompendium.de/sites/kom/0305236.htm)
+- [https://www.ip-insider.de/was-ist-ein-dslam-digital-subscriber-line-access-multiplexer-a-820375/](https://www.ip-insider.de/was-ist-ein-dslam-digital-subscriber-line-access-multiplexer-a-820375/)
+- [https://netzikon.net/lexikon/d/dslac.html](https://netzikon.net/lexikon/d/dslac.html)
+
+# Flow Control
+
+Innerhalb eines Netzwerks gibt es Geräte, die Daten senden und empfangen. Jedoch kann sich die Geschwindigkeit der gesendeten Daten von Gerät zu Gerät unterscheiden. Übertrifft die Geschwindigkeit des Senders die des Empfängers, so kann es passieren, dass Daten verloren gehen könnten. Damit dies nicht passiert, wird der `Flow-Control`-Mechanismus aus der **zweiten OSI-Schicht** (Sicherungsschicht) mitsamt seinen verfügbaren Protokollen benutzt.
+
+<!-- omit in toc -->
+## Basics
+
+Flow-Control teilt dem Sender, von seitens des Empfängers, mit, wie viele Daten dieser senden kann, sodass der Empfänger nicht überlastet ist. Dier Anzahl der maximal zulässigen Frames, die gleichzeitig gesendet werden können, bestimmt demnach der Empfänger. Diese Anzahl ist auch als `Window` oder `Window Size` bekannt.
+
+Flow-Control stellt zwei Protokolle / Mechanismen bereit, wie die Datenübertragung gesteuert wird:
+
+1. Stop and Wait Protokoll
+2. Sliding Window Protokoll
+
+<!-- omit in toc -->
+## Stop and Wait Protokoll
+
+Das Stop and Wait-Protokoll ist ein **unidirektionales** Protokoll, was bedeutet, dass Daten immer nur in **eine Richtung** gesendet und empfangen werden können. Das Konzept hinter dem Protokoll ist sehr simpel: Nach jedem gesendeten Frame des Senders wartet dieser solange, bis der Empfänger den gesendeten Frame mittels einem `Acknowledgement` (ACK) bestätigt. Danach ist der Sender in der Lage, den nächsten Frame zu schicken. Die Kommunikation läuft demnach wie folgt ab:
+
+![](./_resources/Flow-Control_Stop-and-Wait.PNG)
+
+<!-- omit in toc -->
+### Probleme
+
+Diese Form des Stop and Wait Protokoll besitzt jedoch ein paar Probleme:
+
+1. **Datenübertragungsfehler des Senders**: Kommen zu übermittelnde Daten des Senders am Empfänger nicht an, so können Sender und Empfänger in einer endlosen Warteschleife feststecken bleiben.
+   1. Der Sender wartet unendlich lange auf das `ACK` des Empfängers.
+   2. Der Empfänger wartet unendlich lange auf die Daten des Senders.
+2. **Bestätigungsfehler des Empfängers**: Sendet der Empfänger ein `ACK`, welches niemals beim Sender ankommen wird, so wartet der Sender unendliche lange auf das `ACK` des Empfängers.
+3. **Verspätetes ACK**: Wird ein bestimmter `ACK-Timeout`, welcher beim Sender konfiguriert ist, überschritten, so kann der Sender ein verspätetes ACK misinterpretieren und somit einen falschen Frame als `ACK` kennzeichnen.
+
+<!-- omit in toc -->
+### Stop and Wait ARQ (Automatic Repeat Request)
+
+Der *Stop and Wait ARQ-Mechanismus* erweitert das Konzept des primitiven Stop and Wait-Mechnismus durch einen **Timeout und Sequenznummern**. Die Funktion des vorher erklärten Stop and Wait Mechanismus bleibt fast unverändert. Jedoch wird nach dem Senden der Daten von der Seite des Senders ein spezifischer Timer gesetzt. Erhält der Sender kein ACK des Empfängers in der vorgegebenen Zeit, so sendet der Sender nach Ablauf des Timers den Frame erneut:
+
+![](./_resources/Flow-Control_Stop-and-Wait-ARQ.PNG)
+
+Damit löst Stop and Wait ARQ die Probleme 1. und 2. vom primitiven Stop and Wait Protokoll. Beim dritten Problem, adressiert in d) der obigen Abbildung, kann es jedoch passieren, dass das Timeout-Interval des Senders so kurz ist, sodass `ACK`-Nachrichten des Empfängers immer verspätet ankommen. Passiert dies, so versucht das Protokoll nach mehreren Übertragungsversuchen den Timeout anhand der in der Zeit ankommenden `ACK`-Nachrichten anzupassen. Damit sollen die verspäteten ACK-Nachrichten wieder erfolgreich dem Sender zugestellt werden.
+
+<!-- omit in toc -->
+## Effizienzprobleme
+
+Zwar lassen sich die Probleme von abhanden gekommene oder korrupte Daten- und ACK-Frames mittels des Stop and Wait ARQ-Protokolls lösen, jedoch ist dies nicht sonderlich effizient. Dies ist dadurch geschuldet, dass der Sender immer auf ein `ACK` des Empfängers warten muss, bis der Sender einen neuen Frame schicken kann. Das ist Netzen mit niedrigem Datenverkehr zwar in Ordnung, bei hohem Datenverkehr jedoch von Nachteil, da Daten nur über eine begrenzte Geschwindigkeit gesendet und empfangen werden können.
+
+Um die Effizienz zu steigern wird z.B. das `Sliding Window`-Protokoll eingesetzt.
+
+<!-- omit in toc -->
+## Sliding Window Protokoll
+
+Das `Sliding Window` Protokoll wird für **erhöhten Netzwerkverkehr** benutzt. Anders als das Stop and Wait Protokoll agiert das Sliding Window Protokoll **bidirektional**. Das bedeutet, es kann **gleichzeitig** senden und empfangen. Diese bidirektionale Kommunikation funktioniert, indem die `Window-Size` der maximal möglich zu sendenden Pakete erhöht wird. Die Window-Size wird dabei vom Empfänger bestimmt. Er gibt an, wie viele Pakete er empfangen kann.
+
+<!-- omit in toc -->
+### Kommunikationsablauf
+
+1. Zuerst bestimmt der Sender, wie viele Frames er versenden möchte. Für dieses Beispiel möchte der Sender `11` Frames versenden. 
+2. Im Kommunikationsaufbau zwischen Sender und Empfänger bestimmt der Empfänger die `Window-Size` und teilt diese dem Sender mit. In diesem Beispiel ist die festgelegte `Window-Size` des Empfängers auf `4` Frames begrenzt. Das bedeutet, dass der Sender `4` Frames parallel versenden kann.
+3. Der Sender verschickt darauf die ersten vier Frames (Frame `0` bis Frame `3`) an den Empfänger.
+4. Sobald der Empfänger einen dieser vier Frames erhalten hat, schickt dieser ein `ACK` für den entsprechenden Frame (Sequenznummer) zurück an den Sender.
+5. Erhält der Sender das `ACK` vom Empfänger *verschiebt* (slided) sich das Fenster um einen Frame nach hinten. Nun kann Frame `5` versendet werden.
+6. Erhält der Empfänger nun den weiteren Frame (Frame `2`), so schickt dieser wieder ein `ACK` für den entsprechenden Frame zurück an den Sender.
+7. Der Sender nimmt dieses `ACK` entgegen und verschiebt sein Fenster um eine weitere Stelle nach hinten. Nun kann Frame `6` versendet werden.
+
+Da sich das Fenster pro erhaltenes `ACK` beim Sender immer um **einen weiteren Frame** nach hinten verschiebt, heißt dieses Verfahren `Sliding Window` Protokoll.
+
+<img src="./_resources/Flow-Control_Sliding-Window.PNG" width="800">
+
+Auch bei diesem Protokoll können Fehler auftreten wie:
+
+- Korruptes oder verlorenes `ACK`
+- Korrupter oder verlorener Daten-Frame
+
+Um diese Probleme zu vermeiden, werden die folgenden beiden Verfahren benutzt:
+
+1. Go-Back-N ARQ
+2. Selective Repeat ARQ
+
+<!-- omit in toc -->
+### Go-Back-N ARQ
+
+Go-Back-N ARQ ist **ein Mechanismus zur Fehlerbehebung** von verlorengegangenen oder korrupten `ACKs` / Daten-Frames und bedient sich somit am Slding-Window Protokoll. Als Beispiel zur Funktionsbeschreibung dient der bereits beschriebene Kommunikationsablauf.
+
+Der Sender möchte `11` Frames übermitteln. Die Window-Size beträgt hierbei erneut `4` Frames.
+
+1. Der Sender übermittelt die Frames `0`, `1`, `2`, und `3` nacheinander.
+2. Der Empfänger bestätigt Frame `0` mit einem `ACK`.
+3. Der Sender empfängt das `ACK` für den Frame `0`. Das Window verschiebt sich um einen weiteren Frame. Der Sender sendet nun den Datenframe `4` an den Empfänger.
+4. Der Empfänger erhält nun Datenframe `1` und sendet ein weiteres `ACK` zurück an den Sender.
+5. Der Sender nimmt das `ACK` für den Datenframe `1` entgegen und verschiebt das Window um einen weiteren Frame nach hinten. Nun wird Datenframe `5` versendet.
+6. Der Empfänger erhält als nächstes Datenframe `2` und bestätigt diesen mit einem `ACK` an den Sender zurück.
+7. Nun passiert es, dass der Sender dieses `ACK` für den Datenframe `2` nicht bekommt.
+8. Nachdem ein spezifischer Timer ausgelaufen ist ermittelt der Sender den letzten Datenframe, den er versandt hatte und von dem er noch keine Bestätigung erhalten hat. Er geht nun, dank des Go-Back-N ARQ Mechanismus bis zum Datenframe `2` zurück (N=Datenframe 2) und überträgt ab hier nochmal alle im aktuellen Fenster enthaltene Datenframes erneut an den Empfänger. Dies schließt Datenframe `4` und 
+5, welche bereits durch die `ACK`-Bestätigung der Datenframes `1` und `2` versandt wurden, mit ein.
+9. Erhält der Empfänger die Datenframes des aktuellen Windows (`2`, `3`, `4` und `5`), so verwirft er die erhaltenen Datenframes `4` und `5` und ersetzt diese durch die neuen Frames.
+10.  Der Empfänger bestätigt beim Empfang des Datenframes `2` diesen mit einem `ACK` und sendet dieses zurück an den Sender.
+11. Der Sender erhält dieses Mal das `ACK` für den Datenframe `2` und verschiebt sein Window um einen weiteren Frame. Nun kann der Sender einen weiteren Datenframe verschicken.
+
+<img src="./_resources/Flow-Control_Sliding-Window-Go-Back-N-ARQ.PNG" width="800">
+
+Einfach gesagt: Sobald der Sender ein `ACK` für einen bestimmten Frame nicht mehr bekommen hat, geht dieser bis zu diesem Frame innerhalb des Windows zurück (`N`) und sendet von dort an alle nachfolgenden, im Window enthaltene Frames erneut.
+
+Zwar ist diese Herangehensweise für die Behebung einer fehlerhaften Übertragung schon weitaus besser als das Stop and Wait ARQ Verfahren, jedoch kann auch hier eine erhöhte Netzwerklast entstehen. Vor allem dann, wenn es **mehrere fehlerhafte Übertragungen** gibt und somit viele Pakete erneut übertragen werden müssen. Um das zu verhindern, wird auch gerne `Selective Repeat ARQ` für **Hochgeschwindigkeitsumgebungen** benutzt.
+
+<!-- omit in toc -->
+### Selective Repeat ARQ
+
+Auch der `Selective Repeat ARQ`-Mechanismus wird, wie der Go-Back-N ARQ Mechanismus zur Fehlerbehebung bei fehlerhaften oder verlorenen `ACK`-/ Datenframes benutzt. Auch hier wird wieder das Beispiel aus dem Kapitel [Kommunikationsablauf](#kommunikationsablauf) benutzt.
+
+Der Sender möchte `11` Frames übermitteln. Die Window-Size beträgt hierbei erneut `4` Frames.
+
+Die Schritte 1 bis 6 im Kapitel [Go-Back-N ARQ](#go-back-n-arq) werden wiederholt. Nun passiert es, dass der `ACK`-Frame des Empfängers für den Datenframe `2` **nicht** beim Sender ankommt. Anstatt wie beim Go-Back-N ARQ Mechanismus alle Datenframes des aktuellen Windows erneut zu schicken, wird **nur der fehlende Datenframe** erneut gesendet. Damit der Sender herausbekommen kann, dass ausschließlich Datenframe `2` nicht empfangen wurde, existieren zwei verschiedene Möglichkeiten:
+
+1. **Geht der Datenframe vom Sender zum Empfänger verloren**: Der Empfänger sendet mit dem nächsten Frame (Frame `3`), den er vom Sender enthält ein *Negatives ACK* (`NACK`) zurück, in welchem steht, dass der Datenframe `2` noch nicht angekommen ist. Daraufhin ist dem Sender bekannt, welcher Datenframe noch nicht angekommen ist und übermittelt diesen erneut.
+2. **Geht der ACK-Frame vom Empfänger zum Sender verloren**: Bekommt der Sender innerhalb einer **spezifischen vorgegeben Zeit** keine `ACK`-Antwort auch den Datenframe `2` (Timeout), so sendet er diesen erneut.
+
+<img src="./_resources/Flow-Control_Sliding-Window-Selective-Repeat-ARQ.PNG" width="800">
+
+Der Selective-Repeat ARQ Mechanismus ist nochmals etwas besser als der Go-Back-N ARQ, da dieser bei einem verlorenen oder korrupten `ACK`- / Datenframe **nicht alle**, im Window enthaltenen, Datenframes erneut geschickt werden müssen, sondern **nur das Fehlende**. Dies belastet das Netzwerk, vor allem bei einem erhöhten Fehleraufkommen, weniger.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.youtube.com/watch?v=n09DfvemnTQ](https://www.youtube.com/watch?v=n09DfvemnTQ)
+- [https://www.youtube.com/watch?v=YdkksvhkQGQ](https://www.youtube.com/watch?v=YdkksvhkQGQ)
+- [https://www.youtube.com/watch?v=LnbvhoxHn8M](https://www.youtube.com/watch?v=LnbvhoxHn8M)
+- [https://www.youtube.com/watch?v=QD3oCelHJ20](https://www.youtube.com/watch?v=QD3oCelHJ20)
+- [https://www.youtube.com/watch?v=WfIhQ3o2xow](https://www.youtube.com/watch?v=WfIhQ3o2xow)
+- [https://www.youtube.com/watch?v=cqPWjo2iLgk](https://www.youtube.com/watch?v=cqPWjo2iLgk)
+- [https://www.youtube.com/watch?v=PHcIuxvLSzc](https://www.youtube.com/watch?v=PHcIuxvLSzc)
+- [https://afteracademy.com/blog/what-is-flow-control-in-networking](https://afteracademy.com/blog/what-is-flow-control-in-networking)
+
+# X11
 
 *X11* ist ein Protokoll-Stack bestehend aus unterschiedlichen Komponenten. *X* bezieht sich hierbei auf das *X-Window-System*, welches in den meisten Linux-Distributionen vorkommt und dazu benutzt wird, primitive Grahpical User Interfaces (GUIs) zu erstellen. Die *11* bedeutet, dass sich das Protokoll in der elften Version befindet, welche seit dem Jahr **1987** besteht.
 
-### X Window System
+<!-- omit in toc -->
+## X Window System
 
-Das *X Window System* ist ein Framework, um primitive GUIs zu erstellen, welche meist nicht mehr als aus einem Display-Device<sup>1</sup> und Canvas<sup>2</sup> besteht und man mit diesem per Maus und Tastatur interagieren kann. Jedoch ist es für das X Window System nicht möglich komplexere Inhalte wie Buttons zu generieren. Hierfür werden meist Toolkits wie [GTK](https://www.gtk.org/) benutzt, um entsprechende komplexe GUI-Darstellung zu erstellen.
+Das *X Window System* ist ein Framework, um primitive GUIs zu erstellen, welche meist nicht mehr als aus einem Display-Device[^X11_1] und Canvas[^X11_2] besteht und man mit diesem per Maus und Tastatur interagieren kann. Jedoch ist es für das X Window System nicht möglich komplexere Inhalte wie Buttons zu generieren. Hierfür werden meist Toolkits wie [GTK](https://www.gtk.org/) benutzt, um entsprechende komplexe GUI-Darstellung zu erstellen.
 
 X arbeitet in einem transparenten **Client-Server-Modell**, wodurch es an Unabhängigkeit vom eingesetzten Betriebssystem und GUI-Toolkits ist. Der Client ist das **Frontend** des Systems. Es erstellt die primitiven GUI-Elemente, welche durch die entsprechend eingesetzten Toolkits verschönert werden können. Es arbeitet komplett isoliert vom Server, was bedeutet, dass der Stil sich pro eingesetzten Client / Toolkit unterscheiden kann. Der Server ist das **Backend** des Systems. Es kümmert sich um die Anfragen des Clients, der Bereitstellung der Ressourcen und der Kommunikation mit dem Linux-Kernel. Auch dieser kann isoliert vom Frontend benutzt werden.
 
@@ -564,25 +1081,23 @@ Das X Window System ist **netzwerkfähig**, was bedeutet, dass es nicht nur loka
 
 ![X_Remote_Server_Communication](./_resources/X_Remote_Server_Communication.PNG)
 
-### (Sicherheits-) Probleme
+<!-- omit in toc -->
+## (Sicherheits-) Probleme
 
 - Der X11-Standard ist bereits veraltet und dennoch großer Beliebtheit. Dennoch gibt es bereits ähnliche Programme wie [Wayland](https://wayland.freedesktop.org/docs/html/), welche deutlich effizienter laufen.
 - Die netzwerkbasierte Kommunikation erfolgt **unverschlüsselt**. Dies macht die Benutzung von X11 über Netzwerk sehr anfällig für MiTM-Angriffe.
 - X11 liefert viel Programmcode mit sich und bläst das OS ggf. unnötig auf.
 - Viele Prozesse von X11 laufen mit **root-Berechtigungen**. Ein kleiner Fehler im Programmcode kann es erlauben sämtliche Kontrolle des Prozesses zu übernehmen und schadhaften Code als root auszuführen.
 
-### X11 Forwarding
+<!-- omit in toc -->
+## X11 Forwarding
 
 Da X11 **unverschlüsselt** kommuniziert, wird SSH oftmals als Tunnel verwendet, um X11 benutzen zu können. Dieses Vorgehen ist auch bekannt als *X11 Forwarding*. Durch die verschlüsselte SSH-Kommunikation ist es Angreifern nicht möglich auf die Daten während der Kommunikation zuzugreifen.
 
 X11 Forwarding könnte man auch als *Linuxartiges RDP* bezeichnen. Da auf den meisten unixbasierten Produktiv-Servern in einem Unternehmensnetzwerk sowieso keine GUI vorhanden ist, kann in der SSH-Konfiguration (sshd_config) das X11 Forwarding **deaktiviert** werden.
 
-### Fußnoten
-
-- <sup>1</sup> Hiermit sind nicht unbedingt Displays als Hardware gemeint. Gemeint können auch virtuelle Desktops sein.
-- <sup>2</sup> Canvas ist bei Computern ein Container, welcher eine Vielzahl an unterschiedlichen Elemente beinhalten kann.
-
-### Quellen
+<!-- omit in toc -->
+## Quellen
 
 - [https://goteleport.com/blog/x11-forwarding/](https://goteleport.com/blog/x11-forwarding/)
 - [https://security.stackexchange.com/questions/4641/why-are-people-saying-that-the-x-window-system-is-not-secure](https://security.stackexchange.com/questions/4641/why-are-people-saying-that-the-x-window-system-is-not-secure)
@@ -590,3 +1105,13 @@ X11 Forwarding könnte man auch als *Linuxartiges RDP* bezeichnen. Da auf den me
 - [https://www.baeldung.com/linux/x11](https://www.baeldung.com/linux/x11)
 - [https://unix.stackexchange.com/questions/276168/what-is-x11-exactly](https://unix.stackexchange.com/questions/276168/what-is-x11-exactly)
 - [https://en.wikipedia.org/wiki/X_Window_System](https://en.wikipedia.org/wiki/X_Window_System)
+
+# Fußnotizen
+
+[^CPS1]: Ein bestimmter oder unbestimmter Wert, welcher als zusätzlicher Sicherheitsfaktor mit in die Passwortverschlüsselung genommen wird.
+
+[^DSL_1]: Eine Vermittlungsstelle ist ein Knotenpunkt eines Nachrichtennetztes, der die wahlweise Herstellung von Nachrichtenverbindungen ermöglicht.
+
+[^X11_1]: Hiermit sind nicht unbedingt Displays als Hardware gemeint. Gemeint können auch virtuelle Desktops sein.
+
+[^X11_2]: Canvas ist bei Computern ein Container, welcher eine Vielzahl an unterschiedlichen Elemente beinhalten kann.
