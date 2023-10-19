@@ -6,10 +6,10 @@ Dieses Markdown-Dokument soll verschiedene IT-Themen zusammenfassen, die ich hin
 <!-- omit in toc -->
 ## Disclaimer
 
-Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://code.visualstudio.com/) mit diveresen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen! Außerdem werden für Diagramme **mermaid** benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt.
+Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://code.visualstudio.com/) mit diveresen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. ~~Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen!~~ Fußnoten werden mittlerweile nach dem [Markdown-Standard für Fußnoten](https://www.markdownguide.org/extended-syntax/#footnotes) eingesetzt. Dabei wird auf das Plugin [Markdown Footnotes](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-footnotes) in VSCode aufgebaut. Außerdem werden für Diagramme [Mermaid.js](https://mermaid.js.org/intro/getting-started.html) benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt.
 
 <!-- omit in toc -->
-### Benutze VSCode Plugins
+### Benutzte VSCode Plugins
 
 - [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 - [Markdown PDF](https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf)
@@ -27,8 +27,9 @@ Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://cod
 - [Domain und Domaincontroller](#domain-und-domaincontroller)
 - [DSL - Digital Subscriber Line](#dsl---digital-subscriber-line)
 - [Flow Control](#flow-control)
+- [FTP - File Transfer Protocol](#ftp---file-transfer-protocol)
+- [LLDP - Link Layer Discovery Protokoll](#lldp---link-layer-discovery-protokoll)
 - [X11](#x11)
-- [Fußnotizen](#fußnotizen)
 
 # APN - Access Point Name
 
@@ -390,7 +391,7 @@ Das **Secret**-Kommando löst das ursprüngliche **Password**-Kommando ab. Aus h
 <!-- omit in toc -->
 ## Secret-Verschlüsselungstypen erklärt
 
-Generell wird **abgeraten** andere Verschlüsselungstypen, die **nicht** den oben genannten entsprechen, für Cisco-Geräte **weiter einzusetzen**. **MD5** wird zwar mit einem **zusätzlichem Salt[^CPS1]** versehen, ist dennoch weiterhin ein schnell zu berechenbarer Hash-Algorithmus. Auch hier gibt es bereits ein paar Programme, welche es schaffen MD5-Hashes umzukehren.
+Generell wird **abgeraten** andere Verschlüsselungstypen, die **nicht** den oben genannten entsprechen, für Cisco-Geräte **weiter einzusetzen**. **MD5** wird zwar mit einem **zusätzlichem Salt[^1]** versehen, ist dennoch weiterhin ein schnell zu berechenbarer Hash-Algorithmus. Auch hier gibt es bereits ein paar Programme, welche es schaffen MD5-Hashes umzukehren.
 
 Deswegen und daher, dass MD5 bereits im Jahr **2008** von der IETF (Internet Engineering Task Force) als **unsicher** begutachtet wurde, wird auch davon **abgeraten**, MD5 weiter als Passwort-Hash einzusetzen. MD5 sollte **nur dann** eingesetzt werden, wenn es **keinen weiteren verfügbaren Hashalgorithmus** zur Verfügung steht. Auch beim sichereren PBKDF2-Hashalgorithmus scheiden sich in der Sicherheit der Verwendung die Gemüter, da es, je nach **Stärke der Verschlüsselung** schneller oder langsamer mittels eines **Bruteforce-Angriffs** entschlüsselt werden kann. Daher wird auch davon abgeraten PBKDF2 zu benutzen.
 
@@ -862,7 +863,7 @@ Um die vom Vertrag gebuchten Leistungen zu erhalten, wird meist `PPPoE` (*Point 
 <!-- omit in toc -->
 ### DSLAM
 
-Ein `DSLAM` (*DSL Access Multiplexer*) ist das **Gegenstück zum DSL-Modem**. Bei diesem laufen **alle Verbindungen der Privatkunden** zusammen. Die Strecke zwischen DSL-Modem und DSLAM heißt daher auch `Teilnehmeranschluss`. Ein solcher DSLAM ist oftmals in Vermittlungsstellen[^DSL_1], Gebäuden oder im Außenbereich vorzufinden. Ein DSLAM ist vor allem dann in Außenbereichen (Outdoor-DSLAM) oder in Gebäuden vorzufinden, wenn die Leitung zur Vermittlungsstelle für die Techniken (ADSL, ADSL2, VDSL) **zu lang ist** und somit die gebuchte Geschwindigkeit der Kunden nicht zustande kommt oder wenn Glasfasteranbindungen wie `FTTX` (*Fiber tot he X*) benutzt wird. Ein DSLAM **verkürzt somit die Leitungslänge** der Teilnehmeranschlüsse und **verbessert damit die Geschwindigkeit**.
+Ein `DSLAM` (*DSL Access Multiplexer*) ist das **Gegenstück zum DSL-Modem**. Bei diesem laufen **alle Verbindungen der Privatkunden** zusammen. Die Strecke zwischen DSL-Modem und DSLAM heißt daher auch `Teilnehmeranschluss`. Ein solcher DSLAM ist oftmals in Vermittlungsstellen[^2], Gebäuden oder im Außenbereich vorzufinden. Ein DSLAM ist vor allem dann in Außenbereichen (Outdoor-DSLAM) oder in Gebäuden vorzufinden, wenn die Leitung zur Vermittlungsstelle für die Techniken (ADSL, ADSL2, VDSL) **zu lang ist** und somit die gebuchte Geschwindigkeit der Kunden nicht zustande kommt oder wenn Glasfasteranbindungen wie `FTTX` (*Fiber tot he X*) benutzt wird. Ein DSLAM **verkürzt somit die Leitungslänge** der Teilnehmeranschlüsse und **verbessert damit die Geschwindigkeit**.
 
 Während auf der einen Seite eines DSLAMs die Teilnehmeranschlüsse an sogenannten `Linecards` angeschlossen sind, ist auf der anderen Seite der DSLAM mit dem Backbone des Netzreibers (Providers) verbunden. Das Backbone-Netzwerk besteht dabei aus **Glasfaser**.
 
@@ -933,6 +934,8 @@ Hat sich ein Modem mittels PPPoE authentifiziert, handelt der DSLAM mit dem DSL-
 - [https://www.elektronik-kompendium.de/sites/kom/0305236.htm](https://www.elektronik-kompendium.de/sites/kom/0305236.htm)
 - [https://www.ip-insider.de/was-ist-ein-dslam-digital-subscriber-line-access-multiplexer-a-820375/](https://www.ip-insider.de/was-ist-ein-dslam-digital-subscriber-line-access-multiplexer-a-820375/)
 - [https://netzikon.net/lexikon/d/dslac.html](https://netzikon.net/lexikon/d/dslac.html)
+
+
 
 # Flow Control
 
@@ -1066,6 +1069,182 @@ Der Selective-Repeat ARQ Mechanismus ist nochmals etwas besser als der Go-Back-N
 - [https://www.youtube.com/watch?v=PHcIuxvLSzc](https://www.youtube.com/watch?v=PHcIuxvLSzc)
 - [https://afteracademy.com/blog/what-is-flow-control-in-networking](https://afteracademy.com/blog/what-is-flow-control-in-networking)
 
+
+
+# FTP - File Transfer Protocol
+
+Das File Transfer Protokoll (FTP) ist eines der ältesten entwickelten Protokolle in der digitalen Kommunikationstechnik. Entwickelt wurde es im Jahr 1974 und wurde 1985 im [RFC 959](https://datatracker.ietf.org/doc/html/rfc959) spezifiziert. Damit ist es sogar älter als das OSI-Modell, welches erst im Jahr 1983 standardisiert wurde. Dies bringt jedoch die ein oder anderen Probleme mit sich, welche im Nachhinein erklärt werden.
+
+FTP wird zum Übertragen von verschiedenen Dateien im Up- oder Download benutzt. Oftmals kommt es bei Webprovidern oder auch Serverprovidern zum Einsatz, welche es ermöglichen, HTML-Dateien und weitere benötigte Dateien auf den jeweiligen Webserver zu übertragen.
+
+<!-- omit in toc -->
+## Funktionsweise von FTP
+
+FTP ist ein Schicht-7-Protokoll (Anwendungsschicht), welches ausschließlich **TCP** als Übertragungsprotokoll benutzt. Somit ist es **rein verbindungsorientiert**. FTP besitzt standardmäßig zwei Ports:
+
+1. **Port 20 - Datenkanal:** Über diesen Port werden die jeweiligen Dateien übertragen. Dieser Port wird jedoch nicht immer für die Datenkommunikation verwendet (siehe aktives und passives FTP)
+2. **Port 21 - Steuerkanal:** Über diesen Port werden die jeweiligen FTP-Kommandos und die Statusnachrichten gesendet.
+
+Zur Zeit der Entwicklung konnte man FTP nur für den Up- und Download von Dateien benutzen. In den Jahren ist das Protokoll jedoch deutlich gewachsen und es sind heutzutage weitaus mehr Kommandos vorhanden. Somit sind z.B. auch folgende Kommandos heute benutzbar:
+
+- Datei umbenennen
+- Datei löschen
+- Nutzerauthentifizierung
+- Transfer neustarten
+- etc.
+
+FTP besitzt heutzutage zwei Operationsmodi:
+
+1. Aktives FTP
+2. Passives FTP
+
+<!-- omit in toc -->
+### Aktives FTP (Datenkanal aus Client-Seite)
+
+Im aktiven FTP-Modus initiiert der Client die Verbindung von einem zufälligen Port (n, Steuerkanal) aus, welcher größer als 1023[^3] ist und verbindet sich dabei mit dem Port 21 (standardisierter Steuerkanal-Port) des Servers. Daraufhin eröffnet der Client einen weiteren Port, welcher um eine Einheit größer ist als der zufällig initiierte Steuerport (n+1, Datenkanal). Diesen Port übermittelt der Client über den Steuerkanal an den Server. Anschließend horcht der Client auf dem Datenport auf eingehenden Traffic. Sobald der Server die Anfrage des Clients auf seinem Steuerkanal-Port 21 entgegengenommen hat und zusätzlich den Datenkanal-Port des Clients kennt, initiiert dieser von seinem Datenkanal-Port 20 eine Verbindung auf den Datenkanal-Port n+1 des Clients. Nachdem der Client die Verbindung vom Server auf seinem Datenkanal n+1 empfangen hat, sendet dieser ein Acknowledgement (ACK) an den Server auf dessen Port 20 zurück. Dadurch entsteht eine erfolgreiche aktive FTP-Verbindung
+
+```mermaid
+sequenceDiagram
+    box Client
+        participant client_cmd as TCP-1026 Command
+        participant client_data as TCP-1027 Data
+    end
+    box Server
+        participant server_cmd as TCP-21 Command
+        participant server_data as TCP-20 Data
+    end
+    client_cmd ->> server_cmd: 1
+    server_cmd ->> client_cmd: 2
+    server_data ->> client_data: 3
+    client_data ->> server_data: 4
+```
+
+Schaut man sich die Abbildung an, so läuft die Kommunikation folgendermaßen ab:
+
+1. Der Client initiiert den Steuerkanal auf dem Port 1026. Gleichzeitig eröffnet dieser den Datenkanal auf Port 1027 und sendet eine Anfrage mitsamt Datenkanal an den Server.
+2. Der Server antwortet mit einem `ACK` auf die Initiierung des Clients.
+3. Der Server verbindet sich von seinem Datenkanal-Port `20` auf den vom Client mitgeschickten Datenkanal-Port `1027`.
+4. Der Client antwortet mit einem `ACK`.
+5. Die Verbindung ist nun aufgebaut.
+
+Dies ist die ursprüngliche Form von FTP. Jedoch funktioniert diese in den meisten Fällen heutzutage nicht mehr. Das liegt daran, dass die meisten Clients heute hinter einer Firewall bzw. einem NAT-Gerät sitzen. Aus der Sicht des Clients bzw. der Firewall initiiert in Schritt 3 der Server eine Verbindung zum Client. Dies wird von den meisten Firewalls und NAT-Geräten jedoch geblockt. Um dies zu umgehen wurde **passives FTP** entwickelt.
+
+<!-- omit in toc -->
+### Passives FTP (Datenakanl aus Server-Seite)
+
+Passives FTP versucht das Problem mit der Firewall vom aktiven FTP insofern zu vermeiden, dass der Client **beide Verbindungen** für den Steuer- und Datenkanal aufbaut. Dabei initiiert der Client wie beim aktiven FTP zuerst einen Steuerkanal-Port (n < 1023) und versucht sich mit dem Port 21 des Servers verbinden. Anstatt seinen Datenkanal-Port n+1 mitzuteilen, sendet er das Kommando `PASV`, welches dem Server mitteilt, dass der FTP-Verbindungsaufbau im **passiven Modus** aufgebaut wird. Daraufhin öffnet der Server einen **zufälligen** Datenkanal-Port (`p` < 1023) und sendet diesen zusammen mit einem `ACK` an den Client zurück. Der Client öffnet nun einen Datenkanal-Port n+1 und verbindet sich mit dem mitgeschickten Port `p` des Servers. Der Server bestätigt diesen Verbindungsaufbau mit einem `ACK`.
+
+```mermaid
+sequenceDiagram
+    box Server
+        participant server_cmd as TCP-21 Command
+        participant server_data1 as TCP-20 Data
+        participant server_data2 as TCP-2024 Data
+    end
+    box Client
+        participant client_cmd as TCP-1026 Command
+        participant client_data as TCP-1027 Data
+    end
+    client_cmd ->> server_cmd: 1
+    server_cmd ->> client_cmd: 2
+    client_data ->> server_data2: 3
+    server_data2 ->> client_data: 4
+```
+
+Schaut man sich die Kommunikation an, so läuft der Verbindungsaufbau folgendermaßen ab:
+
+1. Der Client initiiert seinen Steuerkanal auf Port `1026` und übermittelt das `PASV`-Kommando an den Steuerkanal-Port `21` des Servers.
+2. Der Server nimmt das `PASV`-Kommando des Clients entgegen, eröffnet einen Datenkanal auf Port `2024` und übermittelt diesen an den Client.
+3. Der Client eröffnet einen Datenkanal auf Port `1027` und verbindet sich mit dem Datenkanal-Port `2024` des Servers.
+4. Der Server sendet zur Bestätigung des aufgebauten Datenkanals ein `ACK`.
+5. Die Verbindung wurde erfolgreich aufgebaut
+
+Zwar löst passives FTP das Problem mit der clientseitigen Firewall, erschließt jedoch ein **neues Problem** auf der Seite des Servers. Dieses Problem beschreibt, dass quasi alle höherwertigen Ports in der Firewall auf der Serverseite **offen** sein müssen, damit der Server die Verbindung des Datenkanals vom Client empfangen kann. Dies ist ein **erhöhtes Sicherheitsrisiko**, da hierdurch sämtliche Ports offenstehen müssen. Glücklicherweise nehmen einige Programme dieses Problem entgegen und versuchen entsprechende Maßnahmen dagegen zu erstellen. Z.B. erstellt der FTP-Proxy in FreeBSD dynamische Firewall-Regeln für die jeweilige FTP-Verbindung des Clients.
+
+<!-- omit in toc -->
+## FTP Sicherheitsrisiko
+
+FTP ist in der digitalen Kommunikationswelt bereits ein sehr **altes Protokoll**. Es bringt einige Schwachstellen mit sich, die Größte davon ist, dass FTP Kommunikationskanäle zwar mit Benutzername und Passwort abgesichert werden, jegliche Kommunikation jedoch **unverschlüsselt** stattfindet. Daher wird empfohlen auf FTP zu verzichten und stattdessen auf Alternativen umzusteigen. Beispiele dafür wären FTPS (File Transfer Protokoll Secure) und SFTP (Secure File Transfer Protokoll).
+
+<!-- omit in toc -->
+### FTPS - Kurzgesagt
+
+FTP wurde 1990 von Netcup als Erweiterung für FTP erstellt. Dabei wird FTP zusammen mit TLS (SSL) benutzt, daher auch der Name FTP**S**. Mit FTPS ist es möglich den Steuer- und Datenkanal zu verschlüsseln. Die Authentizität eines Kommunikationspartners wird mit Zertifikaten überprüft.
+
+<!-- omit in toc -->
+### SFTP - Kurzgesagt
+
+SFTP ist im Gegenzug zu FTP und FTPS ein eigenständiges Protokoll und basiert auf dem Netzwerkprotokoll SSH. Es benutzt nur einen Port zum Übertragen von Statusnachrichten und Dateien. Somit ist keine große Konfiguration an der serverseitigen Firewall vorzunehmen. SFTP **verschlüsselt** die Kommunikation und kann ebenfalls wie FTPS die Authentizität des Gegenübers durch Zertifikate überprüfen. Ähnlich wie bei SSH ist es auch möglich eine passwortlose Authentifikation mittels SSH-Keys zu konfigurieren. Aus administrativer Sicht sollte dieses Protokoll **vorgezogen** werden.
+
+<!-- omit in toc -->
+## Quellen
+
+- [http://www.slacksite.com/other/ftp.html](http://www.slacksite.com/other/ftp.html)
+- [https://de.wikipedia.org/wiki/Liste_der_standardisierten_Ports](https://de.wikipedia.org/wiki/Liste_der_standardisierten_Ports)
+- [https://datatracker.ietf.org/doc/html/rfc959](https://datatracker.ietf.org/doc/html/rfc959)
+- [https://www.goanywhere.com/de/blog/wichtige-unterschiede-zwischen-sftp-und-ftps](https://www.goanywhere.com/de/blog/wichtige-unterschiede-zwischen-sftp-und-ftps)
+
+# LLDP - Link Layer Discovery Protokoll
+
+Das **L**ink **L**ayer **D**iscovery **P**rotocol (LLDP) wurde von der IEEE im Standard 802.1ab standardisiert. Es agiert, wie der Name schon voraussetzt, auf dem OSI-Layer 2, der Sicherungsschicht. Es erlaubt einen Informationsaustausch zwischen benachbarten Netzwerkgeräten. Die ausgetauschten Daten werden anschließend in einer **M**anagement **I**nformation **B**ase (MIB) gespeichert und können mit dem **S**imple **N**etwork **M**anagement Protokoll (SNMP) ausgelesen werden. Die Daten eignen sich gut, um sich einen Überblick über die Systemlandschaft zu machen oder um Troubleshooting durchzuführen. LLDPs Hautpfunktion besteht darin, Informationen über **benachbarte Netzwerkgeräte** zu sammeln und darszustellen.
+
+<!-- omit in toc -->
+## LLDP im Detail
+
+LLDP ist eine Weiterentwicklung des Cisco Discovery Protokolls vom Unternehmen Cisco, ist mit diesem jedoch **nicht kompatibel**. Damit LLDP Daten zwischen anderen Netzwerkgeräten austauschen kann, benötigt es einen Agenten, welcher entweder bereits auf dem jeweiligen Gerät vorinstalliert ist oder nachinstalliert werden muss. LLDP wird in periodischen Zeitabständen versandt. Der periodische Zeitabstand ist standardmäßig auf 30 Sekunden festgelegt, kann jedoch manuell angepasst werden. LLDP benutzt zum Austausch sogenannte LLDP **P**rotocol-**D**ata-**U**nits (LLDP-PDUs oder auch LLDP-DUs), welche über verschiedene Multicast-MAC-Adressen verschickt werden. Diese Multicast-MAC-Adressen sind unter anderem:
+
+- 01:80:C2:00::00:0E
+- 01:80:C2:00::00:03
+- 01:80:C2:00::00:00
+
+Beim Versenden der LLPD-PDUs an andere Netzwerkgeräte wird keine aktive Verbindung aufgebaut. Somit werden die sendenden Geräte auch nicht darüber informiert, ob ihre LLDP-PDUs angekommen sind oder nicht. Zwar ist LLDP nur auf Schicht-2 angesiedelt, jedoch könnte man zu diesem sagen, dass es *verbindungslos* ist.
+
+<!-- omit in toc -->
+## LLDP Type-Length-Value Format
+
+Beim Erhalt einer LLDP-PDU von einem Nachbargerät wird dieses ausgewertet und anschließend in die eigene MIB übernommen. Eine solche LLDP-PDU besteht aus mehreren kodierten Blöcken mit unterschiedlichen Informationen. Diese Blöcke sind im **T**ype-**L**ength-**V**alue-Format (TLV) kodiert. Dabei müssen immer mindestens die drei nachfolgenden Felder vorhanden sein:
+
+- Geräte-ID (Chassi-ID, Typ 1)
+- Port ID (Typ 2)
+- Time To Live (TTL, Typ 3)
+
+An jedem Ende einer LLDP-PDU muss ein TLV-Block vom Typ 0 angehangen werden, welcher die Beschreibung `End of LLDPDU` besitzt. Neben diesen drei Hauptblöcken existieren noch weitere Blöcke, die wie folgt beschrieben sind:
+
+| Typ (7 Bits) | Länge (9 Bits) | Wert (String, 0-511 Oktette) | Benutzung in LLDP-PDU |
+| --- | --- | --- | --- |
+| 0 | End of LLDP-PDU |  | Verpflichtend |
+| 1 | Geräte-ID (Chassis-ID) |  | Verpflichtend |
+| 2 | Port ID |  | Verpflichtend |
+| 3 | Time to Live (TTL) |  | Verpflichtend |
+| 4 | Port Beschreibung |  | Optional |
+| 5 | Hostname |  | Optional |
+| 6 | Hostbeschreibung |  | Optional |
+| 7 | Host-Fähigkeiten |  | Optional |
+| 8 | Management-Adresse |  | Optional |
+| 9-126 | Reserviert |  | - |
+| 127 | Custom TLVs |  | Optional |
+
+Zudem gibt es noch weitere Informationen, die zusätzlich vorhanden sein können wie:
+
+- MDI-Power
+- VLAN-Name
+- Link-Aggregation
+- etc.
+
+Wie bereits erwähnt wird eine solche LLDP-PDU auf OSI-Layer 2 versendet. Dabei wird sie innerhalb eines Ethernet-Frames versendet. Ein solcher Ethernet-Frame mitsamt LLDP-PDU sieht folgendermaßen aus:
+
+| Präambel | Ziel-MAC | Quell-MAC | Ethertype | Chassis-ID | Port-ID | TTL | Optionale TLVs | EoLLDP PDU | FCS |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+|  | 01:08:C2:00:00:0E, 01:08:C2:00:00:03 | Sender-MAC | 0x88CC | Typ=1 | Typ=2 | Typ=3 | 0-n TLVs | Type=0, Length=0 |  |
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.ip-insider.de/was-ist-lldp-link-layer-discovery-protocol-8021ab-a-928511/](https://www.ip-insider.de/was-ist-lldp-link-layer-discovery-protocol-8021ab-a-928511/)
+- [https://www.kunbus.de/lldp-link-layer-discovery-protocol.html](https://www.kunbus.de/lldp-link-layer-discovery-protocol.html)
+- [https://www.itwissen.info/LLDP-link-layer-discovery-protocol-LLDP-Protokoll.html](https://www.itwissen.info/LLDP-link-layer-discovery-protocol-LLDP-Protokoll.html)
+- [https://en.wikipedia.org/wiki/Link_Layer_Discovery_Protocol](https://en.wikipedia.org/wiki/Link_Layer_Discovery_Protocol)
+
 # X11
 
 *X11* ist ein Protokoll-Stack bestehend aus unterschiedlichen Komponenten. *X* bezieht sich hierbei auf das *X-Window-System*, welches in den meisten Linux-Distributionen vorkommt und dazu benutzt wird, primitive Grahpical User Interfaces (GUIs) zu erstellen. Die *11* bedeutet, dass sich das Protokoll in der elften Version befindet, welche seit dem Jahr **1987** besteht.
@@ -1073,7 +1252,7 @@ Der Selective-Repeat ARQ Mechanismus ist nochmals etwas besser als der Go-Back-N
 <!-- omit in toc -->
 ## X Window System
 
-Das *X Window System* ist ein Framework, um primitive GUIs zu erstellen, welche meist nicht mehr als aus einem Display-Device[^X11_1] und Canvas[^X11_2] besteht und man mit diesem per Maus und Tastatur interagieren kann. Jedoch ist es für das X Window System nicht möglich komplexere Inhalte wie Buttons zu generieren. Hierfür werden meist Toolkits wie [GTK](https://www.gtk.org/) benutzt, um entsprechende komplexe GUI-Darstellung zu erstellen.
+Das *X Window System* ist ein Framework, um primitive GUIs zu erstellen, welche meist nicht mehr als aus einem Display-Device[^4] und Canvas[^5] besteht und man mit diesem per Maus und Tastatur interagieren kann. Jedoch ist es für das X Window System nicht möglich komplexere Inhalte wie Buttons zu generieren. Hierfür werden meist Toolkits wie [GTK](https://www.gtk.org/) benutzt, um entsprechende komplexe GUI-Darstellung zu erstellen.
 
 X arbeitet in einem transparenten **Client-Server-Modell**, wodurch es an Unabhängigkeit vom eingesetzten Betriebssystem und GUI-Toolkits ist. Der Client ist das **Frontend** des Systems. Es erstellt die primitiven GUI-Elemente, welche durch die entsprechend eingesetzten Toolkits verschönert werden können. Es arbeitet komplett isoliert vom Server, was bedeutet, dass der Stil sich pro eingesetzten Client / Toolkit unterscheiden kann. Der Server ist das **Backend** des Systems. Es kümmert sich um die Anfragen des Clients, der Bereitstellung der Ressourcen und der Kommunikation mit dem Linux-Kernel. Auch dieser kann isoliert vom Frontend benutzt werden.
 
@@ -1106,12 +1285,16 @@ X11 Forwarding könnte man auch als *Linuxartiges RDP* bezeichnen. Da auf den me
 - [https://unix.stackexchange.com/questions/276168/what-is-x11-exactly](https://unix.stackexchange.com/questions/276168/what-is-x11-exactly)
 - [https://en.wikipedia.org/wiki/X_Window_System](https://en.wikipedia.org/wiki/X_Window_System)
 
-# Fußnotizen
 
-[^CPS1]: Ein bestimmter oder unbestimmter Wert, welcher als zusätzlicher Sicherheitsfaktor mit in die Passwortverschlüsselung genommen wird.
 
-[^DSL_1]: Eine Vermittlungsstelle ist ein Knotenpunkt eines Nachrichtennetztes, der die wahlweise Herstellung von Nachrichtenverbindungen ermöglicht.
 
-[^X11_1]: Hiermit sind nicht unbedingt Displays als Hardware gemeint. Gemeint können auch virtuelle Desktops sein.
 
-[^X11_2]: Canvas ist bei Computern ein Container, welcher eine Vielzahl an unterschiedlichen Elemente beinhalten kann.
+[^1]: Ein bestimmter oder unbestimmter Wert, welcher als zusätzlicher Sicherheitsfaktor mit in die Passwortverschlüsselung genommen wird.
+
+[^2]: Eine Vermittlungsstelle ist ein Knotenpunkt eines Nachrichtennetztes, der die wahlweise Herstellung von Nachrichtenverbindungen ermöglicht.
+
+[^3]: Zufälliger freier Port in der Port-Range der registrierten Ports. Die Ports 1-1023 sind **standardisierte** und somit nicht dynamisch zuweisbare Ports.
+
+[^4]: Hiermit sind nicht unbedingt Displays als Hardware gemeint. Gemeint können auch virtuelle Desktops sein.
+
+[^5]: Canvas ist bei Computern ein Container, welcher eine Vielzahl an unterschiedlichen Elemente beinhalten kann.
