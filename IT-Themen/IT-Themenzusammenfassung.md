@@ -29,6 +29,8 @@ Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://cod
 - [Flow Control](#flow-control)
 - [FTP - File Transfer Protocol](#ftp---file-transfer-protocol)
 - [LLDP - Link Layer Discovery Protokoll](#lldp---link-layer-discovery-protokoll)
+- [LRO - Large Receive Offload](#lro---large-receive-offload)
+- [Netzwerkplanung - Hierarchisches Netzwerk](#netzwerkplanung---hierarchisches-netzwerk)
 - [X11](#x11)
 
 # APN - Access Point Name
@@ -61,7 +63,7 @@ Wird ein öffentliches APN-Netzwerk benutzt, dann können mobile End- und IoT-Ge
 
 Dabei gibt das mobile End- oder IoT-Gerät die IP-Adresse wieder zurück an den Adresspool. Bei einem neuen Verbindungsaufbau wird eine neue freie IP-Adresse aus dem vorhandenen Adresspool benutzt. Ist das APN-Netzwerk statisch konfiguriert, so besitzt jedes mobile End- oder IoT-Gerät seine eigene statische Adresse innerhalb des Netzwerk. Diese wird für jede Verbindung mit dem Internet benutzt.
 
-![APN_public_apn_image.PNG](./_resources/APN_public_apn_image.PNG)
+![APN_public_apn_image.PNG](./_resources/apn/APN_public_apn_image.PNG)
 
 <!-- omit in toc -->
 ### Privater APN
@@ -70,7 +72,7 @@ Im Vergleich zu einem öffentlichen APN-Netzwerk, welches die Daten der mobilen 
 
 Meist werden private APNs jedoch dafür benutzt, um den **Datenverkehr mittels VPN** zum eigenen (Unternehmens-) Netzwerk zu routen. So ist es möglich, dass Dienste innerhalb eines privaten APN-Netzwerks mit Diensten innerhalb des eigenen (Unternehmens-) Netzwerk kommunizieren können. Damit diese Dienste miteinander kommunizieren können, wird klassischerweise ein VPN-Tunnel vom Mobilfunkanbieter zum eigenen (Unternehmens-) Netzwerk erstellt. Die IP-Adressen innerhalb eines privaten APN-Netzwerks können ebenfalls **statisch** oder **dynamisch** verteilt werden.
 
-![APN_private_apn_image.PNG](./_resources/APN_private_apn_image.PNG)
+![APN_private_apn_image.PNG](./_resources/apn/APN_private_apn_image.PNG)
 
 <!-- omit in toc -->
 ## APN vs. VPN
@@ -718,7 +720,7 @@ sequenceDiagram
 Nur für PDF-Print-Version aktivieren, da aus unbekannten Gründen ein Mermaid-Fehler kommt
 Der Mermaid-Fehler ist nicht genau spezifiziert.
 -->
-<!-- <img src="./_resources/DNS_Cache-Poisoning.PNG" width="1000"> -->
+<img src="./_resources/dns/DNS_Cache-Poisoning.PNG" width="1000">
 
 <!-- omit in toc -->
 ## Sicherheitserweiterungen
@@ -849,11 +851,11 @@ DSL benutzt, genau wie ISDN, die **Telefonkabel**. ADSL, benutzt für die Daten�
 
 Ein solcher ADSL-Anschluss sah wie folgt aus:
 
-<img src="./_resources/DSL_ADSL_Teilnehmeranschluss.PNG" width="1000">
+<img src="./_resources/dsl/DSL_ADSL_Teilnehmeranschluss.PNG" width="1000">
 
 Heutzutage werden jedoch keine Splitter mehr eingesetzt, da Techniken wie Telefone oder auch Faxgeräte allesamt digitalisiert anstatt analog betrieben werden:
 
-<img src="./_resources/DSL_VDSL_Ohne_Splitter.PNG" width="1000">
+<img src="./_resources/dsl/DSL_VDSL_Ohne_Splitter.PNG" width="1000">
 
 <!-- omit in toc -->
 ### Authentifizierung
@@ -920,7 +922,7 @@ Hat sich ein Modem mittels PPPoE authentifiziert, handelt der DSLAM mit dem DSL-
 <!-- omit in toc -->
 ### DSL Übersicht
 
-<img src="./_resources/DSL_DSL-Übersicht.PNG" width="600">
+<img src="./_resources/dsl/DSL_DSL-Übersicht.PNG" width="600">
 
 <!-- omit in toc -->
 ## Quellen
@@ -956,7 +958,7 @@ Flow-Control stellt zwei Protokolle / Mechanismen bereit, wie die Datenübertrag
 
 Das Stop and Wait-Protokoll ist ein **unidirektionales** Protokoll, was bedeutet, dass Daten immer nur in **eine Richtung** gesendet und empfangen werden können. Das Konzept hinter dem Protokoll ist sehr simpel: Nach jedem gesendeten Frame des Senders wartet dieser solange, bis der Empfänger den gesendeten Frame mittels einem `Acknowledgement` (ACK) bestätigt. Danach ist der Sender in der Lage, den nächsten Frame zu schicken. Die Kommunikation läuft demnach wie folgt ab:
 
-![](./_resources/Flow-Control_Stop-and-Wait.PNG)
+![](./_resources/flow_control/Flow-Control_Stop-and-Wait.PNG)
 
 <!-- omit in toc -->
 ### Probleme
@@ -974,7 +976,7 @@ Diese Form des Stop and Wait Protokoll besitzt jedoch ein paar Probleme:
 
 Der *Stop and Wait ARQ-Mechanismus* erweitert das Konzept des primitiven Stop and Wait-Mechnismus durch einen **Timeout und Sequenznummern**. Die Funktion des vorher erklärten Stop and Wait Mechanismus bleibt fast unverändert. Jedoch wird nach dem Senden der Daten von der Seite des Senders ein spezifischer Timer gesetzt. Erhält der Sender kein ACK des Empfängers in der vorgegebenen Zeit, so sendet der Sender nach Ablauf des Timers den Frame erneut:
 
-![](./_resources/Flow-Control_Stop-and-Wait-ARQ.PNG)
+![](./_resources/flow_control/Flow-Control_Stop-and-Wait-ARQ.PNG)
 
 Damit löst Stop and Wait ARQ die Probleme 1. und 2. vom primitiven Stop and Wait Protokoll. Beim dritten Problem, adressiert in d) der obigen Abbildung, kann es jedoch passieren, dass das Timeout-Interval des Senders so kurz ist, sodass `ACK`-Nachrichten des Empfängers immer verspätet ankommen. Passiert dies, so versucht das Protokoll nach mehreren Übertragungsversuchen den Timeout anhand der in der Zeit ankommenden `ACK`-Nachrichten anzupassen. Damit sollen die verspäteten ACK-Nachrichten wieder erfolgreich dem Sender zugestellt werden.
 
@@ -1003,7 +1005,7 @@ Das `Sliding Window` Protokoll wird für **erhöhten Netzwerkverkehr** benutzt. 
 
 Da sich das Fenster pro erhaltenes `ACK` beim Sender immer um **einen weiteren Frame** nach hinten verschiebt, heißt dieses Verfahren `Sliding Window` Protokoll.
 
-<img src="./_resources/Flow-Control_Sliding-Window.PNG" width="800">
+<img src="./_resources/flow_control/Flow-Control_Sliding-Window.PNG" width="800">
 
 Auch bei diesem Protokoll können Fehler auftreten wie:
 
@@ -1035,7 +1037,7 @@ Der Sender möchte `11` Frames übermitteln. Die Window-Size beträgt hierbei er
 10.  Der Empfänger bestätigt beim Empfang des Datenframes `2` diesen mit einem `ACK` und sendet dieses zurück an den Sender.
 11. Der Sender erhält dieses Mal das `ACK` für den Datenframe `2` und verschiebt sein Window um einen weiteren Frame. Nun kann der Sender einen weiteren Datenframe verschicken.
 
-<img src="./_resources/Flow-Control_Sliding-Window-Go-Back-N-ARQ.PNG" width="800">
+<img src="./_resources/flow_control/Flow-Control_Sliding-Window-Go-Back-N-ARQ.PNG" width="800">
 
 Einfach gesagt: Sobald der Sender ein `ACK` für einen bestimmten Frame nicht mehr bekommen hat, geht dieser bis zu diesem Frame innerhalb des Windows zurück (`N`) und sendet von dort an alle nachfolgenden, im Window enthaltene Frames erneut.
 
@@ -1053,7 +1055,7 @@ Die Schritte 1 bis 6 im Kapitel [Go-Back-N ARQ](#go-back-n-arq) werden wiederhol
 1. **Geht der Datenframe vom Sender zum Empfänger verloren**: Der Empfänger sendet mit dem nächsten Frame (Frame `3`), den er vom Sender enthält ein *Negatives ACK* (`NACK`) zurück, in welchem steht, dass der Datenframe `2` noch nicht angekommen ist. Daraufhin ist dem Sender bekannt, welcher Datenframe noch nicht angekommen ist und übermittelt diesen erneut.
 2. **Geht der ACK-Frame vom Empfänger zum Sender verloren**: Bekommt der Sender innerhalb einer **spezifischen vorgegeben Zeit** keine `ACK`-Antwort auch den Datenframe `2` (Timeout), so sendet er diesen erneut.
 
-<img src="./_resources/Flow-Control_Sliding-Window-Selective-Repeat-ARQ.PNG" width="800">
+<img src="./_resources/flow_control/Flow-Control_Sliding-Window-Selective-Repeat-ARQ.PNG" width="800">
 
 Der Selective-Repeat ARQ Mechanismus ist nochmals etwas besser als der Go-Back-N ARQ, da dieser bei einem verlorenen oder korrupten `ACK`- / Datenframe **nicht alle**, im Window enthaltenen, Datenframes erneut geschickt werden müssen, sondern **nur das Fehlende**. Dies belastet das Netzwerk, vor allem bei einem erhöhten Fehleraufkommen, weniger.
 
@@ -1245,6 +1247,120 @@ Wie bereits erwähnt wird eine solche LLDP-PDU auf OSI-Layer 2 versendet. Dabei 
 - [https://www.itwissen.info/LLDP-link-layer-discovery-protocol-LLDP-Protokoll.html](https://www.itwissen.info/LLDP-link-layer-discovery-protocol-LLDP-Protokoll.html)
 - [https://en.wikipedia.org/wiki/Link_Layer_Discovery_Protocol](https://en.wikipedia.org/wiki/Link_Layer_Discovery_Protocol)
 
+# LRO - Large Receive Offload
+
+*Large Receive Offload* (LRO) oder auch unter *Linux Generic Receive Offload* (GRO) genannt, ist das Pendant zum sogenannten *TCP Segmentation Offloading* (TSO) bzw. *Generic Segmentation Offloading* (GSO). Wie im Kapitel zu `TCP Segmentation Offloading` beschrieben, werden TCP-Daten von den oberen Schichten als ein komplettes TCP-Paket an die Netzwerkkarte übergeben. Diese segmentiert anschließend das erhaltene TCP-Paket und  erbringt somit einen kleinen Performanceaufschwung im Versenden von TCP-Daten in einer performanten  Netzwerkumgebung. **LRO arbeitet dabei genau umgekehrt**.
+
+<!-- omit in toc -->
+## Funktionsweise
+
+Genau wie TSO nimmt LRO die Last vom eingebauten Prozessor (CPU) des Systems ab und verlagert diese auf die Netzwerkkarte (NIC). Dort werden die einzelnen Frames **zuerst in einen Buffer** geschrieben und anschließend zu einem **großen Datenpaket verkettet**. Dieses Datenpaket durchwandert anschließend die verschiedenen OSI-Modellschichten. Mit deaktiviertem LRO werden die Pakete nicht nur von der CPU verarbeitet, sondern werden wie gewohnt Frame nach Frame abgearbeitet. Dies kann in einem performanten Netz zu Problemen führen, wenn zum Beispiel ein sendendes Gerät mit TSO konfiguriert ist und ein empfangendes Gerät LRO deaktiviert hat. Während der Sender ohne Probleme Pakete senden kann, kommt der Empfänger ins Schwitzen, da er mit der Verarbeitungsmenge nicht hinterherkommt.
+
+<!-- omit in toc -->
+## Einsatz unter Linux und FreeBSD
+
+**Info:** Dieser Teil wurde noch nicht zusammengefasst.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.slideshare.net/eurobsdcon/20140928-gso-eurobsdcon2014](https://www.slideshare.net/eurobsdcon/20140928-gso-eurobsdcon2014)
+- [https://en.wikipedia.org/wiki/TCP_offload_engine#Large_send_offload](https://en.wikipedia.org/wiki/TCP_offload_engine#Large_send_offload)
+- [https://lwn.net/Articles/148697/](https://lwn.net/Articles/148697/)
+- [https://lwn.net/Articles/243949/](https://lwn.net/Articles/243949/)
+
+# Netzwerkplanung - Hierarchisches Netzwerk
+
+<!-- omit in toc -->
+## Vorwort
+
+Bevor ein Netzwerk mitsamt seinen verschiedenen Geräten erstellt werden kann, muss zuerst eine **sorgfältige Planung des Netzwerks** erfolgen. Dabei reicht es jedoch nicht nur, ein großes Wissen an den zu verfügbar stehenden Technologien zu haben. Es ist vor allem wichtig zu wissen, **wie ein Netzwerk richtig segmentiert werden sollte** und **welche Geräte und Funktionen man wirklich dafür braucht**. Zusätzliche, nicht in Benutzung kommende Funktionen verursachen oftmals nicht nur erhöhten Administrationsaufwand, sondern auch Kosten.
+
+Um ein Netzwerk richtig zu planen, sollte man sich den folgenden drei Maßeinheiten bewusst sein:
+
+- **Skalierbarkeit**: Befähigt dazu, das Netzwerk mit zusätzlichen Komponenten für zusätzliche Services oder Benutzer auszuweiten, ohne das Netzwerkdesign zu überdenken. Skalierbarkeit bedeutet ebenfalls das Hinzufügen von neuen Geräten, sodass Benutzer nichts davon aktiv merken.
+- **Ausfallsicherheit**: Befähigt dazu, den Netzwerkverkehr aufrecht zu erhalten, selbst wenn eine Hauptkomponente ausfällt. Ist dies der Fall, so sollte eine zweite Komponente die ausgefallene in kürzester Zeit übernehmen. Zeitverzögerungen sollten dabei so kurz wie möglich gehalten werden.
+- **Management**: Befähigt dazu, das Updaten von Hard- und Software auf einfachste Möglichkeit durchzuführen, ohne dass es zu großen Ausfällen kommt. Zudem sollte man beim Auftreten eines Fehlers wissen, wie und wo das passiert ist, um so schnellstmöglich den Fehler einzugrenzen.
+
+Dabei sollten diese Maßeinheiten / Indikatoren nicht als `entweder oder` angesehen werden. Am besten sollte man ein wenig von allen in seiner Netzwerkplanung enthalten haben, vom einen mehr, vom anderen weniger, so wie es das Budget und die Planung zulässt.
+
+<!-- omit in toc -->
+## Einführung in die Three-Tier Hierarchie
+
+<!-- omit in toc -->
+### Schlecht geplantes Netzwerk
+
+Um erst einmal zu wissen, was ein gutes Netzwerk ausmacht, muss man sich ein schlecht geplantes Netzwerk anschauen. Oftmals findet man solche Netzwerke in **kleinen und mittelständischen Unternehmen**, da diese die Wichtigkeit eines gut geplanten Netzwerks vernachlässigen und eine Person die Netzwerkplanung übernimmt, welche dafür nicht geeignet ist. Das bedeutet in den meisten Fällen, dass die vorher genannten Indikatoren kaum bis gar nicht eingehalten werden. Die nachfolgende Abbildung zeigt ein solches Netzwerk:
+
+![Network-Chain](./_resources/netzwerkplanung/Netzwerkplanung_schlechtes_Netzwerk.PNG)
+
+Dieses Netzwerk ist ein Paradebeispiel für die schlechte Planung eines Netzwerks. Im Fach-Jargon würde man dies eine `Switch-Chain` nennen, da hier Switch an Switch angeschlossen ist. Dies ist jedoch in einigen Fällen der Fall und kann zu Problemen führen. Versucht man die drei genannten Indikatoren, **Skalierbarkeit**, **Ausfallsicherheit** und **Management** hier zu suchen, dann sucht man vergebens. Dieses Netzwerk ist in **keiner Weise skalierbar**. Natürlich können immer mehr Switches an den bereits verfügbaren Switches angehangen werden, jedoch artet dies in einem unnötigen Kabelchaos aus.
+
+Stelle man sich vor, dass nach dem ersten Switch vom Router aus gesehen, mehrere hunderte Personen und Server hängen, dann wäre dieses Netzwerk sehr stark anfällig auf Ausfälle was, wohlgemerkt, der **Ausfallsicherheit** einen Strich durch die Rechnung macht. Der erste Switch entpuppt sich nämlich als `Single Point of Failure`. **Fällt dieser Switch aus, dann fällt das gesamte Netzwerk aus**. Auch das Management der jeweiligen Switches ist eine Katastrophe. In diesem Netzwerk gibt es sehr wahrscheinlich kein Konzept, wie mit dem Verbinden von Geräten vorgegangen werden soll. Dies wird in einem großen und undurchsichtigen Kabelsalat enden.
+
+<!-- omit in toc -->
+### Die Three-Tier Architektur
+
+Die *Three-Tier Architektur* oder auch bekannt als *Drei-Schichten Hierarchie-Modell*, ist ein von Cisco entworfenes Modell, um ein Netzwerk für große Unternehmen und Universitäten (Campus Netzwerke) zu planen und designen. Es ist ein einfach zu verstehendes und zu verwaltendes Netzwerkplanungsmodell, welches zudem seinen **Fokus auf eine hohe Ausfallsicherheit und Skalierbarkeit** setzt. Hinter dem Konzept verbirgt sich die Strategie, verschiedene Netzwerkkomponenten und Systeme zu sammeln und in **verschiedene Gruppen einzuteilen**. Dabei erfüllen Geräte in der gleichen Gruppe alle denselben Zweck.
+
+![Netzwerkplanung Three-Tier Hierarchiemodell](./_resources/netzwerkplanung/Netzwerkplanung_Three_Tier_Hierarchiemodell.PNG)
+
+Die drei Schichten, in welche das Three-Tier Modell eingeteilt sind: 
+
+1. Core
+2. Distribution
+3. Access
+
+<!-- omit in toc -->
+### Access-Schicht
+
+Die Access-Schicht ist die Schicht, welche am **nächsten zu den Benutzern** ist. Benutzer, die mit dieser Schicht verbunden sind, werden über mehrere Technologien und Protokolle angebunden. Darunter befinden sich z.B.Kabel- und Wireless Verbindungen. Dafür werden meist fixe Layer-2 Switches eingesetzt, welche die jeweiligen Benutzer mit dem Netzwerk verbinden (Access Switches). Auf den Access-Switchen werden meist Netzwerk-Sicherheitsvorkehrungen für den Netzwerkzugriff konfiguriert. Darunter fallen z.B. die `Port-Security` oder auch `Network Access Control-Listen`. Ebenfalls werden hier `virtuelle local Area Networks` (VLAN) für die unterschiedlichen Benutzergruppen verwendet. Auch die Konfiguration vom `Spanning-Tree` Protokoll ist hier als **Schleifen-Prävention** von Vorteil. Müssen weitere Benutzer angebunden werden und die verfügbaren Kapazitäten des installierten Switches reichen nicht aus, so wird ein neuer Access-Switch eingebaut und expandiert den Benutzerzugriff.
+
+![Access-Switch-Layer](./_resources/netzwerkplanung/Netzwerkplanung_Access_Switch_Layer.PNG)
+
+<!-- omit in toc -->
+### Distribution-Schicht
+
+Die Distribution-Schicht kümmert sich darum, **die Access-Switches mit dem Netzwerk zu verbinden**. Die hier eingesetzten Switches besitzen ausschließlich Verbindungen zu Access-Switches oder zu den darüberliegenden Core-Switches. Cisco empfiehlt die Verwendung von Layer-3 Switches, um nicht nur die Layer-2 Verkabelung zu reduzieren, sondern auch direkt ein Gateway zur Verfügung zu stellen. **Aus Kostengründen werden jedoch oft anstatt Layer-3 eher Layer-2 Switches mit einem zusätzlichen Gateway benutzt**, um die Layer-3 Funktionalität realisieren zu können. Solche Distribution-Switches sind meist in größeren Gebäudekomplexen oder in Firmen mit unterschiedlichem Standort vertreten. Auf diesen Switches werden meist bestimmte Distribution-Sicherheitsvorkehrungen angewandt, welcheden Netzwerkverkehr nochmals genauer einschränken. So werden z.B. nur Services nach außen angeboten, welche auch **definitiv benutzt werden müssen** wie z.B. http oder auch https. In kleinen bis mittelständischen Unternehmen agieren die Distribution-Switches bereits als Gateway zum jeweiligen ISP. Bei großen Unternehmen sind die Distribution-Switches meist noch mit einer höherliegenden Schicht, der **Core-Schicht**, verbunden
+
+Switchmodelle, die hier eingesetzt werden, sind oftmals fix oder modular, um den Anforderungen zurechtkommen. Außerdem sollten diese in aller Regel **stackbar** sein, um eine Erweiterung eines Switches zu vereinfachen. Auch ist hier mit höheren Datenraten zu rechnen, da die Distribution-Switches alle Access-Switches mit ihren Benutzern verbinden.
+
+![Distribution-Switch-Layer](./_resources/netzwerkplanung/Netzwerkplanung_Distribution_Switch_Layer.PNG)
+
+<!-- omit in toc -->
+### Core-Schicht
+
+Im Three-Tier Hierarchie-Modell ist die Core-Schicht die **oberste und wichtigste Schicht**. **Sie verbindet alle Distribution-Switches miteinander und fungiert damit als Backbone des Netzwerks**. Die einzige Aufgabe, die diese Schicht hat, ist simpel: Datenverkehr auf einfachste Weise, so schnell wie möglich versenden und empfangen. 
+
+Auf dieser Schicht werden generell keine Netzwerksicherheitsrichtlinien definiert. Diese sollten bereits auf den Access- und Distribution-Switches erfolgen. Auf den Core-Switches werden meist lediglich dynamische Routing-Protokolle wie `OSPF` (Open Shortest Path First) oder `EIGRP` (Enhanced Interior Routing Gateway Protocol) eingesetzt. Solche Switche werden jedoch meist nur in großen Unternehmen eingesetzt, deren Standort sich über eine große Fläche erstreckt und miteinander verbunden werden. Auch hier besteht die Möglichkeit entweder einen Layer-3 Switch oder eine Kombination aus Layer-2 Switch und zusätzlichen Gateway zu benutzen, um die Datenpakete hin und her zu routen.
+
+Es ist wichtig zu wissen, dass hier **der meiste Datenverkehr auftritt**, weshalb diese Switches **sehr schnell sein müssen**. Daher werden hier auch ausschließlich teure, performante Switches eingesetzt, welches zudem meist noch modular und stackbar sind.
+
+![Core-Switch-Layer](./_resources/netzwerkplanung/Netzwerkplanung_Core_Switch_Layer.PNG)
+
+<!-- omit in toc -->
+## Collapsed Core bzw. Spine-Leaf Architektur
+
+Die Three-Tier Architektur lohnt sich für **große Unternehmen**. Jedoch ist diese **sehr kostspielig** und für kleine und mittelständische Unternehmen kaum zu leisten. Daher wird hier oftmals die sogenannte `Collapsed-Core` bzw. `Spine-Leaf` Architektur eingesetzt. 
+
+Anders als die Three-Tier Architektur, basiert die Collapsed-Core Architektur nur auf **zwei Tiers / Schichten**. Um die Kosten zu reduzieren werden **Core- und Distribution-Schicht vereint**. Das bedeutet, dass die Distribution-Switches bereits die Hauptswitches sind und die Access-Switches mit dem Netzwerk verbindet. Man könnte auch sagen, dass es in einem Two-Tier Netzwerk nur Access- und Distribution-Switches gibt, da die eigentliche Funktionalität der Core-Schicht entfällt. Dabei werden die oben genannten können die eingesetzten Sicherheitsrichtlinien der Three-Tier Architektur auf die Two-Tier Architektur übertragen werden. Zudem bietet die Collapsed-Core Architektur den Vorteil, dass bei einer Expansion des Unternehmens sehr simpel eine Core-Schicht über die vorhandenen Distribution-Switches erstellt werden kann.
+
+![Collapsed Core Architektur](./_resources/netzwerkplanung/Netzwerkplanung_Collapsed_Core.PNG)
+
+**Anmerkung**: In vielen Unternehmen heutzutage wird jedoch die Two-Tier Architektur nicht nur aufgrund von Kosteneinsparungen eingesetzt, sondern auch um Latenzen im Netzwerk selbst zu reduzieren. Es hat sich in den letzten Jahren gezeigt, dass immer mehr Services intern eingerichtet und genutzt werden. Um das Netzwerk performant und hochverfügbar zu machen ist es wichtig, zusätzliche Instanzen wie die unterschiedlichen Schichten weitestgehend zu reduzieren, um die Latenzen gering zu halten.
+
+Es ist jedoch wichtig anzumerken, dass bei einer bestimmten Unternehmensgröße die Two-Tier Hierarchie nicht mehr ausreicht, um zuverlässig und mit wenigem administrativ technischen Aufwand betrieben werden kann. Daher ist eine Umstellung auf die Three-Tier Architektur bei Expansion des Unternehmens unausweichlich, wie die nachfolgenden Abbildungen darstellen.
+
+![Netzwerk ohne Core-Schicht](./_resources/netzwerkplanung/Netzwerkplanung_Netzwerk_Ohne_Core.PNG)
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.techrepublic.com/article/build-your-skills-the-three-layer-hierarchical-model/](https://www.techrepublic.com/article/build-your-skills-the-three-layer-hierarchical-model/)
+- [https://www.computernetworkingnotes.com/ccna-study-guide/access-distribution-and-core-layers-explained.html](https://www.computernetworkingnotes.com/ccna-study-guide/access-distribution-and-core-layers-explained.html)
+- [https://www.ictshore.com/free-ccna-course/three-tier-architecture/](https://www.ictshore.com/free-ccna-course/three-tier-architecture/)
+- [https://www.wwt.com/article/comparing-two-tier-three-tier-data-center-networks](https://www.wwt.com/article/comparing-two-tier-three-tier-data-center-networks)
+
 # X11
 
 *X11* ist ein Protokoll-Stack bestehend aus unterschiedlichen Komponenten. *X* bezieht sich hierbei auf das *X-Window-System*, welches in den meisten Linux-Distributionen vorkommt und dazu benutzt wird, primitive Grahpical User Interfaces (GUIs) zu erstellen. Die *11* bedeutet, dass sich das Protokoll in der elften Version befindet, welche seit dem Jahr **1987** besteht.
@@ -1258,7 +1374,7 @@ X arbeitet in einem transparenten **Client-Server-Modell**, wodurch es an Unabh�
 
 Das X Window System ist **netzwerkfähig**, was bedeutet, dass es nicht nur lokal auf einem Rechner ausgeführt werden kann, sondern auch über das Netzwerk verteilt. Dabei agiert der PC als **XServer** (Backend, stellt Ressourcen zur Verfügung) und kommuniziert mit einem entfernten Server (XClient, Frontend) mitsamt GUI-Frontend.
 
-![X_Remote_Server_Communication](./_resources/X_Remote_Server_Communication.PNG)
+![X_Remote_Server_Communication](./_resources/x11/X_Remote_Server_Communication.PNG)
 
 <!-- omit in toc -->
 ## (Sicherheits-) Probleme
