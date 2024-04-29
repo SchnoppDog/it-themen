@@ -6,16 +6,7 @@ Dieses Markdown-Dokument soll verschiedene IT-Themen zusammenfassen, die ich hin
 <!-- omit in toc -->
 ## Disclaimer
 
-Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://code.visualstudio.com/) mit diveresen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Ich versuche mich jedoch daran zu halten, ausschließlich Markdown zu benutzen. ~~Es kann ebenfalls dazu kommen, dass **HTML-Elemente** wie `<sup>` oder auch `<sub>` eingebaut werden, um Fußnoten darzustellen!~~ Fußnoten werden mittlerweile nach dem [Markdown-Standard für Fußnoten](https://www.markdownguide.org/extended-syntax/#footnotes) eingesetzt. Dabei wird auf das Plugin [Markdown Footnotes](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-footnotes) in VSCode aufgebaut. Außerdem werden für Diagramme [Mermaid.js](https://mermaid.js.org/intro/getting-started.html) benutzt! Eine aktuelle PDF-Kopie ist immer beigelegt.
-
-<!-- omit in toc -->
-### Benutzte VSCode Plugins
-
-- [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
-- [Markdown PDF](https://marketplace.visualstudio.com/items?itemName=yzane.markdown-pdf)
-- [Markdown Preview Mermaid Support](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-mermaid)
-- ~~[Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint)~~ Wird nicht mehr zur Syntaxüberprüfung verwendet.
-- [Markdown Footnotes](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-footnotes)
+Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://code.visualstudio.com/) mit diversen Plugins verfasst. Das bedeutet, dass hier nicht 100% auf Markdown gesetzt wird. **Es kann vorkommen, dass Elemente anders oder gar nicht angezeigt werden, wird VScode mit den entsprechenden Plugins nicht benutzt.** Für weitere Informationen bezüglich benutzten Plugins, Einstellungen etc. siehe *misc/VS-Code-Customizing.md*.
 
 <!-- omit in toc -->
 ## Inhaltsverzeichnis
@@ -31,6 +22,12 @@ Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://cod
 - [LLDP - Link Layer Discovery Protokoll](#lldp---link-layer-discovery-protokoll)
 - [LRO - Large Receive Offload](#lro---large-receive-offload)
 - [Netzwerkplanung - Hierarchisches Netzwerk](#netzwerkplanung---hierarchisches-netzwerk)
+- [UNIX-Prozesse](#unix-prozesse)
+- [Round-Robin](#round-robin)
+- [.rhosts](#rhosts)
+- [TSO - TCP Segmentation Offloading](#tso---tcp-segmentation-offloading)
+- [VRRP - Virtual Router Redundancy Protocol](#vrrp---virtual-router-redundancy-protocol)
+- [WSUS - Windows Server Update Services](#wsus---windows-server-update-services)
 - [X11](#x11)
 
 # APN - Access Point Name
@@ -720,7 +717,7 @@ sequenceDiagram
 Nur für PDF-Print-Version aktivieren, da aus unbekannten Gründen ein Mermaid-Fehler kommt
 Der Mermaid-Fehler ist nicht genau spezifiziert.
 -->
-<img src="./_resources/dns/DNS_Cache-Poisoning.PNG" width="1000">
+<!-- <img src="./_resources/dns/DNS_Cache-Poisoning.PNG" width="1000"> -->
 
 <!-- omit in toc -->
 ## Sicherheitserweiterungen
@@ -1361,6 +1358,426 @@ Es ist jedoch wichtig anzumerken, dass bei einer bestimmten Unternehmensgröße 
 - [https://www.ictshore.com/free-ccna-course/three-tier-architecture/](https://www.ictshore.com/free-ccna-course/three-tier-architecture/)
 - [https://www.wwt.com/article/comparing-two-tier-three-tier-data-center-networks](https://www.wwt.com/article/comparing-two-tier-three-tier-data-center-networks)
 
+# UNIX-Prozesse
+
+Ein Prozess in UNIX-artigen Betriebssystemen ist ein Programm oder ein Kommando (z.B. ls), welches eine bestimmte Instanz erstellt. Diese Instanz besteht aus verschiedenen Hard- und Softwareressourcen und wird durch den jeweiligen Prozess verwaltet.
+
+<!-- omit in toc -->
+## Prozess-Identifikation
+
+Jedem Prozess wird ein sogenannter `Process Identifier` (PID, Deutsch „*Prozesserkennung*“) hinzugefügt. Dieser PID ist pro Prozess **einzigartig** und wird zur **Identifizierung des Prozesses benutzt**. Mit dem PID ist es möglich verschiedene Tätigkeiten wie Manipulation, Anpassen der Prozess-Priorität oder auch das Beenden (kill) von Prozessen auszuführen.
+
+<!-- omit in toc -->
+## Arten von Prozessen
+
+Grundsätzlich gibt es zwei Arten von Prozessen: 
+
+1. Vordergrundprozesse
+2. Hintergrundprozesse
+
+<!-- omit in toc -->
+### Vordergrund-Prozesse
+
+Vordergrundprozesse zeichnen sich dadurch aus, dass diese **nur mit einer Eingabe** ausgeführt werden können. Ihre Ausgabe ist demnach auch meist an den Benutzer gerichtet. Ein Vordergrund-Prozess wie `pwd` beispielsweise erwartet die Eingabe `pwd` auf der Shell, um ausgeführt zu werden und im Anschluss das Ergebnis dem Benutzer bzw. dem aufrufenden Prozess mitzuteilen. Dabei ist zu beachten, dass ein Vordergrundprozess zuerst beendet worden sein muss, um einen weiteren Vordergrundprozess zu starten.
+
+<!-- omit in toc -->
+### Hintergrund-Prozesse
+
+Hintergrundprozesse zeichnen sich dadurch aus, dass diese **ohne Eingabe eines Benutzers** ausgeführt werden können. Solche Hintergrundprozesse werden meist **von anderen Prozessen** automatisch aufgerufen, wenn diese gebraucht werden. Der Vorteil davon ist, dass der Benutzer normal arbeiten kann, ohne von den Hintergrundprozessen unterbrochen zu werden. Es ist auch möglich Vordergrundprozesse wie `pwd` in den Hintergrund zu verschieben. Der Nachteil ist jedoch, dass der Benutzer solange keine Ausgabe des Prozesses erhält, wie dieser nicht im Vordergrund ist. Daher macht es kaum Sinn Vordergrundprozesse in den Hintergrund zu rücken.
+
+<!-- omit in toc -->
+## Prozesserstellung
+
+Wie bereits unter [Arten von Prozessen](#arten-von-prozessen) erklärt gibt es zwei Arten von Prozessen, die Vorder- und Hintergrundprozesse. Diese beschreiben bereits, wie Prozesse erstellt werden können. Diese können entweder **aktiv** durch eine Benutzereingabe oder **passiv** durch einen anderen Prozess erstellt werden. Während die aktive Erstellung von Prozessen verständlich ist, ist es jedoch interessant zu wissen, wie bereits laufende (Hintergrund-) Prozesse neue (Hintergrund-) Prozesse starten. Dies kann entweder durch einen direkten Aufruf eines Programms erfolgen oder mittels einem `Fork`.
+
+<!-- omit in toc -->
+### Systemaufruf mittels Fork
+
+Ein Fork ist in UNIX-artigen Betriebssystemen ein Systemaufruf, anhand dessen der aufrufende Prozess (Elternprozess) **eine Kopie von sich selbst erzeugt**, einen sogenannten `Kindprozess`. Der Kindprozess übernimmt die Daten, den Code, den Befehlszähler und weitere Parameter vom Elternprozess mit sich und erhält von Kernel einen eindeutigen PID. Außerdem erhält auch dieser Prozess einen Speicherbereich im RAM. Ab hier an wird der Kindprozess als **eigenständige Instanz**, **unabhängig vom Elternprozess**, ausgeführt.
+
+<!-- omit in toc -->
+## Zombie-Prozess
+
+Ein Zombie-Prozess ist ein, noch in der Prozesstabelle befindlicher, beendeter Prozess. Ein solcher beendeter Prozess wird aus der Prozesstabelle entfernt, sobald sein Elternprozess dessen `Exit-Status` abfragt. Bis dahin verbleibt der Prozess als Zombie, der keine weiteren Ressourcen außer dem Tabelleneintrag, der PID, den Einträgen in Nutzungs-Statistiken und einen winzigen Teil des RAMs mehr belegt.
+
+<!-- omit in toc -->
+### Entstehung von Zombie-Prozessen
+
+Wenn ein Kindprozess beendet wird, kann der Elternprozess vom Betriebssystem erfragen, auf welche Art dieser beendet wurde: erfolgreich, mit Fehler, abgestürzt, abgebrochen etc. Um diese Abfrage zu ermöglichen, bleibt der Eintrag, nachdem der Prozess beendet wurde stehen, bis der Elternprozess die Abfrage durchführt, ganz gleich, ob die Information gebraucht wird oder nicht. Bis dahin gilt der Prozess als Zombie.
+
+Sobald ein Kindprozess beendet wurde, sendet der Kernel ein spezielles Signal (`SIGCHLD`) an den Elternprozess, um ihm mitzuteilen, dass er eine Statusabfrage durchführen kann, damit dieser endgültig aus der Prozesstabelle verschwindet (`reaped`). Führt der Elternprozess jedoch keine Statusabfrage durch, dann verbleibt dieser als Zombie-Prozess in der Prozesstabelle.
+
+<!-- omit in toc -->
+### Programmierfehler
+
+Wenn ein Prozess seine Kinder oftmals „*vergisst*“ und zu Zombies werden lässt, besonders wenn er auch auf ein manuelles `SIGCHLD` nicht reagiert, ist das meistens ein Hinweis auf einen **Bug im Programm**. Aus den daraus folgenden Problemen sollten die Fehler im Programm beseitigt werden, um das System durch die entstehenden Zombies nicht zu beeinträchtigen.
+
+<!-- omit in toc -->
+### Verwaiste Prozesse
+
+Ein weiterer Spezialfall, der an und für sich unabhängig von Zombies ist, jedoch in Kombination damit auftreten *kann*, ist, wenn der Elternprozess beendet wird. In diesem Fall werden all seine Prozesse `verwaist` genannt (`orphaned`). Diese Prozesse werden automatisch vom PID 1, dem INIT-Prozess, „*adoptiert*“ und bekommen diesen als Elternprozess zugewiesen. Dies passiert für **laufende genauso wie für Zombieprozesse**, deren Eltern nicht mehr existieren. Der INTI-Prozess kümmert sich anschließend **um das Beenden** der verwaisten Prozesse.
+
+<!-- omit in toc -->
+### Probleme von verwaisten Prozessen
+
+Grundsätzlich stellt das Vorhandensein von Zombieprozessen **keine große Gefahr** für das Betriebssystem dar, da diese nur wenige Systemressourcen in Anspruch nehmen. Problematisch kann es jedoch bei einer sehr großen Anzahl von Zombieprozessen werden, wenn zum Beispiel ein Programm mit vielen Hintergrundprozessen abstürzt. Diese Zombieprozesse nehmen viele PIDs ein, was dazu führen kann, dass nur noch **kaum oder gar keine freien PIDs** mehr vergeben werden können (`Forkbomb`). Somit wäre es nicht mehr möglich neue Prozesse aufzurufen.
+
+Erst wenn diese Prozesse beendet werden, können neue Prozesse erstellt werden.
+
+<!-- omit in toc -->
+### Behandlung von Zombieprozessen
+
+<!-- omit in toc -->
+#### Automatisiertes Löschen dank INIT
+
+Wie bereits unter [Verwaiste Prozesse](#verwaiste-prozesse) angesprochen übernimmt die PID 1 `INIT` verwaiste Prozesse und Zombieprozesse, welche keinen Elternprozess mehr besitzen. INIT hat dabei die Aufgabe den Beendigungszustand seiner Kindprozesse abzufragen und nach Beendigung des Kindprozesses diesen zu löschen. So sorgt INIT dafür, dass keine überflüssigen Zombies im System vorhanden sind.
+
+<!-- omit in toc -->
+#### Besonderheit des Linux-Kernels
+
+Der Linux-Kernel bietet für Prozesse, die nicht am Status ihrer Kinder interessiert sind, eine einfache – allerdings nicht standardisierte – Methode, Zombies loszuwerden: Gibt ein Prozess explizit an, dass er `SIGCHLD` **ignorieren** will, so löscht Linux die Zombies **automatisch**, **ohne auf eine Statusabfrage** zu warten.
+
+<!-- omit in toc -->
+## Forkbombs
+
+Forkbomben gehören zur Kategorie der *DoS-Attacken* (*Denial of Service*). Dessen einzige Zweck ist es, rekursiv Kopien seiner selbst zu starten, alle **verfügbaren Systemressourcen zu verbrauchen** und so das System zu blockieren. Unter UNIX-artigen Betriebssystemen ist dies möglich, indem ein Programm sich immer wieder selbst mittels eines Forks aufruft. Dadurch werden die daraus entstehenden Kindprozesse nie beendet. Die Anzahl der entstehenden Prozesse nimmt immer exponentiell zu. Somit ist ein normales Arbeiten bereits nach wenigen Sekunden nicht mehr möglich. Jedoch gibt es Möglichkeiten eine solche Forkbomb zu verhindern, wie das Beschränken von maximal zulässigen Prozessen pro Benutzer oder auch als Gruppe.
+
+<!-- omit in toc -->
+## Szenario - Out of PIDs
+
+Was passiert eigentlich, wenn keine PIDs mehr vorhanden sind und vor allem: wie viele PIDs kann ein UNIX-artiges Betriebssystem überhaupt haben?
+
+<!-- omit in toc -->
+### Das Maximum an PIDs
+
+Die maximale Anzahl von PIDs, die ein UNIX-artiges Betriebssystem haben kann ist von Distribution zu Distribution und von der Prozessorarchitektur unterschiedlich. Während es bei 32-Bit Prozessoren eine momentane maximale Anzahl von 2<sup>15</sup> (32.768) mögliche PIDs sind, sind es bei 64-Bit Prozessoren 2<sup>22</sup> (4.194.304) maximale PIDs[^6].
+
+Nun könnte man sich jedoch für 32- als auch 64-Bit Architektur fragen, warum es denn nicht mehr PIDs sind. Dies geht aus der [Man-Page](https://www.man7.org/linux/man-pages/man5/proc.5.html) von `proc` hervor. Letztlich wurde die Anzahl an benötigten PIDs in der jeweiligen Architektur frei ausgewählt, ohne eine wirkliche Begründung. Laut der Man-Page über `proc` sei z.B. die Anzahl von 2<sup>22</sup> PIDs für 64-Bit Systeme ausreichend genug. Man würde diese Anzahl so schnell nicht erreichen[^7].
+
+Aber was, wenn es doch passieren könnte? Zwar ist dies nur theoretisch zu beantworten, es gibt jedoch zwei Anhaltspunkte:
+
+1. Prozessstart nicht möglich. Wie in [Probleme von Zombieprozessen](#probleme-von-verwaisten-prozessen) beschrieben kann ein Mangel an freien PIDs dazu führen, dass keine neuen Prozesse gestartet werden können. Eine andere Möglichkeit ist außerdem das Freigeben von Prozessen, welche nicht mehr benötigt werden (z.B. Zombies), um so neue PIDs zu bekommen
+2. Laut eines Reddit-Foreneintrags wurde eine Forkbomb in einer Linux-VM getestet. Das Ergebnis hat gezeigt, dass bereits bei einer Anzahl von ca. 3000 Prozessen das System verweigert, neue Prozesse auszuführen. Ob dies jedoch ein Sicherheitsmechanismus oder ein Bug ist, ist nicht klar identifizierbar.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://de.wikipedia.org/wiki/Zombie-Prozess](https://de.wikipedia.org/wiki/Zombie-Prozess)
+- [https://en.wikipedia.org/wiki/Zombie_process](https://en.wikipedia.org/wiki/Zombie_process)
+- [https://de.wikipedia.org/wiki/Fork_(Unix)](https://de.wikipedia.org/wiki/Fork_(Unix))
+- [https://en.wikipedia.org/wiki/Fork_(system_call)](https://en.wikipedia.org/wiki/Fork_(system_call))
+- [https://de.wikipedia.org/wiki/Forkbomb](https://de.wikipedia.org/wiki/Forkbomb)
+- [https://en.wikipedia.org/wiki/Fork_bomb](https://en.wikipedia.org/wiki/Fork_bomb)
+- [https://unix.stackexchange.com/questions/231719/why-is-the-maximum-pid-in-a-64-bit-linux-system-222/231724](https://unix.stackexchange.com/questions/231719/why-is-the-maximum-pid-in-a-64-bit-linux-system-222/231724)
+- [https://unix.stackexchange.com/questions/16883/what-is-the-maximum-value-of-the-process-id](https://unix.stackexchange.com/questions/16883/what-is-the-maximum-value-of-the-process-id)
+- [https://en.wikipedia.org/wiki/Process_identifier](https://en.wikipedia.org/wiki/Process_identifier)
+- [https://www.reddit.com/r/linux/comments/1pnqwx/what_happens_when_all_of_the_allotted_pids_are/](https://www.reddit.com/r/linux/comments/1pnqwx/what_happens_when_all_of_the_allotted_pids_are/)
+- [https://unix.stackexchange.com/questions/304030/what-happens-when-you-run-out-of-pids](https://unix.stackexchange.com/questions/304030/what-happens-when-you-run-out-of-pids)
+- [https://www.geeksforgeeks.org/processes-in-linuxunix/](https://www.geeksforgeeks.org/processes-in-linuxunix/)
+
+# Round-Robin
+
+Das *Round-Robin* (Rundlauf-Verfahren) ist ein Verfahren, welches u.a. dafür konzipiert ist, Warteschlangen abzuarbeiten. Dabei kann es für verschiedene Bereiche wie Prozess-Scheduling oder auch als Netzerk- / DNS-Load-Balancing Verfahren eingesetzt werden. Es kommt ebenfalls häufig in der Rotation von Log-Dateien vor.
+
+<!-- omit in toc -->
+## Funktionsprinzipien
+
+Je nach Einsatzgebiet verfährt Round-Robin unterschiedlich, ist vom Verständnis her dennoch ähnlich.
+
+<!-- omit in toc -->
+### Beispiel - Prozess-Scheduler
+
+Verschiedene Prozesse in einer bestimmten Anwendung werden in einer **Warteschlange** eingereiht. Der vorderste Prozess erhält einen kurzen bestimmten Zeitschlitz lang den Zugang zu den anzufordernden Hardwareressourcen wie CPU, GPU oder andere. Nach diesem Zeitschlitz oder bei Beendigung der Aufgabe reiht er sich wieder **in die Warteschlange hinten** ein. Als nächstes kommt der zweite Prozess. Auch dieser besitzt einen bestimmten Zeitschlitz, bearbeitet seine Aufgaben und reiht sich anschließend wieder in die Warteschlange hinten ein. Dieses Verfahren basiert auch auf dem sogenannten `First in First out`-Verfahren (FIFO).
+
+<!-- omit in toc -->
+### Beispiel - Server Load-Balancer
+
+Im Beispiel von Load-Balancing verhält sich das Round-Robin Verfahren folgendermaßen: Nimmt man an, man hat drei gleiche Server (im Sinne der Hardwareressourcen), dann werden Anfragen für diese Server immer **der Reihe nach** verteilt. Zuerst erhält Server 1 eine Anforderung (Request). Anschließend Server 2 und danach Server 3. Nachdem Server 3 eine Request bekommen hat, beginnt die *Warteschlange* von vorne, indem Server 1 eine Anfrage entgegennimmt.
+
+Nun ist es in der Praxis so, dass nicht immer jeder Server die gleichen Hardwareanforderungen besitzt. Dafür wird das sogenannten `Weighted Load-Balancing`-Verfahren benutzt. Dieses bestimmt die Anzahl der Requestan die jeweiligen Server, basierend auf deren Hardwarekonfiguration. Geht man bei einem Beispiel von 6 Requests davon aus, dass Server 1 die stärkste, Server 2 die mittlere und Server 3 die schwächste Hardwarekonfiguration besitzt, so werden die Requests wie folgt aufgeteilt:
+
+- **Server 1:** 3 Requests
+- **Server 2:** 2 Requests
+- **Server 3:** 1 Request
+
+<!-- omit in toc -->
+### Beispiel - Netzwerkrouting mit RIP
+
+Im Beispiel mit einem Netzwerkroutingprotokoll wie `RIP` funktioniert das Round-Robin Verfahren nur dann, wenn zu einem bestimmten Ziel die Pfadkosten und Metriken identisch sind. Hier können anschließend zwischen zwei Methoden gewählt werden:
+
+1. **Per Packet:** Die verschiedenen Pakete werden immer abwechselnd über die jeweiligen Netzwerkrouten übertragen.
+2. **Per Ziel:** Die Pakete nehmen immer dann eine andere Netzwerkroute, wenn sich der Empfänger des Pakets ändert.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://avinetworks.com/glossary/round-robin-load-balancing/](https://avinetworks.com/glossary/round-robin-load-balancing/)
+- [https://de.wikipedia.org/wiki/Round_Robin_(Informatik)](https://de.wikipedia.org/wiki/Round_Robin_(Informatik))
+
+# .rhosts
+
+Heutzutage ist das SSH-Protokoll allgegenwärtig. Es ist das meistbenutzte Protokoll für Remote-Benutzerzugriff auf Systemen, vor allem in den UNIX / Linux-Umgebungen. Doch vor der Entwicklung von SSH in Jahr 1995 war der Wunsch für einen Remote-Login auf UNIX-Systemen groß. Dafür wurde, das im Jahre 1980 entwickelte `.rhosts` eingesetzt
+
+<!-- omit in toc -->
+## Über .rhosts
+
+`.rhosts` (remote Hosts) wurde, im Jahr 1980 entwickelt und erstmals in BSD (Berkely Software Distribution) eingeführt. Es stellt eine Möglichkeit dar, sich von einem Gerät auf ein anderes Gerät über die Ferne (remote) zu verbinden. Wichtig war hier, dass die Geräte entweder im **selben Netzwerk** waren oder in der .rhosts-Datei auf eine **bestimmte Netzgruppe** hingewiesen wurde, welche Zugriff für das Remote-System besitzt.
+
+Mitsamt .rhosts wurden weitere Programme wie folgende entwickelt:
+
+- `rsh`: Führt einen Shell-Befehl auf einem Remote-System aus.
+- `rlogin`: Möglichkeit zur Remote-Authentifizierung und Anmeldung. Stellt zudem ein Terminal auf dem Remote-Host bereit.
+- `rcp`: Kopiert unterschiedliche Dateien zwischen lokalen und remote System (siehe das SSH-Pendant `scp`).
+- `rcmd`: Führt einen Befehl auf einem Remote-System mit dem Superuser aus.
+
+<!-- omit in toc -->
+## Funktionsweise
+
+Im jeweiligen UNIX Remote-System existieren zwei unterschiedliche Dateien:
+
+1. `/etc/hosts.equiv`: Hier werden vertrauenswürdige Systeme eingetragen, welche sich einloggen dürfen, um allgemeine root-Rechte zu erlangen.
+2. `/$HOME/$USER/.rhosts`:  Hier werden Systeme eingetragen, die sich ausschließlich an diesem Benutzer anmelden dürfen.
+
+Damit sich ein System mit einem anderen (remote) System mittels .rhosts verbinden kann, wird das System mit FQDN (Fully qualified domain name) und optionalem Benutzer in die jeweilige .rhosts-Datei eingetragen. Dabei können Einträge entweder negativ (`-`, negierter Zugriff) oder positiv (`+`, erlaubter Zugriff) sein. Ist ein Eintrag negiert, so wird eine Remoteverbindungs-Anfrage abgelehnt. Ist ein Eintrag erlaubt, so wird die Remoteverbindungs-Anfrage gestattet.
+
+Eine .rhosts-Datei besteht zudem meist aus mehreren einzeiligen Einträgen. Das Format für Einträge in einer .rhosts-Datei sind wie folgt:
+
+```txt
+<hostname> <username>
+```
+
+Dabei besitzen `Hostname` und `Username` folgende Eigenschaften:
+
+- `+`: Alle Hosts / Users im Netzwerk sind vertrauenswürdig.
+- `Hostname / Username:` Alle Benutzer, die von `hostname` aus zugreifen, sind vertrauenswürdig. / Der Benutzer `username` ist vertrauenswürdig.
+- `-Hostname / -Username`: Der `hostname` ist nicht vertrauenswürdig. / Der Benutzer `username` ist nicht vertrauenswürdig.
+- `+@netgroup`: Alle Hosts / Users in der Netzgruppe `netgroup` sind vertrauenswürdig.
+- `-@netgroup`: Kein Host / User in der Netzgruppe `netgroup` ist vertrauenswürdig.
+
+<!-- omit in toc -->
+### .rhosts-Einträge Beispiele
+
+Der folgende Eintrag erlaubt den Zugriff auf das lokale System / auf einen lokalen User mit dem Host `hostname.example.com` und dem Benutzer `robert`:
+
+```txt
+hostname.example.com robert
+```
+
+Der nachfolgende Eintrag verweigert jeglichen Zugriff vom Host `hostname.example.com`:
+
+```txt
+-hostname.example.com
+```
+
+Der nachfolgende Eintrag erlaubt das Anmelden der Netzgruppe `admins` außer des Benutzernamens `robert`:
+
+```txt
++@admins -robert
+```
+
+Es ist wichtig, dass verweigerte Zugriffe **vor den erlaubten Zugriffen** innerhalb einer .hosts-Datei geschrieben werden. Ansonsten werden eventuell Zugriffe erlaubt, welche normalerweise verboten werden sollten, bzw. anders eingeschränkt werden sollten.
+
+<!-- omit in toc -->
+## Sicherheitsrisiko
+
+.rhosts war für die damalige Benutzung ein großer Fortschritt in der remote Authentifikation gewesen, besitzt jedoch bekanntlich einige Schwachstellen, weshalb der Einsatz heutzutage **nicht mehr empfohlen** ist. Ein Problem ist, dass die .rhosts-Datei für den jeweiligen Nutzer die korrekten Rechte besitzen muss. Nur der Benutzer selbst oder der Root-Benutzer dürfen Schreibrechte für diese Datei besitzen. Andernfalls könnten andere lokale Benutzer die Datei modifizieren und so nicht vertrauenswürdige Hosts eintragen.
+
+Eine weitere Schwachstelle liegt darin, dass die Authentifikation mittels Hostnamen / FQDNs stattfindet. Es besteht die Möglichkeit, dass ein FQDN mittels einer DNS-Spoofing-Attacke auf einen anderen / böswilligen Host umgeleitet werden kann. Dieser kann dann verschiedene Namen durchprobieren, bis dieser sich am System anmelden kann. Im schlimmsten Fall erlangt dieser Root-Rechte und kann das jeweilige System übernehmen.
+
+Zudem kann jeder Benutzer eine eigene .rhosts-Datei erstellen, weshalb es wichtig ist, die Erstellung einer solchen Datei für einen Benutzer zu unterbinden.
+
+<!-- omit in toc -->
+## Ablösung von .rhosts
+
+Durch die verschiedenen und kritischen Sicherheitsrisikos ist es heute nicht mehr empfohlen .rhosts.Dateien einzusetzen. Als Ablösung wird herfür das in 1995 entwickelte **SSH-Protokoll empfohlen**. Es bietet nicht nur die Funktionalitäten wie .rhosts, sondern noch vieles mehr wie z.B. ein **verschlüsselter Datenaustausch** als auch eine **sichere passwortlose Authentifikation**.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.ssh.com/academy/ssh/rsh](https://www.ssh.com/academy/ssh/rsh)
+- [http://www.qnx.com/developers/docs/6.5.0SP1.update/com.qnx.doc.neutrino_utilities/r/rhosts.html](http://www.qnx.com/developers/docs/6.5.0SP1.update/com.qnx.doc.neutrino_utilities/r/rhosts.html)
+- [https://www.ibm.com/docs/en/aix/7.2?topic=formats-rhosts-file-format-tcpip](https://www.ibm.com/docs/en/aix/7.2?topic=formats-rhosts-file-format-tcpip)
+- [https://www.lifewire.com/what-is-rhosts-2195896](https://www.lifewire.com/what-is-rhosts-2195896)
+
+# TSO - TCP Segmentation Offloading
+
+TCP Segmentation Offloading (TSO) oder auch Generic Segmentation Offloading (Linux) genannt, ist eine Funktion der Netzwerkkarte (NIC) eines PCs, Servers oder sonstigen technischen Geräts, welches die Segmentierung von TCP/IP-Paketen übernimmt. Dadurch entlastet die NIC den Prozessor (CPU), welcher stattdessen die Berechnungen der TCP-Segmentierung durchführen müsste. Somit können die CPU-Ressourcen, welche für die Segmentierung zuständig wären, stattdessen für andere Berechnungen benutzt werden. Dies steigert die Effizienz des einzelnen Geräts, nicht jedoch des gesamten Netzwerks.
+
+Die meisten heutigen hergestellten NICs unterstützen TSO. Es ist ein **Best-Practice** TSO auf NICs anzuwenden, welche innerhalb eines Netzwerks mit hohem Datenverkehr und schnellen Transferraten interagieren. Ist TSO auf vielen Geräten aktiv, kann das die Transferrate innerhalb des Netzwerks steigern.
+
+**Vorsicht:** TSO kann jedoch auch zu Netwerk-Performance Problemen führen. So kann beispielsweise nicht jede Software mit dem TSO-Feature umgehen. Ein Beispiel ist hierfür der von FreeBSD eingetzte Packet-Filter `pf`. Dieser kann im Zusammenhang mit TSO Probleme bereiten. Dies kann auch bei anderer Software der Fall sein. Grundsätzlich sollte man bei der Planung des Netzwerk auch immer im Hinterkopf behalten, ob die Aktivierung von TSO tatsächlich sinnvoll ist und nicht zu Problemen führen könnte.
+
+<!-- omit in toc -->
+## Funktionsweise von TSO
+
+TSO ist in seiner Funktion mit dem bloßen Auge nicht direkt ersichtlich. Daher muss man, um die Funktion auch in der Praxis ansehen zu können, sich an Drittmitteln wie [Wireshark](https://www.wireshark.org/) oder [tcpdump](https://www.tcpdump.org/) bedienen. Zur Veranschaulichung dient das folgende Beispiel:
+
+Man möchte ein Paket mit der Größe von 7.300 Bytes verschicken. TCP wird dieses Paket dabei in circa **5 Segmente** segmentieren. Weshalb 5? Wie man weiß ist die Maximum Transmission Unit (MTU) eines Ethernet- Frames meist auf 1.500 Bytes beschränkt. Dabei müssen noch 20 Byte für den IP-Header und weitere 20 Byte für den TCP-Header abziehen. Somit erhält man eine Maximum Segmentation Size (MSS) von 1460 Byte (Siehe untere Abbildung).
+
+![TSO Bild 1](./_resources/tso/tso_bild1.PNG)
+
+Nachdem die Übertragungsschicht den IP-Header an die jeweiligen Datagramme angefügt hat, übergibt es jedes einzelne Segment an die Sicherungsschicht. Von dort aus werden die Daten zusätzlich mit dem Frame-Header versehen und nach und nach zum Ziel geschickt.
+
+Setzt man bei diesem Beispiel nun TSO ein, so kann man sehen, dass das Hostsystem die Daten bis zur Netzwerkkarte in einem Stück (7.300 Byte) übergibt. Dabei werden TCP- und IP-Header als *Template* angefügt. Auf der Sicherungsschicht kümmert sich die NIC um die Segmentierung des großen Datenpakets.
+
+![TSO Bild 2](./_resources/tso/tso_bild2.PNG)
+
+Bei bloßer Betrachtung ist kein enormer Unterschied zwischen einer aktiven und einer ausgeschalteten TSO-Funktion zu erkennen. Doch mit Wireshark (oder tcpdump) sieht man einen deutlichen Unterschied. Während man beim deaktivierten TSO die fünf einzelnen TCP-Segmente aufzeichnen kann, wird beim aktivierten TSO nur ein komplettes (7.300 Byte langes) Datenpaket angezeigt.
+
+<!-- omit in toc -->
+### Differenzierung in Linux und FreeBSD
+
+In Linux wird grundsätzlich zwischen TSO und GSO unterschieden. Dies hat den Grund, da GSO eine **Softwareimplementation** von TSO ist. Sie wurde in FreeBSD 8.0 und im Linux-Kernel 2.6.18 hinzugefügt. GSO besitzt dabei die gleichen Funktionsmerkmale wie TSO, jedoch auf **Softwareebene**. 
+
+In Linux kann man die Verwendung von GSO besser betrachten. Überträgt man beispielsweise eine Datei in der Größe von 10.000 Bytes und überlässt die Segmentierung der NIC, so werden unter Linux auf 10.000 Bytes ebenfalls nur fünf Segmente erstellt (Siehe nachfolgenden Auszug).
+
+```txt
+sgordon@ginger$ sudo tcpdump -i eth0 -n 'not port 22'
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+18:30:24.899687 IP 192.168.1.2.5002 > 10.10.1.22.5001: S 679249855:679249855(0) win
+5840
+18:30:24.900583 IP 10.10.1.22.5001 > 192.168.1.2.5002: S 1420594303:1420594303(0)
+ack 679249856 win 5792
+18:30:24.900612 IP 192.168.1.2.5002 > 10.10.1.22.5001: . ack 1 win 92
+# Segment 1
+18:30:24.900713 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 1:2897(2896) ack 1 win 92
+# Segment 2
+18:30:24.900735 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 2897:4345(1448) ack 1 win
+92
+18:30:24.902575 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 1449 win 68
+# Segment 3
+18:30:24.902591 IP 192.168.1.2.5002 > 10.10.1.22.5001: P 4345:7241(2896) ack 1 win
+92
+18:30:24.903597 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 2897 win 91
+# Segment 4
+18:30:24.903607 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 7241:8689(1448) ack 1 win
+92
+# Segment 5
+18:30:24.903613 IP 192.168.1.2.5002 > 10.10.1.22.5001: P 8689:10001(1312) ack 1 win
+92
+18:30:24.903617 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 4345 win 114
+18:30:24.905573 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 5793 win 136
+18:30:24.905587 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 7241 win 159
+18:30:24.906628 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 8689 win 181
+18:30:24.906637 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 10001 win 204
+```
+
+Die jeweiligen Segmente sind in der Zeile entsprechend markiert. Die sich dahinter befindende eingeklammerte Zahl gibt die Größe des jeweiligen TCP-Segments an. Doch nun könnte man sich fragen, wie ein 2896 Byte großes TCP-Segment in ein maximal 1460 Byte großes TCP-Segment hineinpasst. Dies ist dem GSO zu verdanken, welches die Segmentierung der NIC überlässt. Dadurch können größere TCP-Segmente erstellt werden, als wenn die CPU diese Aufgabe übernimmt. Wenn die CPU die Aufgabe der Segmentierung vornehmen würde, würden die Segmentgrößen folgendem Auszug entsprechen:
+
+```txt
+sgordon@ginger$ sudo tcpdump -i eth0 -n 'not port 22'
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 96 bytes
+18:33:02.644356 IP 192.168.1.2.5002 > 10.10.1.22.5001: S 3144010294:3144010294(0)
+win 5840
+18:33:02.645427 IP 10.10.1.22.5001 > 192.168.1.2.5002: S 3901655238:3901655238(0)
+ack 3144010295 win 5792
+18:33:02.645471 IP 192.168.1.2.5002 > 10.10.1.22.5001: . ack 1 win 92
+# Segment 1
+18:33:02.645542 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 1:1449(1448) ack 1 win 92
+# Segment 2
+18:33:02.645558 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 1449:2897(1448) ack 1 win
+92
+# Segment 3
+18:33:02.645567 IP 192.168.1.2.5002 > 10.10.1.22.5001: P 2897:4345(1448) ack 1 win
+92
+18:33:02.647415 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 1449 win 68
+# Segment 4
+18:33:02.647433 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 4345:5793(1448) ack 1 win
+92
+# Segment 5
+18:33:02.647439 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 5793:7241(1448) ack 1 win
+92
+18:33:02.648437 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 2897 win 91
+# Segment 6
+18:33:02.648446 IP 192.168.1.2.5002 > 10.10.1.22.5001: . 7241:8689(1448) ack 1 win
+92
+# Segment 7
+18:33:02.648451 IP 192.168.1.2.5002 > 10.10.1.22.5001: P 8689:10001(1312) ack 1 win
+92
+18:33:02.648460 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 4345 win 114
+18:33:02.650414 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 5793 win 136
+18:33:02.650428 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 7241 win 159
+18:33:02.651469 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 8689 win 181
+18:33:02.651476 IP 10.10.1.22.5001 > 192.168.1.2.5002: . ack 10001 win 204
+```
+
+Im Unterschied kann man also sehen, dass das Versenden einer 10.000 Byte großen Datei mit deaktiviertem GSO **sieben** TCP-Segmente braucht und somit zwei mehr als mit eingeschaltetem GSO.
+
+<!-- omit in toc -->
+## Bevorzugung von GSO über TSO
+
+In FreeBSD und bei sämtlichen Linux-Distributionen wird eher GSO anstatt TSO verwendet. Dies hat den Grund, da TSO komplett auf einer hardwaregestützten Implementation in der Netzwerkkarte basiert. Für z.B. Linux ist es somit nicht oder auch nur schwer möglich mittels Netfilter Pakete besser auszulesen und zu bestimmen. Auch das Auftreten von Hard- oder Software-Fehlern mit TSO bei NICs ist ein großes Problem. Wenn TSO nicht korrekt ausgeführt wird, muss zuerst der Hersteller der jeweiligen NIC einen Patch bereitstellen. Das Patchen der Code-Fehler geht mittels im Linux-Kernel verbauten GSO deutlicher eleganter und einfacher. Zudem müssten für den umfänglichen Support von TSO sämtliche sich im Einsatz befindende NICs vom Hersteller modifiziert werden, was auch eine hohe Implementierungszeit benötigen würde.
+
+<!-- omit in toc -->
+## Fazit - Eigene Meinung
+
+Im alltäglichen Gebrauch wird die Aktivierung von TSO und GSO kaum eine wahrnehmbare Rolle spielen, weshalb es daher auch nicht unbedingt aktiviert werden muss. Wo es jedoch definitiv aktiviert werden sollte ist bei Netzwerkgeräten, welche viel Traffic-Aufkommen haben wie Router, Gateways, oder Switches. Dabei sollte GSO über TSO bevorzugt werden. Um jedoch eine wirkliche Verbesserung zu spüren, sollte diese Funktion bei allen Geräten, die in einem traffic-lastigen Netz arbeiten, aktiviert werden.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://sandilands.info/sgordon/segmentation-offloading-with-wireshark-and-ethtool](https://sandilands.info/sgordon/segmentation-offloading-with-wireshark-and-ethtool)
+- [https://www.deinlexikon.de/wiki/TCP_segmentation_offload](https://www.deinlexikon.de/wiki/TCP_segmentation_offload)
+- [https://de.wikipedia.org/wiki/TCP_segmentation_offload](https://de.wikipedia.org/wiki/TCP_segmentation_offload)
+- [https://doc.dpdk.org/guides/prog_guide/generic_segmentation_offload_lib.html](https://doc.dpdk.org/guides/prog_guide/generic_segmentation_offload_lib.html)
+
+# VRRP - Virtual Router Redundancy Protocol
+
+Virtual Router Redundancy Protocol (VRRP) ist ein Netzwerkprotokoll, welches den Single-Point-of-Failure innerhalb eines einfachen Netzwerks beseitigen soll. Dafür werden mehrere Router oder Switche benötigt, welche als eine Gruppe agieren. Diese Routinggruppe, auch *Routingplattform* genannt, besitzt jeweils nur eine IP-Adresse. Diese IP-Adresse wird in den Einstellungen des jeweiligen Clients eingetragen. Fällt der Hauptrouter aus so wird die Verbindung durch die bestehenden Router fortgeführt. Dies fällt u.a. auch unter dem Begriff `Cluster`.
+
+<!-- omit in toc -->
+## Funktionsweise
+
+Möchte ein Client mit dem Internet kommunizieren, baut er eine Verbindung mit seinem Router auf, welcher für Ihn seine private IP-Adresse in eine öffentliche umwandelt. So ist er in der Lage mit anderen Kommunikationspartnern außerhalb seines eigenen Netzwerks zu kommunizieren. Die IP-Adresse des Routers ist oft in der Client-Konfiguration zu finden (entweder statisch oder per DHCP). Doch fällt dar Router aus, kann der Client nicht mehr mit dem Internet kommunizieren. Der Router ist somit der **Single-Point-of-Failure** innerhalb des Netzwerkes. 
+
+Um einen solchen Vorfall zu vermeiden wird VRRP eingesetzt. VRRP legt die Verbindung des Clients redundant aus. Benötigt werden hierfür jedoch mehrere Router. Diese Router werden als **logischen Router** zusammengeschaltet, was man auch als *Routingplattform* bezeichnet. Jede Routingplattform besteht aus einem Master-Router und mehreren Standby-Routern (Master/Slave). Die Routingplattform erhält wie jeder Router auch eine IP- und MAC-Adresse. Diese Adressen werden jeweils unter den einzelnen Routern ausgehandelt. In den meisten Fällen wird jedoch die IP- und MAC-Adresse des **ersten Master-Routers** für die Routingplattform benutzt.
+
+Fällt nun der Master-Router aus so bemerken das die Standby-Router und wählen einen neuen Master-Router unter sich aus. Dies wird anhand der jeweiligen automatisch oder manuell gesetzten Priorität bestimmt. Der neue Master-Router macht den anderen Routern anschließend bekannt, dass dieser die Rolle des Masters übernommen hat und übernimmt die IP- und MAC-Adresse des ursprünglichen Master- Routers [^8]. Dies birgt den Vorteil, dass Clients, die bereits eine Kommunikation über den ausgefallenen Router aufgebaut haben, ihre Kommunikation nicht neu aufbauen müssen. Sie können ihre Kommunikation wie gehabt fortsetzen.
+
+Startet der ausgefallenen Master-Router wieder so übergibt der temporäre Master-Router seine Aufgabe wieder an den ursprünglichen Master-Router und meldet sich anschließen wieder als Standby-Router. Unten gezeigte Abbildung stellt die Routingplattform nochmals genauer dar.
+
+![VRRP Bild 1](./_resources/vrrp/vrrp_bild1.PNG)
+
+<!-- omit in toc -->
+## Gut zu wissen
+
+- Es können mehrere Routingplattformen erstellt werden. Jede Routingplattform benötigt dafür eine ID.
+- Jeder Router besitzt eine Priorisierung. Diese Priorisierung kann einen **manuell** gesetzten Wert zwischen 1 und 255 annehmen. Dabei entspricht 255 die **höchste** Priorität.
+- Der RFC Standard zu VRRP ([RFC 5798](https://datatracker.ietf.org/doc/html/rfc5798)) besitzt keinen Eintrag für die Verwendung von zwei Master-Routern. Daher gibt es keine genaue Definition wie eine Master-Master-Verwendung auszusehen hat. Eine am meisten eingesetzte Verwendung ist jedoch das Load-Balancing.
+- Es gibt noch unterschiedliche Protokolle im Vergleich zu VRRP. Diese sind unter HSRP (Hot Standby Router Protocol, Cisco proprietär. Ähnlich wie VRRP) und GLBP (Gateway Load Balancing Protocol) bekannt. Ausführliche Informationen dazu findet man hier: [https://www.freeccnastudyguide.com/study-guides/ccna/ch14/vrrp-hsrp-glbp/](https://www.freeccnastudyguide.com/study-guides/ccna/ch14/vrrp-hsrp-glbp/)
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.juniper.net/documentation/us/en/software/junos/high-availability/topics/concept/vrrp-overview-ha.html](https://www.juniper.net/documentation/us/en/software/junos/high-availability/topics/concept/vrrp-overview-ha.html)
+- [https://de.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol](https://de.wikipedia.org/wiki/Virtual_Router_Redundancy_Protocol)
+- [https://www.cisco.com/c/de_de/support/docs/security/vpn-3000-series-concentrators/7210-vrrp.pdf](https://www.cisco.com/c/de_de/support/docs/security/vpn-3000-series-concentrators/7210-vrrp.pdf)
+
+# WSUS - Windows Server Update Services
+
+Der Windows Server Update Services (kurz WSUS) ist eine von Microsoft bereitgestellte Softwarekomponente, welche seit Windows Server 2003 erhältlich ist. Es ist die zentrale Komponente für Windows-Clients Upgrades und Aktualisierungen zu beziehen, weshalb es auf einem Client-Server-System basiert. WSUS benutzt dabei eine auf dem System installierte Datenbank um Versionsdaten, Statusberichte und Aktualisierungen der jeweiligen Clients zu verwalten.
+
+<!-- omit in toc -->
+## Hauptaufgabe
+
+Zu einem vom Administrator bestimmten Zeitpunkt baut der WSUS-Server eine Verbindung mit einem offiziellen Microsoft-Update-Server auf. Nach erfolgreichem Verbindungsaufbau lädt er die benötigten Aktualisierungen für die jeweiligen Clients herunter. Die Updates werden anschließend durch einen Pull-Mechanismus von den Clients vom WSUS-Server angefordert, heruntergeladen und installiert. Dieser Pull-Mechanismus ist durch eine vom Administrator bestimmte Zeit festgelegt. Bei kritischen / wichtigen Updates kann der Server auch direkt nach dem Herunterladen das Update auf die jeweiligen Clients pushen. Ebenfalls ist es möglich manuell Updates zu für Clients oder auch Client- und Server-Gruppen freizugeben.
+
+Auch Drittanbieter-Software kann so vom WSUS heruntergeladen und anschließend bereitgestellt werden. Hierfür wird jedoch ein Zusatzprogramm benötigt. Dafür kann entweder der Windows Package Manager (WPP) oder der Windows Package Publisher eingesetzt werden.
+
+<!-- omit in toc -->
+## Besonderheiten
+
+Es ist möglich mit dem WSUS-Server verschiedene (Client-) Gruppen anzulegen. In diesen Gruppen befinden sich unterschiedliche Clients, welche unterschiedliche Updates und Softwareinstallationen beziehen können. So können z.B. wichtige / kritische Systeme von Testsystemen voneinander getrennt werden. So ist es zum Beispiel möglich ein neues Update erst auf den Test-Servern aufzuspielen und nach erfolgreichem Testen auf die kritischen Systeme aufzuspielen.
+
+![WSUS Bild 1](./_resources/wsus/wsus_bild1.PNG)
+
+<!-- omit in toc -->
+## Quellen
+
+Da dieser Artikel bereits vor längerer Zeit verfasst wurde und ursprünglich keine Quellenangaben gegeben wurden, können hier ebenfalls keine Quellen genannt werden.
+
 # X11
 
 *X11* ist ein Protokoll-Stack bestehend aus unterschiedlichen Komponenten. *X* bezieht sich hierbei auf das *X-Window-System*, welches in den meisten Linux-Distributionen vorkommt und dazu benutzt wird, primitive Grahpical User Interfaces (GUIs) zu erstellen. Die *11* bedeutet, dass sich das Protokoll in der elften Version befindet, welche seit dem Jahr **1987** besteht.
@@ -1414,3 +1831,9 @@ X11 Forwarding könnte man auch als *Linuxartiges RDP* bezeichnen. Da auf den me
 [^4]: Hiermit sind nicht unbedingt Displays als Hardware gemeint. Gemeint können auch virtuelle Desktops sein.
 
 [^5]: Canvas ist bei Computern ein Container, welcher eine Vielzahl an unterschiedlichen Elemente beinhalten kann.
+
+[^6]: Jedoch muss von der Gesamtsumme an PIDs 2 abgezogen werden. Standardmäßig ist der Kernel PID 0 und der INIT PID 1.
+
+[^7]: Es gab auch eine hitzige Diskussion über die Erhöhung der PIDs. Letztlich wurde jedoch nichts verändert.
+
+[^8]: Die neue IP-Adresse wird auf die NIC (Network Interface Card) des neuen Master-Routers geschrieben. Eine NIC kann mehrere Netzwerke fassen und somit noch Datenverkehr von anderen Netzwerken routen.
