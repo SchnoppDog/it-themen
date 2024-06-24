@@ -3,6 +3,8 @@
 
 Dieses Markdown-Dokument soll verschiedene IT-Themen zusammenfassen, die ich hin und wieder angeschaut habe.
 
+- **Letzte Änderung:** 2024-06-24
+
 <!-- omit in toc -->
 ## Disclaimer
 
@@ -21,7 +23,6 @@ Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://cod
 - [FTP - File Transfer Protocol](#ftp---file-transfer-protocol)
 - [LLDP - Link Layer Discovery Protokoll](#lldp---link-layer-discovery-protokoll)
 - [LRO - Large Receive Offload](#lro---large-receive-offload)
-- [Netzwerkadressberechnung](#netzwerkadressberechnung)
 - [Netzwerkplanung - Hierarchisches Netzwerk](#netzwerkplanung---hierarchisches-netzwerk)
 - [UNIX-Prozesse](#unix-prozesse)
 - [Round-Robin](#round-robin)
@@ -1058,6 +1059,21 @@ Die Schritte 1 bis 6 im Kapitel [Go-Back-N ARQ](#go-back-n-arq) werden wiederhol
 Der Selective-Repeat ARQ Mechanismus ist nochmals etwas besser als der Go-Back-N ARQ, da dieser bei einem verlorenen oder korrupten `ACK`- / Datenframe **nicht alle**, im Window enthaltenen, Datenframes erneut geschickt werden müssen, sondern **nur das Fehlende**. Dies belastet das Netzwerk, vor allem bei einem erhöhten Fehleraufkommen, weniger.
 
 <!-- omit in toc -->
+## Geheime Tücken von Flow-Control
+
+Flow-Control ist an für sich ein wichtiges Protokoll, welches dabei helfen kann, Geschwindigkeiten für den Empfänger entsprechend anzupassen. Jedoch kann Flow-Control auch Probleme verursachen. So zum Beispiel in einem kleinen Netzwerk mit einem Switch, der 802.3X Flow-Control unterstützt und drei angeschlossene Endgeräte. Von diesen drei angeschlossenen Endgeräten haben zwei eine 1 Gbit/s Verbindung und der dritte Client eine 100 Mbit/s Verbindung.
+
+Sendet ein Client mit der 1 Gbit/s Verbindung Dateien an beide andere Clients, würde man erwarten, dass der Client mit 100 Mbit/s auch nur eine Geschwindigkeit von 100 Mbit/s hat und der Client mit 1 Gbit/s seine Geschwindigkeit von 1 Gbit/s ausreizt. Es kann jedoch dazu kommen, dass der Client mit 1 Gbit/s auf 100 Mbit/s gedrosselt wird. Dies kommt durch eine problematische Verhaltensweise von Flow-Control im Switch zum Vorschein. Im Flow-Control Protokoll gibt es ein Flag namens `PAUSE`, welches normalerweise vom Emfpänger an den Sender gesendet wird, um zu zeigen, dass der Sender keine weiteren Pakete kurzzeitig empfangen kann.
+
+Dieses `PAUSE` sollte zwar vom **Empfänger** gesendet werden, stattdessen kann es vorkommen, dass es vom **Sender** gesendet wird, was darin resultiert, dass **alle** Verbindungen auf 100 Mbit/s gedrosselt werden.
+
+Diese Problematik kann auf verschiedene Arten und Weisen jedoch umgangen werden:
+
+1. Die erste Möglichkeit besteht darin Flow-Control in den Einstellungen der jeweiligen NIC zu **deaktivieren**. Dadurch wird zwar Flow-Control nicht mehr verwendet, es hat aber auch keinen allzu großen Impact in der Netzwerkkommunikation, kann aber zu einer *Überlfutung* an Netzwerkpaketen führen.
+2. Die zweite Möglichkeit besteht darin Flow-Control auf dem Switch zu deaktivieren, sofern der Switch managebar ist. Alle unmanaged Switche besitzen grundsätzlich immer Flow-Control.
+3. Eine dritte Möglichkeit besteht darin alle Geräte, die am Switch angeschlossen sind, auf die gleiche Bandbreitengeschwindigkeit zu setzen. In diesem Fall wäre es beispielsweise sinnvoll alle NICs mit 1 Gbit/s auszustatten. Dadurch würde jeder die gleiche Geschwindigkeit besitzen und Flow-Control könnte weiterhin aktiviert bleiben.
+
+<!-- omit in toc -->
 ## Quellen
 
 - [https://www.youtube.com/watch?v=n09DfvemnTQ](https://www.youtube.com/watch?v=n09DfvemnTQ)
@@ -1068,6 +1084,7 @@ Der Selective-Repeat ARQ Mechanismus ist nochmals etwas besser als der Go-Back-N
 - [https://www.youtube.com/watch?v=cqPWjo2iLgk](https://www.youtube.com/watch?v=cqPWjo2iLgk)
 - [https://www.youtube.com/watch?v=PHcIuxvLSzc](https://www.youtube.com/watch?v=PHcIuxvLSzc)
 - [https://afteracademy.com/blog/what-is-flow-control-in-networking](https://afteracademy.com/blog/what-is-flow-control-in-networking)
+- [https://www.smallnetbuilder.com/lanwan/lanwan-features/when-flow-control-is-not-a-good-thing/](https://www.smallnetbuilder.com/lanwan/lanwan-features/when-flow-control-is-not-a-good-thing/)
 
 
 
@@ -1266,296 +1283,6 @@ Genau wie TSO nimmt LRO die Last vom eingebauten Prozessor (CPU) des Systems ab 
 - [https://en.wikipedia.org/wiki/TCP_offload_engine#Large_send_offload](https://en.wikipedia.org/wiki/TCP_offload_engine#Large_send_offload)
 - [https://lwn.net/Articles/148697/](https://lwn.net/Articles/148697/)
 - [https://lwn.net/Articles/243949/](https://lwn.net/Articles/243949/)
-
-# Netzwerkadressberechnung
-
-<!-- omit in toc -->
-## Vorwort
-
-In diesem Kapitel geht es um die Berechnung von Netz- und Brodcastadressen und Netzwerkbereiche mittels `Variable Length Subnet Masking` (VLSM). Die nachfolgende Anleitung wurde von mir selbst verfasst und soll einen von mehreren möglichen Wegen aufzeigen, die entsprechenden Netzwerkadressbereiche zu berechnen. Dies soll eine Hilfe für diejenigen sein, die noch unsicher bei der Berechnung von IP-Adressen bzw. Netzwerkadressbereiche sind.
-
-Für die Berechnung werden unterschiedliche Szenarien angenommen.
-
-<!-- omit in toc -->
-## Einteilung mehrerer Netzwerke für unterschiedliche Host-Größen
-
-In diesem Szenario geht es darum, dass mehrere Netzwerke (Netzwerkbereiche) für unterschiedliche Host-Größen erstellt werden sollen. Dabei wird ein entsprechende IP-Adresse mit Suffix als Basis genommen.
-
-**Aufgabe:**
-
-Es sollen passende Netzwerkbereiche für die nachfolgenden Hosts erstellt werden:
-
-- **Netzwerkbereich 1:** 25 Hosts
-- **Netzwerkbereich 2:** 14 Hosts
-- **Netzwerkbereich 3:** 12 Hosts
-- **Netzwerkbereich 4:** 6 Hosts
-- **Netzwerkbereich 5:** 2 Hosts
-
-Dabei steht Ihnen die IP-Adresse `200.150.70.0/24` zur Verfügung. Das Netzwerk soll dabei mit der größten Host-Anzahl beginnen und mit der kleinsten Host-Anzahl enden.
-
-<!-- omit in toc -->
-### Herangehensweise
-
-In diesem Beispiel wird VLSM eingesetzt. Dies bedeutet, dass man die passenden **Hostbits** errechnen muss, welche die Anzahl an Host pro Netzwerkbereich einschließt.
-
-Zurzeit besitzen wir das Netzwerk `200.150.70.0/24`. Das Suffix `/24` repräsentiert dabei die Netzwerkmaske. Diese ist in diesem Fall `255.255.255.0`. Das verrät uns automatisch 2 Dinge:
-
-1. Die **ersten 3 Oktette** der IP-Adresse bleiben **fest und ändern sich nicht**.
-2. Das letzte (4) Oktett kann bislang bis zu 254 Hosts aufnehmen. Dieses Netzwerk soll nun in mehrere **Teil-Netzwerke** eingeteilt werden, in welchen die obenstehenden Hosts Platz finden können.
-
-<!-- omit in toc -->
-#### Berechnung der Hostbits
-
-Da die Aufgabe von uns verlangt, dass das erste Netzwerk / der erste Netzwerkbereich mit der größten Hostanzahl anfangen und das letzte Netzwerk / der letzte Netzwerkbereich mit der niedrigsten Hostanzahl enden soll, beginnen wir mit dem ersten Netzwerkbereich mit **25 Hosts**.
-
-Um herausfinden zu können, wie viele Hostbits 25 Hosts abdecken, können wir nachfolgende Möglichkeit verwenden:
-
-1 Oktett besteht aus **8 Bit**. Diese sind wie folgt dargestellt:
-
-| **Bits**        | 1   | 1   | 1   | 1   | 1   | 1   | 1   | 1   |
-| --------------- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Dezimalwert** | 128 | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
-
-> **Tipp:**
->
-> Hostbits werden immer von **rechts nach links** und Netzwerkbits von **links nach rechts** gezählt!
-
-Schaut man sich obige Tabelle an, so kann man schnell feststellen, dass eine Anzahl von **5 Hostbits** benötigt werden, um die 25 Hosts abzudecken. Die Berechnung sieht dabei wie folgt aus:
-
-$2^5 = 32 - 2 = 30$
-
-$30>25$
-
-> **Info:**
->
-> Die `-2` Bei der Berechnung $32 - 2$ repräsentiert die **Netz-** und **Broadcastadresse**. Diese beiden Adressen können **nicht** von Hosts benutzt werden. Demnach werden diese für die Berechnung der Hostanzahl direkt herausgenommen.
-
-<!-- omit in toc -->
-#### Berechnung der Netzwerkbits
-
-Um den gültigen Netzwerkbreich für die 25 Hosts nun herauszubekommen ist es wichtig die Netzwerkmaske zu kennen bzw. das entsprechende Suffix zu errechnen. Wie wir im vorherigen Schritt herausgefunden haben, benötigen wir **5 Hostbits** um die Hostanzahl von 25 Hosts zu decken. Nun benötigen wir die **Netzwerbits**, um den gültigen Adressbereich und die entsprechende Netzwerkmaske angeben zu können.
-
-Dafür kann ganz einfach vorgegangen werden:
-
-Eine IPv4-Adresse besitzt maximal 32 Bits. Würden alle 32 Bits verwendet werden, würde das bedeuten, dass alle Zahlen der IP-Adresse **fest** sind. Mit anderen Worten würde beispielsweise die IP-Adresse `192.168.100.5/32` die Netzmaske `255.255.255.255` besitzen. Dies würde eine einzige IP-Adresse darstellen. `/32` Netzwerke kann es, aufgrund der fehlenden Netz- und Brodcastadresse, nicht geben und identifizieren damit **immer** eine **Host-Adresse**!
-
-Da wir aber 5 Hostbits haben, um 25 Hosts abzudecken, können wir ganz einfach die maximale IPv4-Bit-Anzahl **minus** der Hosbits nehmen:
-
-$32 Bits - 5 Hostbits = 27 Netzwerkbits$
-
-Schaut man sich nun die obige Tabelle und den zugehörigen Tipp erneut an, kann man ganz einfach die Netzwerkmaske berrechnen:
-
-| **Oktett** | 1        | 2        | 3        | 4        |
-| ---------- | -------- | -------- | -------- | -------- |
-| **Bits**   | 11111111 | 11111111 | 11111111 | 11100000 |
-
-**Die Netzwerkmaske lautet `255.255.255.224`**
-
-<!-- omit in toc -->
-#### Definierung des Netzwerkbereichs
-
-Wir besitzen nun folgende Informationen:
-
-- **Anzahl benötigter Hostbits:** 5
-- **Übrige Netzwerkbits:** 3
-- **Suffix:** /27
-- **Netzwerkmaske:** 255.255.255.224
-
-Wir wissen, dass wir mit der Anzahl von 5 Hostbits bis zu 30 Hosts abdecken können. Das bedeutet, dass der **erste Netzwerkbereich** wie folgt aussieht:
-
-- **Netzadresse:** 200.150.70.0
-- **Erste Host-Adresse:** 200.150.70.1
-- **Letzte Host-Adresse:** 200.150.70.30
-- **Broadcastadresse:** 200.150.70.31
-- **Netzwerkmaske:** 255.255.255.224
-- **Suffix:** /27
-
-<!-- omit in toc -->
-#### Berechnung weiterer Netzwerkbereiche
-
-Mit den oben stehenden Informationen können wir anschließend die nächsten Netzwerkbereiche ausrechnen.
-
-> **Wichtig:**
->
-> Die neuen Netwerkbereiche starten verständlicherweise **nicht** bei der Adresse `200.150.70.0`, sondern **nach der Broadcastadresse des letzten Netzwerkbereichs**. Im Beispiel von 25 Hosts also bei 200.150.70.**32**.
-
-***Hostbits:***
-
-- **Netzwerk 2:** $14 Hosts = 2^4 Hostbits = 16 - 2 = 14$ → Verwendung von 4 Hostbits, um die Anzahl von 14 Hosts abzudecken.
-- **Netzwerk 3:** $12 Hosts = 2^4 Hostbits = 16 - 2 = 14$ → Verwendung von 4 Hostbits, um die Anzahl von 12 Hosts abzudcken.
-- **Netzwerk 4:** $6 Hosts = 2^3 Hostbits = 8 - 2 = 6$ → Verwendung von 3 Hostbits, um die Anzahl von 6 Hosts abzudecken.
-- **Netzwerk 5:** $2 Hosts = 2^2 Hostbits = 4 - 2 = 2$ → Verwendung von 2 Hostbits, um die Anzahl von 2 Hosts abzudecken.
-
-***Netzwerkbits:***
-
-- **Netzwerk 2:** $32 - 4 = 28$ → 28 Netzwerkbits mit dem Suffix `/28` und der Netzmaske `255.255.255.240`
-- **Netzwerk 3:** $32 - 4 = 28$ → 28 Netzwerkbits mit dem Suffix `/28` und der Netzmaske `255.255.255.240`
-- **Netzwerk 4:** $32 - 3 = 29$ → 29 Netzwerkbits mit dem Suffix `/29` und der Netzmaske `255.255.255.248`
-- **Netzwerk 5:** $32 - 2 = 30$ → 30 Netzwerkbits mit dem Suffix `/30` und der Netzmaske `255.255.255.252`
-
-***Netzwerkbereiche:***
-
-**Netzwerkbereich 2:**
-
-> **Wichtig:**
->
-> Bei diesem Netzwerk gibt es 14 Hosts mit 4 Hostbits. 4 Hostbits erlauben bis zu 16 IP-Adressen (Netz- und Broadcastadresse inkludiert).
->
-> Das Netzwerk startet **nach der Broadcastadresse des letzten Netzwerks**. Um die Broadcastadresse dieses Netzwerks zu bestimmten, können die 16 IP-Adressen ganz einfach auf die neue Netzadresse berechnet werden: $32 + 16 = 48$. Das teilt uns zudem mit, dass ab `48` das nächste Netzwerk beginnt und unsere Broadcastadresse automatisch `47` ist. 
->
-> Dieser Vorgang wird für Netzerkbereich 3-5 wiederholt.
-
-- **Netzadresse:** 200.150.70.32
-- **Erste Host-Adresse:** 200.150.70.33
-- **Letzte Host-Adresse:** 200.150.70.46
-- **Broadcastadresse:** 200.150.70.47
-- **Netzwerkmaske:** 255.255.255.240
-- **Suffix:** /28
-
-**Netzwerkbereich 3:**
-
-- **Netzadresse:** 200.150.70.48
-- **Erste Host-Adresse:** 200.150.70.49
-- **Letzte Host-Adresse:** 200.150.70.62
-- **Broadcastadresse:** 200.150.70.63
-- **Netzwerkmaske:** 255.255.255.240
-- **Suffix:** /28
-
-**Netzwerkbereich 4:**
-
-- **Netzadresse:** 200.150.70.64
-- **Erste Host-Adresse:** 200.150.70.65
-- **Letzte Host-Adresse:** 200.150.70.70
-- **Broadcastadresse:** 200.150.70.71
-- **Netzwerkmaske:** 255.255.255.248
-- **Suffix:** /29
-
-**Netzwerkbereich 5:**
-
-- **Netzadresse:** 200.150.70.72
-- **Erste Host-Adresse:** 200.150.70.73
-- **Letzte Host-Adresse:** 200.150.70.74
-- **Broadcastadresse:** 200.150.70.75
-- **Netzwerkmaske:** 255.255.255.252
-- **Suffix:** /30
-
-<!-- omit in toc -->
-## Subnetzerke mit großer Hostanzahl
-
-Die Berechnung von Subnetzwerken mit großer Hostanzahl unterscheidet sich nicht von der Methode, wie die Subnetzwerke in den oberen Beispielen erklärt wurde. Die einzige Schwierigkeit liegt hierbei, dass nun nicht mehr mit ein- bis zweistelligen Hosts gerechnet wird, sondern mit deutlich mehr.
-
-**Aufgabe:**
-
-Es sollen passende Netzwerkbereiche für die nachfolgenden Hosts erstellt werden:
-
-- **Netzwerkbereich 1:** 2401 Hosts
-- **Netzwerkbereich 2:** 2037 Hosts
-- **Netzwerkbereich 3:** 1013 Hosts
-- **Netzwerkbereich 4:** 450 Hosts
-- **Netzwerkbereich 5:** 235 Hosts
-
-Dabei steht Ihnen die IP-Adresse `172.16.0.0/16` zur Verfügung. Das Netzwerk soll dabei mit der größten Host-Anzahl beginnen und mit der kleinsten Host-Anzahl enden.
-
-<!-- omit in toc -->
-### Berechnung der Hostbits
-
-Die Vorgehensweise wie die Hostbits berechnet werden ist wie in den ersten Beispielen mit der Berechnung einer kleinen Hostanzahl. Dafür kann unsere Bit-Tabelle weiterhelfen, welche wir mit weiteren Bits erweitern:
-
-| **Bits**        | 1    | 1    | 1    | 1   | 1   | 1   | 1   | 1   | 1   | 1   | 1   | 1   | 1   |
-| --------------- | ---- | ---- | ---- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Dezimalwert** | 4096 | 2048 | 1024 | 512 | 256 | 128 | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
-
-- **Netzwerk 1:** $2401 Hosts = 2^12 Hostbits = 4096 - 2 = 4094$ → Verwendung von 12 Hostbits, um die Anzahl von 2401 Hosts abzudecken.
-- **Netzwerk 2:** $2037 Hosts = 2^11 Hostbits = 2048 - 2 = 2046$ → Verwendung von 11 Hostbits, um die Anzahl von 2037 Hosts abzudecken.
-- **Netzwerk 3:** $1013 Hosts = 2^10 Hostbits = 1024 - 2 = 1022$ → Verwendung von 10 Hostbits, um die Anzahl von 1013 Hosts abzudcken.
-- **Netzwerk 4:** $450 Hosts = 2^9 Hostbits = 512 - 2 = 510$ → Verwendung von 9 Hostbits, um die Anzahl von 450 Hosts abzudecken.
-- **Netzwerk 5:** $235 Hosts = 2^8 Hostbits = 256 - 2 = 254$ → Verwendung von 8 Hostbits, um die Anzahl von 235 Hosts abzudecken.
-
-<!-- omit in toc -->
-### Berechnung der Netzwerkbits
-
-In diesem Fall können wir auch wieder von der maximalen Hostbit-Anzahl einer IPv4-Adresse die zu benutzenden Hostbits abziehen:
-
-- **Netzwerkbreich 1:** $32 Netzwerkbits - 12 Hostbits = 20 Netzwerkbits$ → 20 Netzwerkbits mit dem Suffix `/20`.
-- **Netzwerkbreich 2:** $32 Netzwerkbits - 11 Hostbits = 21 Netzwerkbits$ → 21 Netzwerkbits mit dem Suffix `/21`.
-- **Netzwerkbreich 3:** $32 Netzwerkbits - 10 Hostbits = 22 Netzwerkbits$ → 22 Netzwerkbits mit dem Suffix `/22`.
-- **Netzwerkbreich 4:** $32 Netzwerkbits - 9 Hostbits = 23 Netzwerkbits$ → 23 Netzwerkbits mit dem Suffix `/23`.
-- **Netzwerkbreich 5:** $32 Netzwerkbits - 8 Hostbits = 24 Netzwerkbits$ → 24 Netzwerkbits mit dem Suffix `/24`.
-
-Anders als bei einer kleinen Host-Anzahl bewegen wir uns nun zwischen dem 3. und 4. Oktett der IP-Adresse. Für die Berechnung der Netzmaske kann jedoch wieder einfach vorgegangen werden.
-
-Beim ersten Netzwerkbereich mit 20 Netzwerkbits sieht die Netzmaske in Bits wie folgt aus:
-
-| **Oktett** | 1        | 2        | 3        | 4        |
-| ---------- | -------- | -------- | -------- | -------- |
-| **Bits**   | 11111111 | 11111111 | 11110000 | 00000000 |
-
-Da wir die **Netzmaske** ausrechnen wollen und diese mit den **Netzwerkbits** berechnet werden, können wir die Hostbits **ignorieren**. D.h. unser Fokus befindet sich im dritten Oktett. Hier haben wir 4 Bits für das Netzwerk und 4 Bits für die Hosts. Schauen wir uns folgende Tabelle an, so können wir mit dem Zusammenrechnen der Dezimalzahlen die Netzmaske ausrechnen:
-
-| **Bits**        | 1   | 1   | 1   | 1   | 1   | 1   | 1   | 1   |
-| --------------- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Dezimalwert** | 128 | 64  | 32  | 16  | 8   | 4   | 2   | 1   |
-
-Da die **ersten 4 Bits des dritten Oktetts** Netzwerkbits sind, und Netzwerkbits von **links nach rechts** gelesen werden, lautet die Netzmaske **255.255.240.0**.
-
-Dadurch können wir nun die Netzmasken der restlichen Netze berechnen:
-
-- **Netzwerkbereich 2:** 255.255.248.0
-- **Netzwerkbereich 3:** 255.255.252.0
-- **Netzwerkbereich 4:** 255.255.254.0
-- **Netzwerkbereich 5:** 255.255.255.0
-
-<!-- omit in toc -->
-### Berechnung der Netzbereiche
-
-Da `16` bereits die Netzadresse des **nächsten Netzwerks** ist, können wir eine Adresse zurückgehen und erhalten unsere Broadcastadresse für das **dritte Oktett**.
-
-Führen wir diese Informationen zusammen und berücksichtigen, dass das vierte Oktett **ausschließlich für Hosts zuständig ist** bekommen wir folgenden Netzwerkbereich für das erste Netzwerk:
-
-- **Netzadresse:** 172.16.0.0
-- **Erste Host-Adresse:** 172.16.0.1
-- **Letzte Host-Adresse:** 172.16.15.254
-- **Broadcastadresse:** 172.16.15.255
-- **Netzwerkmaske:** 255.255.240.0
-- **Suffix:** /20
-
-Der nächste Netzwerkbereich (Netzwerkbereich 2) besitzt demnach die Netzadresse `172.16.16.0`. Die restlichen Netzbereiche sind wie folgt:
-
-**Neztbereich 2:**
-
-- **Netzadresse:** 172.16.16.0
-- **Erste Host-Adresse:** 172.16.16.1
-- **Letzte Host-Adresse:** 172.16.23.254
-- **Broadcastadresse:** 172.16.23.255
-- **Netzwerkmaske:** 255.255.248.0
-- **Suffix:** /21
-
-**Neztbereich 3:**
-
-- **Netzadresse:** 172.16.24.0
-- **Erste Host-Adresse:** 172.16.24.1
-- **Letzte Host-Adresse:** 172.16.27.254
-- **Broadcastadresse:** 172.16.27.255
-- **Netzwerkmaske:** 255.255.252.0
-- **Suffix:** /22
-
-**Neztbereich 4:**
-
-- **Netzadresse:** 172.16.28.0
-- **Erste Host-Adresse:** 172.16.28.1
-- **Letzte Host-Adresse:** 172.16.29.254
-- **Broadcastadresse:** 172.16.29.255
-- **Netzwerkmaske:** 255.255.254.0
-- **Suffix:** /23
-
-**Neztbereich 5:**
-
-- **Netzadresse:** 172.16.30.0
-- **Erste Host-Adresse:** 172.16.30.1
-- **Letzte Host-Adresse:** 172.16.30.254
-- **Broadcastadresse:** 172.16.30.255
-- **Netzwerkmaske:** 255.255.255.0
-- **Suffix:** /24
 
 # Netzwerkplanung - Hierarchisches Netzwerk
 
@@ -2002,6 +1729,15 @@ Im Unterschied kann man also sehen, dass das Versenden einer 10.000 Byte großen
 In FreeBSD und bei sämtlichen Linux-Distributionen wird eher GSO anstatt TSO verwendet. Dies hat den Grund, da TSO komplett auf einer hardwaregestützten Implementation in der Netzwerkkarte basiert. Für z.B. Linux ist es somit nicht oder auch nur schwer möglich mittels Netfilter Pakete besser auszulesen und zu bestimmen. Auch das Auftreten von Hard- oder Software-Fehlern mit TSO bei NICs ist ein großes Problem. Wenn TSO nicht korrekt ausgeführt wird, muss zuerst der Hersteller der jeweiligen NIC einen Patch bereitstellen. Das Patchen der Code-Fehler geht mittels im Linux-Kernel verbauten GSO deutlicher eleganter und einfacher. Zudem müssten für den umfänglichen Support von TSO sämtliche sich im Einsatz befindende NICs vom Hersteller modifiziert werden, was auch eine hohe Implementierungszeit benötigen würde.
 
 <!-- omit in toc -->
+## Paradoxes Verhalten
+
+Eigentlich sollte TSO dazu führen, dass es den Prozessor entlastet, indem es ankommende IP-Pakete in einen Buffer schreibt und anschließend der entsprechenden Anwendung übergibt. Dadurch soll eine Performance-Steigerung im Netzwerkdurchsatz erreicht werden, da die Pakete keinen Umweg mehr über die CPU machen müssen.
+
+Es gibt jedoch Szenarien, in welchen es wichtig ist TSO sowie weitere Features wie [LRO](#lro---large-receive-offload) abzuschalten, da diese eher Performance-Einbußen geben, anstatt eine Steigerung zu erzielen. Gerade bei Netzwerkgeräten wie Router oder Firewalls ist dies wichtig. Das hat den Grund, dass das Schreiben des Buffers und das anschließende Übergeben diesen Buffers an die entsprechende Anwendung, eine hohe Latenzzeit mit sich bringt. Diese Latenzzeit wirkt sich negativ auf die Performance aus und kann zu niedrigeren Durchsätzen oder auch Kernel-Panics (in FreeBSD) führen.
+
+Daher sollte TSO sowie weitere Features wie LRO oder auch VLAN-HWTSO bei Routern und Firewalls **deaktiviert** werden.
+
+<!-- omit in toc -->
 ## Fazit - Eigene Meinung
 
 Im alltäglichen Gebrauch wird die Aktivierung von TSO und GSO kaum eine wahrnehmbare Rolle spielen, weshalb es daher auch nicht unbedingt aktiviert werden muss. Wo es jedoch definitiv aktiviert werden sollte ist bei Netzwerkgeräten, welche viel Traffic-Aufkommen haben wie Router, Gateways, oder Switches. Dabei sollte GSO über TSO bevorzugt werden. Um jedoch eine wirkliche Verbesserung zu spüren, sollte diese Funktion bei allen Geräten, die in einem traffic-lastigen Netz arbeiten, aktiviert werden.
@@ -2013,6 +1749,7 @@ Im alltäglichen Gebrauch wird die Aktivierung von TSO und GSO kaum eine wahrneh
 - [https://www.deinlexikon.de/wiki/TCP_segmentation_offload](https://www.deinlexikon.de/wiki/TCP_segmentation_offload)
 - [https://de.wikipedia.org/wiki/TCP_segmentation_offload](https://de.wikipedia.org/wiki/TCP_segmentation_offload)
 - [https://doc.dpdk.org/guides/prog_guide/generic_segmentation_offload_lib.html](https://doc.dpdk.org/guides/prog_guide/generic_segmentation_offload_lib.html)
+- [https://wiki.freebsd.org/Networking/10GbE/Router](https://wiki.freebsd.org/Networking/10GbE/Router)
 
 # VRRP - Virtual Router Redundancy Protocol
 

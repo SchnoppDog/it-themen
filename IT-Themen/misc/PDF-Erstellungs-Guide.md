@@ -71,7 +71,7 @@ Anschließend kann das HTML-Dokument in einem entsprechenden Browser geöffnet w
 
 > **Wichtig:**
 >
-> Aufgrund von unbekannten Problemen funktionieren interne Dokumenten-Links wie Überschriften-Verweise o.ä. nicht! Zudem wird das CSS-Design nicht richtig gerendert! Deshalb ist es empfohlen die HTML-Seite zur Betrachtung zu verwenden, da hier alle Funktionen unterstützt sind!
+> Aufgrund von unbekannten Problemen funktionieren interne Dokumenten-Links wie Überschriften-Verweise o.ä. im PDF-Format nicht! Zudem wird das CSS-Design nicht richtig gerendert! Deshalb ist es empfohlen die HTML-Seite zur Betrachtung zu verwenden, da hier alle Funktionen unterstützt sind!
 
 ## Informationen zum CSS-Template
 
