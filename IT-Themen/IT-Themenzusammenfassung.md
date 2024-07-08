@@ -3,7 +3,7 @@
 
 Dieses Markdown-Dokument soll verschiedene IT-Themen zusammenfassen, die ich hin und wieder angeschaut habe.
 
-- **Letzte Änderung:** 2024-06-24
+- **Letzte Änderung:** 2024-07-08
 
 <!-- omit in toc -->
 ## Disclaimer
@@ -21,6 +21,7 @@ Dieses Markdown-Dokument wurde in [Visual Studio Code von Microsoft](https://cod
 - [DSL - Digital Subscriber Line](#dsl---digital-subscriber-line)
 - [Flow Control](#flow-control)
 - [FTP - File Transfer Protocol](#ftp---file-transfer-protocol)
+- [HTTP - Hypertext Transfer Protocol](#http---hypertext-transfer-protocol)
 - [LLDP - Link Layer Discovery Protokoll](#lldp---link-layer-discovery-protokoll)
 - [LRO - Large Receive Offload](#lro---large-receive-offload)
 - [Netzwerkplanung - Hierarchisches Netzwerk](#netzwerkplanung---hierarchisches-netzwerk)
@@ -1200,6 +1201,110 @@ SFTP ist im Gegenzug zu FTP und FTPS ein eigenständiges Protokoll und basiert a
 - [https://de.wikipedia.org/wiki/Liste_der_standardisierten_Ports](https://de.wikipedia.org/wiki/Liste_der_standardisierten_Ports)
 - [https://datatracker.ietf.org/doc/html/rfc959](https://datatracker.ietf.org/doc/html/rfc959)
 - [https://www.goanywhere.com/de/blog/wichtige-unterschiede-zwischen-sftp-und-ftps](https://www.goanywhere.com/de/blog/wichtige-unterschiede-zwischen-sftp-und-ftps)
+
+# HTTP - Hypertext Transfer Protocol
+
+> Info:
+>
+> Dieses Thema wird ggf. noch weiter ausgeführt, jedoch wurde es ursprünglich nur erstellt, um HTTP2 darzustellen.
+
+Das **H**yper**t**ext **T**ransfer **P**rotokoll (HTTP) wird dazu verwendet, um Webseiten im Web anzuzeigen. Es ist das Urprotokoll, welches als Grundlage für das Anzeigen von Webseiten gilt. Es wurde ursprünglich von Tim Berners-Lee im Jahr 1989 erfunden mit der Version 0.9 eingeführt und bis zur Version 1.0 entwickelt. Neuere Standards basieren auf den Versionen 1.1 und 2.0. Darunter ist die Version 2.0 die aktuellste und zurzeit am weitesten verbreitete. HTTP gibt an, wie die Kommunikation zwischen Server und Client stattfindet, um eine Webseite zu laden. Dafür werden unterschiedliche Funktionen verwendet.
+
+<!-- omit in toc -->
+## HTTP/2
+
+HTTP2 oder auch `HTTP/2` geschrieben, ist eine Weiterentwicklung von HTTP1.1, welche im Jahr 2015 eingeführt wurde. Grund dafür war, dass das bereits weit etablierte HTTP1.1 einige Schwachstellen und Verbesserungen aufwies, weshalb eine Verbesserung des Protokolls ausstand. Ursprünglich kam die Anregung zur Verbesserung durch Google, welches sich am Versuch machte, HTTP1.1 mit ihrem eigenen propritären Standard SPDY weiterzuentwickeln. Die HTTP-Working-Group schaute sich anschließend Googles SPDY Protokoll an und entwarf auf Basis von SPDY HTTP2. Zu Gunsten von HTTP2 stellte Google die Entwicklung von SPDY ein.
+
+HTTP2 bringt einige Neuerungen gegenüber HTTP1.1 mit sich. Solche Neuerungen sind beispielsweise:
+
+- Multiplexing
+- Header Compression
+- Priorisierung
+- Server-Push
+- Und mehr
+
+<!-- omit in toc -->
+### Multiplexing
+
+HTTP1.1 basiert darauf, dass jede Resource (CSS, Bilder, Javascript, Videos etc.) einzeln nacheinander geladen wird. Der Client fragt den Server nach einer bestimmten Resource und der Server antwortet mit dieser an den Client. Sobald der Client die Resource erhalten hat, sendet er eine Antwort bzw. ein Acknowledgement an den Server zurück und fordert die nächste Resource an.
+
+![HTTP1.1 Resource Request](./_resources/http/http1-1_resource_request.PNG)
+
+Dabei wird für jede angeforderte Resource ein neuer TCP-Stream aufgemacht. Kann eine Resource nicht geladen werden, wird die nachfolgende Kette an Resourcen abgebrochen. D.h. müssen 8 Resourcen für das Anzeigen einer Webseite geladen werden und die dritte Resource kann nicht geladen werden, **dann werden Resourcen 3-8 nicht geladen**, was dazu führen kann, dass die Webseite nicht korrekt angezeigt wird. Dies hat zusätzlich den Nachteil, dass mit **ansteigenden Resourcen die Ladezeit einer Webseite deutlich erhöht wird**. Um dieses Problem zu umgehen, benutzt HTTP2 ``multiplexing``.
+
+Mit Multiplexing werden **alle Daten** vom Client **gleichzeitig** angefragt. Der Server stellt diese zusammen und sendet sie gebündelt an den Client zurück.
+
+![HTTP2 Resource Request](./_resources/http/http2_resource_request.PNG)
+
+Die Daten werden in einem einzigen TCP-Stream, innerhalb jedoch in unterschiedlichen Streams, bereitgestellt. Damit der Client weiß, welche Daten über welchem Stream zu erhalten sind und die Webseite korrekt aufbauen kann, sind die Streams entsprechend nummeriert. Diese Neuerung bringt zwei signifikante Vorteile mit sich:
+
+1. **Verringerung der Ladezeit:** Dadurch, dass alle Resourcen gleichzeitig gesendet werden, kann der Client diese schneller verarbeiten und zusammensetzen als wenn er jede Resource einzeln anfordern müsste.
+2. **Verbesserter Umgang von fehlerhaften Resourcen:** Sollten angeforderte Resourcen beschädigt oder verloren sein, kann der Client diese einzeln erneut anfordern. Dadurch werden die anderen Resourcen **nicht beeinflusst**.
+
+![HTTP Multiplexing](./_resources/http/http2_multiplexing.PNG)
+
+<!-- omit in toc -->
+#### Priorisierung
+
+Zusammen mit Multiplexing zur Verbesserung der Ladezeiten einer Webseite wurde auch das **Priorisieren von Resourcen beim Laden** eingeführt. Dabei kann der Webentwickler frei entscheiden, welche Resource er dem Client wann zur Verfügung stellt. So kann beispielsweise entscheiden werden, ob zuerst der Text, dann das Stylesheet, dann Werbung und Javaskript-Dateien etc. geladen werden sollen oder umgekehrt oder doch in einer ganz anderen Reihenfolge.
+
+Dadurch können sich Ladezeiten von Webseiten ebenfalls deutlich verbessern, da so beispielsweise der Text über alles andere priorisiert werden kann. Der Benutzer bekommt somit das Gefühl, dass die Webseite schneller lädt.
+
+<!-- omit in toc -->
+### Binär- statt Textform
+
+In HTTP1.1 wurde der angeforderte Text der Webseite noch als reine Text übertragen. Dies führte in manchen Browsern zu Schwierigkeiten in der Intepretation des Textes. Vor allem durch die Benutzung von Leerzeichen schlichen sich nicht nur Fehler ein, sondern konnten aktiv durch Hacker mit entsprechenden Angriffsmethoden ausgenutzt werden.
+
+HTTP2 übersetzt nun den Text in Binärform und sendet diese vom Server zum Client. Dies steigert u.A. die Performance, da ein kleinerer Overhead benötigt wird, aber auch andere Dinge wie:
+
+- **Verbesserung von Fehlerfreien Interpretationen.** Da das Binärformat Standardisiert ist, kann es einfacher interpretiert werden. Vor allem Leerzeichen oder auch Sonderzeichen können korrekt umgewandelt werden.
+- **Weniger anfällig für Angriffe auf den Text.** Die zuvor genannte Schwachstelle, bei welcher Leerzeichen innerhalb eines Textes missbraucht werden können, um Angriffe zu starten, ist hier nicht mehr möglich, da ein Leerzeichen korrekt interpretiert und der Rest auf einen Angriff gescannt werden kann.
+
+<!-- omit in toc -->
+### Header Compression
+
+HTTP setzt unterschidliche Header-Typen ein, um die Kommunikation zwischen Client und Server zu leiten. Dabei fallen unterschiedliche Daten an, welche in HTTP1.1 unkomprimiert gesendet werden. Dies kann gerade bei vielen angeforderten Resourcen zu einer größeren Netzwerklast führen. HTTP2 komprimiert hingegen HTTP-Header, um die anfallende Größe zu verkleinern. Dabei benutzt es die ``HPACK``-Komrpimierung, um Header zu verkleinern, indem es redundante Informationen löscht.
+
+Profitieren tun vor allem die Daten-Header, welche beispielsweise die Resourcen übertragen. Diese beinhalten oft Informationen, welche doppelt vorkommen und dadurch komprimiert werden können. Zwar spart dies nur ein paar Byte ein, kann jedoch aufgrund der Menge sich signifikant auf die Netzwerklast ausprägen.
+
+<!-- omit in toc -->
+### Server Push
+
+Grundsätzlich ist es im HTTP-Protokoll vorgesehen, dass der Server nur dann Resourcen an den Client sendet, wenn dieser diese angefordert hat. Unter speziellen Umständen kann es aber auch erforderlich sein, dass der Server, bevor der Client Daten angefragt hat, Informationen dem Client bereitstellen möchte. Durch eine in HTTP2 eingeführte Funktion ist dies nun möglich. So kann über ein bestimmtes HTML-Tag der Wert ``push`` angegeben werden, um eine Resource vor Client-Request diesem bereitzustellen.
+
+<!-- omit in toc -->
+### Nachteile von HTTP2
+
+Zwar bringt HTTP2 einige Vorteile gegenüber HTTP1.1 mit sich, besitzt jedoch ebenfalls einige Verbesserungen und Schwächen.
+
+<!-- omit in toc -->
+#### Rückkompatibilität zu HTTP1.1
+
+Um Eine Fallback-Lösung zu haben ist HTTP2 immer noch mit HTTP1.1 kompatibel. So werden beispielsweise weiterhin die gleichen ``POST``- und ``GET``-Anfragen mit denselben Status-Codes verwendet, damit diese nicht neu implementiert werden müssen. Zusätzlich ist die Komprimierung von HTTP2 mit HPACK anfällig auf bestimmte Angriffe so z.B. [BREACH](https://en.wikipedia.org/wiki/BREACH) oder auch [CRIME](https://en.wikipedia.org/wiki/CRIME)
+
+<!-- omit in toc -->
+#### Verschlüsselung nicht unbedingt notwendig
+
+Ausgehend vom Standard ist eine Aktivierung zur verschlüsselter Kommunikation über SSL/TLS nicht vorgesehen. Wobei dies durch Browser-Hersteller mittlerweile umgangen wird, indem geprüft wird, ob eine Webseite verschlüsselte Kommunikation einsetzt oder nicht. Wird **keine verschlüsselte Kommunikation** eingesetzt, wird automatisch die Benutzung von HTTP2 nicht gewährt.
+
+<!-- omit in toc -->
+#### Cookies sind weiterhin ein Thema
+
+Aufgrund der Rückwärtskompatibilität zu HTTP1.1 sind auch Cookies weiterhin ein Thema in HTTP2. Auch in HTTP2 werden diese wie in HTTP1.1 als Textdateien abgespeichert. Zum Hintergrund: In Cookies sind meist personalisierte Informationen von unterschiedlichen Webseiten gespeichert, welche beispielsweise für Login-Informationen verwendet werden oder auch um personalisierte Werbung auf Webseiten einzuspielen.
+
+Gerade durch XSS-Angriffe (Cross Site Scripting) können diese Cookies geklaut und von Angreifern verwendet werden. So können beispielsweise Login-Daten zu verschiedenen Web-Konten oder ganze Sitzungen unbemerkt übernommen werden.
+
+<!-- omit in toc -->
+## Quellen
+
+- [https://www.cloudflare.com/learning/performance/http2-vs-http1.1/](https://www.cloudflare.com/learning/performance/http2-vs-http1.1/)
+- [https://en.wikipedia.org/wiki/HTTP](https://en.wikipedia.org/wiki/HTTP)
+- [https://www.upwork.com/resources/what-is-http2#disadvantages-of-http2](https://www.upwork.com/resources/what-is-http2#disadvantages-of-http2)
+- [https://en.wikipedia.org/wiki/BREACH](https://en.wikipedia.org/wiki/BREACH)
+- [https://en.wikipedia.org/wiki/CRIME](https://en.wikipedia.org/wiki/CRIME)
+- [https://www.imperva.com/learn/performance/http2/](https://www.imperva.com/learn/performance/http2/)
+- [https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview#http_messages](https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview#http_messages)
+
 
 # LLDP - Link Layer Discovery Protokoll
 
